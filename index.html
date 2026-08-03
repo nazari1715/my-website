@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>আইসিটি প্রতিযোগিতা ও কুইজ</title>
+  <title>এডভান্সড আইসিটি কুইজ ও লার্নিং পোর্টাল</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 15px;
       background-color: #f4f7f6;
       color: #333;
       transition: background 0.3s, color 0.3s;
@@ -21,8 +21,8 @@
       background: white;
       padding: 20px;
       margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
     .dark-mode .card {
       background: #2d2d2d;
@@ -31,41 +31,70 @@
     button {
       cursor: pointer;
       font-size: 14px;
+      border-radius: 5px;
+      border: none;
+      transition: 0.2s;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    select {
+      font-size: 15px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 350px;
+    }
+    .q-box {
+      text-align: left;
+      margin-bottom: 15px;
+      background: rgba(0,0,0,0.03);
+      padding: 12px;
+      border-radius: 8px;
+      border-left: 4px solid #007bff;
+    }
+    .dark-mode .q-box {
+      background: rgba(255,255,255,0.05);
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <button onclick="toggleDarkMode()" style="background:#333; color:white; padding:8px 15px; border:none; border-radius:5px;">🌙 Dark/Light Mode</button>
-    <p id="live-clock" style="font-weight:bold; margin-top:10px; color:#007bff;"></p>
+  <div class="card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+    <button onclick="toggleDarkMode()" style="background:#333; color:white; padding:10px 18px;">🌙 Dark/Light Mode</button>
+    <p id="live-clock" style="font-weight:bold; color:#007bff; margin:10px 0 0 0;"></p>
   </div>
 
   <div class="card">
-    <h2>🔊 ভয়েস রিডার (Text-to-Speech)</h2>
-    <p id="speech-text">আইসিটি প্রতিযোগিতায় আপনাকে স্বাগতম! আমাদের ওয়েবসাইটে বিষয়ভিত্তিক কুইজ এবং আধুনিক তথ্যপ্রযুক্তির ফিচার রয়েছে।</p>
-    <button onclick="readText()" style="background:#28a745; color:white; padding:8px 15px; border:none; border-radius:5px;">পড়ে শোনাও 🗣️</button>
+    <h2>🔊 স্মার্ট ভয়েস রিডার (Voice Assistant)</h2>
+    <p id="speech-text">স্বাগতম আমাদের আইসিটি মেগা কুইজ প্রতিযোগিতায়! এখানে আপনি কম্পিউটার, ইন্টারনেট, এআই এবং সাইবার সিকিউরিটির বিভিন্ন বিষয় নিয়ে নিজেকে যাচাই করতে পারবেন।</p>
+    <button onclick="readText()" style="background:#28a745; color:white; padding:10px 18px;">পড়ে শোনাও 🗣️</button>
   </div>
 
   <div class="card" id="quiz-section">
-    <h2>🧠 বিষয়ভিত্তিক আইসিটি কুইজ প্রতিযোগিতা</h2>
+    <h2>🧠 জাতীয় আইসিটি অলিম্পিয়াড কুইজ</h2>
+    <p>আপনার পছন্দের বিষয় সিলেক্ট করুন এবং সব প্রশ্নের উত্তর দিয়ে স্কোর জমা দিন:</p>
     
-    <label for="quiz-subject"><b>বিষয় নির্বাচন করুন:</b></label><br>
-    <select id="quiz-subject" onchange="loadQuiz()" style="padding: 8px; margin: 10px 0; border-radius: 5px; width: 100%; max-width: 300px;">
-      <option value="hardware">১. কম্পিউটার হার্ডওয়্যার</option>
-      <option value="network">২. নেটওয়ার্ক ও ইন্টারনেট</option>
-      <option value="cyber">৩. সাইবার নিরাপত্তা</option>
+    <label for="quiz-subject"><b>বিষয় নির্বাচন করুন:</b></label><br><br>
+    <select id="quiz-subject" onchange="loadQuiz()">
+      <option value="hardware">১. কম্পিউটার হার্ডওয়্যার ও ফান্ডামেন্টালস</option>
+      <option value="internet">২. ইন্টারনেট, www ও নেটওয়ার্কিং</option>
+      <option value="cyber">৩. সাইবার নিরাপত্তা ও ডিজিটাল সুরক্ষা</option>
+      <option value="ai">৪. কৃত্রিম বুদ্ধিমত্তা (AI) ও ফিউচার টেক</option>
+      <option value="programming">৫. প্রোগ্রামিং ও তথ্যপ্রযুক্তি</option>
     </select>
 
+    <br><br>
     <div id="quiz-box">
       </div>
 
-    <button onclick="checkAnswer()" style="background:#007bff; color:white; padding:8px 15px; border:none; border-radius:5px; margin-top:10px;">উত্তর জমা দিন</button>
-    <p id="quiz-result" style="font-weight:bold; margin-top:10px;"></p>
+    <button onclick="checkAnswer()" style="background:#007bff; color:white; padding:12px 25px; font-size:16px; font-weight:bold; margin-top:10px;">উত্তর জমা দিন 🚀</button>
+    <p id="quiz-result" style="font-weight:bold; font-size:16px; margin-top:15px;"></p>
   </div>
 
   <footer style="text-align:center; padding:15px; margin-top:20px;">
-    <button onclick="scrollToTop()" style="background:#ff4757; color:white; padding:8px 15px; border:none; border-radius:5px;">⬆️ ওপরে যান</button>
+    <button onclick="scrollToTop()" style="background:#ff4757; color:white; padding:10px 20px;">⬆️ উপরে যান</button>
   </footer>
 
   <script>
@@ -92,38 +121,37 @@
       window.speechSynthesis.speak(uttr);
     }
 
-    // বিষয়ভিত্তিক প্রশ্নাবলী
+    // ২০টি প্রশ্ন সমৃদ্ধ ডাটাবেজ (৫টি ক্যাটাগরি)
     const quizData = {
       hardware: [
-        {
-          q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?",
-          options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit"],
-          ans: 1
-        },
-        {
-          q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি?",
-          options: ["RAM", "ROM", "Cache"],
-          ans: 1
-        }
+        { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit"], ans: 1 },
+        { q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি (Permanent Memory)?", options: ["RAM", "ROM", "Cache"], ans: 1 },
+        { q: "কম্পিউটারের মস্তিষ্ক (Brain of Computer) কাকে বলা হয়?", options: ["Monitor", "Hard Disk", "Microprocessor/CPU"], ans: 2 },
+        { q: "নিচের কোনটি একটি ইনপুট ডিভাইস?", options: ["Keyboard", "Printer", "Speaker"], ans: 0 }
       ],
-      network: [
-        {
-          q: "ইন্টারনেট ব্যবহারের জন্য কোনটি অবশ্য প্রয়োজনীয়?",
-          options: ["IP Address", "Pen Drive", "Printer"],
-          ans: 0
-        },
-        {
-          q: "www-এর পূর্ণরূপ কী?",
-          options: ["World Wide Web", "World Whole Web", "Web World Wide"],
-          ans: 0
-        }
+      internet: [
+        { q: "www-এর পূর্ণরূপ কী?", options: ["World Wide Web", "World Whole Web", "Web World Wide"], ans: 0 },
+        { q: "ইন্টারনেটে নেটওয়ার্ক ঠিকানার পরিচয়কে কী বলা হয়?", options: ["IP Address", "USB Drive", "E-mail"], ans: 0 },
+        { q: "ওয়েবসাইট দেখার জন্য কোনটি ব্যবহৃত হয়?", options: ["Google Chrome Browser", "MS Excel", "Photoshop"], ans: 0 },
+        { q: "ইমেইল (E-mail)-এর পূর্ণরূপ কী?", options: ["Electrical Mail", "Electronic Mail", "Engine Mail"], ans: 1 }
       ],
       cyber: [
-        {
-          q: "পাসওয়ার্ড সুরক্ষিত রাখার সবচেয়ে ভালো উপায় কোনটি?",
-          options: ["সবার সাথে শেয়ার করা", "সহজ নাম্বার দেওয়া", "স্ট্রং ও গোপন রাখা"],
-          ans: 2
-        }
+        { q: "পাসওয়ার্ড সুরক্ষিত রাখার সবচেয়ে ভালো উপায় কোনটি?", options: ["সব জায়গায় একই পাসওয়ার্ড ব্যবহার", "সহজ মোবাইল নম্বর দেওয়া", "অনন্য, শক্তিশালী ও গোপন রাখা"], ans: 2 },
+        { q: "অপরিচিত ব্যক্তির পাঠানো ইমেইলের সন্দেহজনক লিংকে কী করা উচিত?", options: ["সাথে সাথে ক্লিক করা", "ক্লিক না করে ডিলিট করা", "বন্ধুদের পাঠানো"], ans: 1 },
+        { q: "ফিশিং (Phishing) মূলত কীসের সাথে সম্পর্কিত?", options: ["মাছ ধরা", "অনলাইন প্রতারণা বা তথ্য চুরি", "কম্পিউটার স্পিড বাড়ানো"], ans: 1 },
+        { q: "ফেসবুক বা জিমেইলে বাড়তি সুরক্ষার জন্য কোনটি চালু রাখা উচিত?", options: ["2-Factor Authentication (2FA)", "Public Wi-Fi", "Auto-login"], ans: 0 }
+      ],
+      ai: [
+        { q: "AI-এর পূর্ণরূপ কী?", options: ["Artificial Intelligence", "Automated Information", "Advanced Internet"], ans: 0 },
+        { q: "নিচের কোনটি এআই চালিত চ্যাটবট?", options: ["ChatGPT", "Calculator", "MS Paint"], ans: 0 },
+        { q: "স্বয়ংক্রিয় গাড়ি (Self-driving Car) পরিচালনায় কোনটি ব্যবহৃত হয়?", options: ["Robotics & AI", "Bluetooth", "Radio Wave"], ans: 0 },
+        { q: "মানুষের মতো চিন্তাভাবনা করার কম্পিউটার ক্ষমতাকে কী বলে?", options: ["Hardware", "Machine Learning & AI", "Database"], ans: 1 }
+      ],
+      programming: [
+        { q: "HTML মূলত কিসের জন্য ব্যবহৃত হয়?", options: ["ওয়েব পেজের কাঠামো তৈরিতে", "ভিডিও এডিটিং করতে", "গেম খেলতে"], ans: 0 },
+        { q: "নিচের কোনটি প্রোগ্রামিং ল্যাঙ্গুয়েজ?", options: ["Python", "Google", "Windows"], ans: 0 },
+        { q: "ওয়েবসাইটে ইন্টারঅ্যাক্টিভিটি ও বাটন কাজের জন্য কোনটি দরকার?", options: ["CSS", "JavaScript", "JPEG"], ans: 1 },
+        { q: "কম্পিউটারের বাইনারি কোড মূলত কোন দুটি সংখ্যা নিয়ে গঠিত?", options: ["১ এবং ২", "০ এবং ১", "১ এবং ১০"], ans: 1 }
       ]
     };
 
@@ -134,10 +162,10 @@
       let html = "";
 
       questions.forEach((qObj, index) => {
-        html += `<div style="text-align: left; margin-bottom: 15px; background: rgba(0,0,0,0.03); padding: 10px; border-radius: 5px;">`;
-        html += `<p><b>${index + 1}. ${qObj.q}</b></p>`;
+        html += `<div class="q-box">`;
+        html += `<p style="margin-top:0;"><b>${index + 1}. ${qObj.q}</b></p>`;
         qObj.options.forEach((opt, optIndex) => {
-          html += `<label style="display:block; margin: 4px 0;"><input type="radio" name="q_${index}" value="${optIndex}"> ${opt}</label>`;
+          html += `<label style="display:block; margin: 6px 0; cursor:pointer;"><input type="radio" name="q_${index}" value="${optIndex}"> ${opt}</label>`;
         });
         html += `</div>`;
       });
@@ -173,19 +201,23 @@
 
       const resElem = document.getElementById("quiz-result");
       if (!answeredAll) {
-        alert("দয়া করে সবগুলো প্রশ্নের উত্তর দিন!");
+        alert("দয়া করে এই ক্যাটাগরির সবগুলো প্রশ্নের উত্তর সিলেক্ট করুন!");
         return;
       }
 
-      resElem.innerHTML = `<span style="color: green;">🎉 চমৎকার! আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।</span>`;
+      if(score === total) {
+        resElem.innerHTML = `<span style="color: green;">🏆 চমৎকার! আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়ে পূর্ণ নম্বর পেয়েছেন!</span>`;
+      } else {
+        resElem.innerHTML = `<span style="color: #d9534f;">📊 আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন। আরও চেষ্টা করুন!</span>`;
+      }
     }
 
-    // ওপরে যাওয়ার ফাংশন
+    // স্ক্রোল ফাংশন
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // প্রথমবার অটোমেটিক কুইজ লোড
+    // প্রথমবার লোড
     window.onload = function() {
       loadQuiz();
     };
