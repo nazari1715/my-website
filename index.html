@@ -67,5 +67,30 @@ allowfullscreen>
 
 </div>
 
+<div class="card">
+<h2>🤖 AI Assistant</h2>
+
+<input type="text" id="prompt" placeholder="আপনার প্রশ্ন লিখুন">
+<button onclick="askAI()">জিজ্ঞাসা করুন</button>
+
+<p id="answer"></p>
+</div>
+
+<script>
+async function askAI() {
+  const prompt = document.getElementById("prompt").value;
+
+  const res = await fetch("https://wp-ai.nazari1715.workers.dev/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ prompt })
+  });
+
+  const data = await res.text();
+  document.getElementById("answer").innerText = data;
+}
+</script>
 </body>
 </html>
