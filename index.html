@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>এডভান্সড আইসিটি কুইজ ও লার্নিং পোর্টাল</title>
+  <title>এডভান্সড আইসিটি প্রজেক্ট ও এআই চ্যাটবট</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 15px;
       background-color: #f4f7f6;
@@ -14,37 +14,36 @@
       transition: background 0.3s, color 0.3s;
     }
     .dark-mode {
-      background-color: #1e1e1e;
+      background-color: #121212;
       color: #ffffff;
     }
     .card {
       background: white;
       padding: 20px;
       margin-bottom: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
     .dark-mode .card {
-      background: #2d2d2d;
+      background: #1e1e1e;
       color: white;
     }
     button {
       cursor: pointer;
       font-size: 14px;
-      border-radius: 5px;
+      border-radius: 6px;
       border: none;
       transition: 0.2s;
     }
     button:hover {
       opacity: 0.9;
     }
-    select {
+    select, input[type="text"] {
       font-size: 15px;
       padding: 10px;
       border-radius: 6px;
       border: 1px solid #ccc;
-      width: 100%;
-      max-width: 350px;
+      box-sizing: border-box;
     }
     .q-box {
       text-align: left;
@@ -57,6 +56,44 @@
     .dark-mode .q-box {
       background: rgba(255,255,255,0.05);
     }
+
+    /* চ্যাটবট স্টাইল */
+    #chat-box {
+      height: 250px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 8px;
+      background: #fafafa;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+    .dark-mode #chat-box {
+      background: #2a2a2a;
+      border-color: #444;
+    }
+    .chat-msg {
+      margin: 8px 0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      max-width: 80%;
+      word-wrap: break-word;
+    }
+    .user-msg {
+      background: #007bff;
+      color: white;
+      margin-left: auto;
+      text-align: right;
+    }
+    .bot-msg {
+      background: #e9ecef;
+      color: #333;
+      margin-right: auto;
+    }
+    .dark-mode .bot-msg {
+      background: #3a3a3a;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -67,17 +104,31 @@
   </div>
 
   <div class="card">
+    <h2>🤖 আইসিটি স্মার্ট এআই চ্যাটবট (ICT AI Assistant)</h2>
+    <p>আইসিটি, কম্পিউটার, ইন্টারনেট বা প্রোগ্রামিং নিয়ে যেকোনো প্রশ্ন জিজ্ঞাসা করুন:</p>
+    
+    <div id="chat-box">
+      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার আইসিটি এআই সহকারী। আমাকে কম্পিউটার, ইন্টারনেট বা এআই নিয়ে প্রশ্ন করুন!</div>
+    </div>
+
+    <div style="display:flex; gap:8px;">
+      <input type="text" id="user-input" placeholder="এখানে আপনার প্রশ্ন লিখুন..." style="flex:1;" onkeypress="handleKeyPress(event)">
+      <button onclick="sendMessage()" style="background:#007bff; color:white; padding:10px 20px;">পাঠান 🚀</button>
+    </div>
+  </div>
+
+  <div class="card">
     <h2>🔊 স্মার্ট ভয়েস রিডার (Voice Assistant)</h2>
-    <p id="speech-text">স্বাগতম আমাদের আইসিটি মেগা কুইজ প্রতিযোগিতায়! এখানে আপনি কম্পিউটার, ইন্টারনেট, এআই এবং সাইবার সিকিউরিটির বিভিন্ন বিষয় নিয়ে নিজেকে যাচাই করতে পারবেন।</p>
+    <p id="speech-text">স্বাগতম আমাদের আইসিটি মেগা লার্নিং পোর্টালে! এখানে আপনি স্মার্ট চ্যাটবট এবং বিষয়ভিত্তিক কুইজের মাধ্যমে প্রযুক্তি শিখতে পারবেন।</p>
     <button onclick="readText()" style="background:#28a745; color:white; padding:10px 18px;">পড়ে শোনাও 🗣️</button>
   </div>
 
   <div class="card" id="quiz-section">
     <h2>🧠 জাতীয় আইসিটি অলিম্পিয়াড কুইজ</h2>
-    <p>আপনার পছন্দের বিষয় সিলেক্ট করুন এবং সব প্রশ্নের উত্তর দিয়ে স্কোর জমা দিন:</p>
+    <p>আপনার পছন্দের বিষয় সিলেক্ট করুন এবং সব প্রশ্নের উত্তর দিন:</p>
     
     <label for="quiz-subject"><b>বিষয় নির্বাচন করুন:</b></label><br><br>
-    <select id="quiz-subject" onchange="loadQuiz()">
+    <select id="quiz-subject" onchange="loadQuiz()" style="width:100%; max-width:350px;">
       <option value="hardware">১. কম্পিউটার হার্ডওয়্যার ও ফান্ডামেন্টালস</option>
       <option value="internet">২. ইন্টারনেট, www ও নেটওয়ার্কিং</option>
       <option value="cyber">৩. সাইবার নিরাপত্তা ও ডিজিটাল সুরক্ষা</option>
@@ -86,8 +137,7 @@
     </select>
 
     <br><br>
-    <div id="quiz-box">
-      </div>
+    <div id="quiz-box"></div>
 
     <button onclick="checkAnswer()" style="background:#007bff; color:white; padding:12px 25px; font-size:16px; font-weight:bold; margin-top:10px;">উত্তর জমা দিন 🚀</button>
     <p id="quiz-result" style="font-weight:bold; font-size:16px; margin-top:15px;"></p>
@@ -121,7 +171,59 @@
       window.speechSynthesis.speak(uttr);
     }
 
-    // ২০টি প্রশ্ন সমৃদ্ধ ডাটাবেজ (৫টি ক্যাটাগরি)
+    // 🤖 এআই চ্যাটবট লজিক
+    function handleKeyPress(e) {
+      if (e.key === 'Enter') sendMessage();
+    }
+
+    function sendMessage() {
+      const inputField = document.getElementById("user-input");
+      const text = inputField.value.trim();
+      if (!text) return;
+
+      // ব্যবহারকারীর মেসেজ দেখানো
+      addChatMessage(text, 'user-msg');
+      inputField.value = "";
+
+      // বটের উত্তর তৈরি
+      setTimeout(() => {
+        const reply = getBotResponse(text.toLowerCase());
+        addChatMessage(reply, 'bot-msg');
+      }, 500);
+    }
+
+    function addChatMessage(msg, className) {
+      const box = document.getElementById("chat-box");
+      const div = document.createElement("div");
+      div.className = "chat-msg " + className;
+      div.innerText = msg;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function getBotResponse(input) {
+      if (input.includes("cpu") || input.includes("সিপিইউ")) {
+        return "CPU (Central Processing Unit) হলো কম্পিউটারের মস্তিষ্ক। এটি সকল গাণিতিক ও যুক্তিভিত্তিক কাজ সম্পন্ন করে।";
+      } else if (input.includes("ai") || input.includes("এআই") || input.includes("কৃত্রিম")) {
+        return "AI বা Artificial Intelligence হলো মানুষের বুদ্ধিমত্তা ও চিন্তাশক্তিকে কম্পিউটারের মধ্যে রূপদান করার প্রযুক্তি।";
+      } else if (input.includes("ram") || input.includes("র্যাম")) {
+        return "RAM (Random Access Memory) হলো কম্পিউটারের অস্থায়ী মেমোরি। কম্পিউটার চালু থাকা অবস্থায় এটি ডাটা প্রসেস করে।";
+      } else if (input.includes("rom") || input.includes("রম")) {
+        return "ROM (Read Only Memory) হলো স্থায়ী মেমোরি। এতে বায়োস (BIOS) সংক্রান্ত ফাইল সংরক্ষিত থাকে।";
+      } else if (input.includes("internet") || input.includes("ইন্টারনেট")) {
+        return "ইন্টারনেট হলো বিশ্বব্যাপী বিস্তৃত কম্পিউটার নেটওয়ার্কের এক বিশাল ব্যবস্থা।";
+      } else if (input.includes("html") || input.includes("এইচটিএমএল")) {
+        return "HTML (HyperText Markup Language) হলো ওয়েবসাইট ডিজাইন করার মূল ল্যাঙ্গুয়েজ বা স্ট্রাকচার।";
+      } else if (input.includes("cyber") || input.includes("সাইবার") || input.includes("পাসওয়ার্ড")) {
+        return "সাইবার নিরাপত্তার জন্য পাসওয়ার্ড সবসময় স্ট্রং (সংখ্যার সাথে চিহ্ন) রাখা এবং ২-ফ্যাক্টর অথেনটিকেশন অন রাখা উচিত।";
+      } else if (input.includes("হাই") || input.includes("হ্যালো") || input.includes("hi") || input.includes("hello")) {
+        return "হ্যালো! কেমন আছেন? আইসিটি সম্পর্কিত যেকোনো প্রশ্ন করতে পারেন।";
+      } else {
+        return "ধন্যবাদ আপনার প্রশ্নের জন্য! আইসিটি বা কম্পিউটার সম্পর্কিত নির্দিষ্ট বিষয় (যেমন: সিপিইউ, র্যাম, এআই, ইন্টারনেট, এইচটিএমএল) লিখে প্রশ্ন করুন।";
+      }
+    }
+
+    // কুইজ ডাটাবেজ
     const quizData = {
       hardware: [
         { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit"], ans: 1 },
@@ -155,7 +257,6 @@
       ]
     };
 
-    // কুইজ লোড করার ফাংশন
     function loadQuiz() {
       const subject = document.getElementById("quiz-subject").value;
       const questions = quizData[subject];
@@ -174,7 +275,6 @@
       document.getElementById("quiz-result").innerHTML = "";
     }
 
-    // উত্তর চেক করার ফাংশন
     function checkAnswer() {
       const subject = document.getElementById("quiz-subject").value;
       const questions = quizData[subject];
@@ -212,12 +312,10 @@
       }
     }
 
-    // স্ক্রোল ফাংশন
     function scrollToTop() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // প্রথমবার লোড
     window.onload = function() {
       loadQuiz();
     };
