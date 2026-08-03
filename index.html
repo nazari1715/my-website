@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>এডভান্সড আইসিটি প্রজেক্ট ও এআই চ্যাটবট</title>
+  <title>এডভান্সড আইসিটি অলিম্পিয়াড ও এআই চ্যাটবট</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -59,7 +59,7 @@
 
     /* চ্যাটবট স্টাইল */
     #chat-box {
-      height: 250px;
+      height: 220px;
       overflow-y: auto;
       border: 1px solid #ddd;
       padding: 10px;
@@ -94,6 +94,32 @@
       background: #3a3a3a;
       color: white;
     }
+
+    /* টাইমার ও সার্টিফিকেট স্টাইল */
+    #timer-display {
+      font-size: 18px;
+      font-weight: bold;
+      color: #d9534f;
+      background: #ffe6e6;
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+    .dark-mode #timer-display {
+      background: #4a1c1c;
+      color: #ff8080;
+    }
+    #certificate-card {
+      display: none;
+      border: 6px double #007bff;
+      padding: 25px;
+      text-align: center;
+      background: #fdfdfd;
+      border-radius: 10px;
+      margin-top: 20px;
+      color: #222;
+    }
   </style>
 </head>
 <body>
@@ -104,43 +130,59 @@
   </div>
 
   <div class="card">
-    <h2>🤖 আইসিটি স্মার্ট এআই চ্যাটবট (ICT AI Assistant)</h2>
-    <p>আইসিটি, কম্পিউটার, ইন্টারনেট বা প্রোগ্রামিং নিয়ে যেকোনো প্রশ্ন জিজ্ঞাসা করুন:</p>
+    <h2>🤖 আইসিটি স্মার্ট এআই চ্যাটবট (Voice & Text)</h2>
+    <p>আইসিটি বা কম্পিউটার নিয়ে প্রশ্ন লিখুন অথবা মাইক্রোফোন চেপে কথা বলুন:</p>
     
     <div id="chat-box">
-      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার আইসিটি এআই সহকারী। আমাকে কম্পিউটার, ইন্টারনেট বা এআই নিয়ে প্রশ্ন করুন!</div>
+      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার আইসিটি এআই সহকারী। কোনো প্রশ্ন থাকলে লিখুন বা মুখে বলুন!</div>
     </div>
 
-    <div style="display:flex; gap:8px;">
-      <input type="text" id="user-input" placeholder="এখানে আপনার প্রশ্ন লিখুন..." style="flex:1;" onkeypress="handleKeyPress(event)">
-      <button onclick="sendMessage()" style="background:#007bff; color:white; padding:10px 20px;">পাঠান 🚀</button>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <input type="text" id="user-input" placeholder="এখানে আপনার প্রশ্ন লিখুন..." style="flex:1; min-width:200px;" onkeypress="handleKeyPress(event)">
+      <button onclick="sendMessage()" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
+      <button onclick="startVoiceRecognition()" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
     </div>
-  </div>
-
-  <div class="card">
-    <h2>🔊 স্মার্ট ভয়েস রিডার (Voice Assistant)</h2>
-    <p id="speech-text">স্বাগতম আমাদের আইসিটি মেগা লার্নিং পোর্টালে! এখানে আপনি স্মার্ট চ্যাটবট এবং বিষয়ভিত্তিক কুইজের মাধ্যমে প্রযুক্তি শিখতে পারবেন।</p>
-    <button onclick="readText()" style="background:#28a745; color:white; padding:10px 18px;">পড়ে শোনাও 🗣️</button>
   </div>
 
   <div class="card" id="quiz-section">
-    <h2>🧠 জাতীয় আইসিটি অলিম্পিয়াড কুইজ</h2>
-    <p>আপনার পছন্দের বিষয় সিলেক্ট করুন এবং সব প্রশ্নের উত্তর দিন:</p>
+    <h2>🧠 জাতীয় আইসিটি কুইজ ও টাইমার (Feature 1)</h2>
     
-    <label for="quiz-subject"><b>বিষয় নির্বাচন করুন:</b></label><br><br>
-    <select id="quiz-subject" onchange="loadQuiz()" style="width:100%; max-width:350px;">
-      <option value="hardware">১. কম্পিউটার হার্ডওয়্যার ও ফান্ডামেন্টালস</option>
-      <option value="internet">২. ইন্টারনেট, www ও নেটওয়ার্কিং</option>
-      <option value="cyber">৩. সাইবার নিরাপত্তা ও ডিজিটাল সুরক্ষা</option>
-      <option value="ai">৪. কৃত্রিম বুদ্ধিমত্তা (AI) ও ফিউচার টেক</option>
-      <option value="programming">৫. প্রোগ্রামিং ও তথ্যপ্রযুক্তি</option>
-    </select>
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+      <div>
+        <label for="quiz-subject"><b>বিষয় নির্বাচন করুন:</b></label><br>
+        <select id="quiz-subject" onchange="loadQuiz()" style="width:100%; max-width:300px; margin-top:5px;">
+          <option value="hardware">১. কম্পিউটার হার্ডওয়্যার</option>
+          <option value="internet">২. ইন্টারনেট ও নেটওয়ার্কিং</option>
+          <option value="cyber">৩. সাইবার নিরাপত্তা</option>
+          <option value="ai">৪. কৃত্রিম বুদ্ধিমত্তা (AI)</option>
+          <option value="programming">৫. প্রোগ্রামিং ও আইসিটি</option>
+        </select>
+      </div>
+      <div id="timer-display">⏱️ সময় বাকি: <span id="time-left">৬০</span> সেকেন্ড</div>
+    </div>
 
-    <br><br>
+    <br>
     <div id="quiz-box"></div>
 
     <button onclick="checkAnswer()" style="background:#007bff; color:white; padding:12px 25px; font-size:16px; font-weight:bold; margin-top:10px;">উত্তর জমা দিন 🚀</button>
     <p id="quiz-result" style="font-weight:bold; font-size:16px; margin-top:15px;"></p>
+
+    <div id="certificate-card">
+      <h1 style="color:#007bff; margin-bottom:5px;">📜 আইসিটি মেধা সার্টিফিকেট</h1>
+      <p style="font-size:14px; color:#666;">জাতীয় আইসিটি অলিম্পিয়াড প্রতিযোগিতা</p>
+      <hr style="width:80%; margin:15px auto;">
+      <p style="font-size:18px;">প্ৰমাণ করা যাচ্ছে যে,</p>
+      <h2 id="cert-name" style="color:#28a745; text-decoration:underline; font-size:26px; margin:10px 0;">[আপনার নাম]</h2>
+      <p style="font-size:16px;">আইসিটি কুইজ প্রতিযোগিতায় অংশ নিয়ে চমৎকার ফলাফল অর্জন করেছেন!</p>
+      <p><b>অর্জিত স্কোর: <span id="cert-score">0</span></b></p>
+      <button onclick="window.print()" style="background:#28a745; color:white; padding:8px 20px; font-size:14px; margin-top:15px;">🖨️ সার্টিফিকেট প্রিন্ট / সেভ করুন</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔊 ভয়েস অ্যাসিস্ট্যান্ট</h2>
+    <p id="speech-text">আমাদের আইসিটি পোর্টালে আপনাকে স্বাগতম। কুইজ অংশ নিন এবং সার্টিফিকেট অর্জন করুন!</p>
+    <button onclick="readText()" style="background:#28a745; color:white; padding:10px 18px;">পড়ে শোনাও 🗣️</button>
   </div>
 
   <footer style="text-align:center; padding:15px; margin-top:20px;">
@@ -153,7 +195,7 @@
       document.body.classList.toggle("dark-mode");
     }
 
-    // লাইভ ঘড়ি
+    // ঘড়ি
     function updateClock() {
       const now = new Date();
       const elem = document.getElementById("live-clock");
@@ -171,21 +213,19 @@
       window.speechSynthesis.speak(uttr);
     }
 
-    // 🤖 এআই চ্যাটবট লজিক
+    // 🤖 চ্যাটবট লজিক
     function handleKeyPress(e) {
       if (e.key === 'Enter') sendMessage();
     }
 
-    function sendMessage() {
+    function sendMessage(customText) {
       const inputField = document.getElementById("user-input");
-      const text = inputField.value.trim();
+      const text = customText || inputField.value.trim();
       if (!text) return;
 
-      // ব্যবহারকারীর মেসেজ দেখানো
       addChatMessage(text, 'user-msg');
-      inputField.value = "";
+      if(!customText) inputField.value = "";
 
-      // বটের উত্তর তৈরি
       setTimeout(() => {
         const reply = getBotResponse(text.toLowerCase());
         addChatMessage(reply, 'bot-msg');
@@ -203,59 +243,84 @@
 
     function getBotResponse(input) {
       if (input.includes("cpu") || input.includes("সিপিইউ")) {
-        return "CPU (Central Processing Unit) হলো কম্পিউটারের মস্তিষ্ক। এটি সকল গাণিতিক ও যুক্তিভিত্তিক কাজ সম্পন্ন করে।";
-      } else if (input.includes("ai") || input.includes("এআই") || input.includes("কৃত্রিম")) {
-        return "AI বা Artificial Intelligence হলো মানুষের বুদ্ধিমত্তা ও চিন্তাশক্তিকে কম্পিউটারের মধ্যে রূপদান করার প্রযুক্তি।";
+        return "CPU (Central Processing Unit) হলো কম্পিউটারের মস্তিষ্ক।";
+      } else if (input.includes("ai") || input.includes("এআই")) {
+        return "AI হলো Artificial Intelligence বা কৃত্রিম বুদ্ধিমত্তা।";
       } else if (input.includes("ram") || input.includes("র্যাম")) {
-        return "RAM (Random Access Memory) হলো কম্পিউটারের অস্থায়ী মেমোরি। কম্পিউটার চালু থাকা অবস্থায় এটি ডাটা প্রসেস করে।";
-      } else if (input.includes("rom") || input.includes("রম")) {
-        return "ROM (Read Only Memory) হলো স্থায়ী মেমোরি। এতে বায়োস (BIOS) সংক্রান্ত ফাইল সংরক্ষিত থাকে।";
+        return "RAM হলো কম্পিউটারের দ্রুত প্রসেসিং করার মেমোরি।";
       } else if (input.includes("internet") || input.includes("ইন্টারনেট")) {
-        return "ইন্টারনেট হলো বিশ্বব্যাপী বিস্তৃত কম্পিউটার নেটওয়ার্কের এক বিশাল ব্যবস্থা।";
-      } else if (input.includes("html") || input.includes("এইচটিএমএল")) {
-        return "HTML (HyperText Markup Language) হলো ওয়েবসাইট ডিজাইন করার মূল ল্যাঙ্গুয়েজ বা স্ট্রাকচার।";
-      } else if (input.includes("cyber") || input.includes("সাইবার") || input.includes("পাসওয়ার্ড")) {
-        return "সাইবার নিরাপত্তার জন্য পাসওয়ার্ড সবসময় স্ট্রং (সংখ্যার সাথে চিহ্ন) রাখা এবং ২-ফ্যাক্টর অথেনটিকেশন অন রাখা উচিত।";
-      } else if (input.includes("হাই") || input.includes("হ্যালো") || input.includes("hi") || input.includes("hello")) {
-        return "হ্যালো! কেমন আছেন? আইসিটি সম্পর্কিত যেকোনো প্রশ্ন করতে পারেন।";
+        return "ইন্টারনেট হলো পুরো বিশ্বের কম্পিউটার নেটওয়ার্ক সিস্টেম।";
       } else {
-        return "ধন্যবাদ আপনার প্রশ্নের জন্য! আইসিটি বা কম্পিউটার সম্পর্কিত নির্দিষ্ট বিষয় (যেমন: সিপিইউ, র্যাম, এআই, ইন্টারনেট, এইচটিএমএল) লিখে প্রশ্ন করুন।";
+        return "ধন্যবাদ প্রশ্নের জন্য! আইসিটি সম্পর্কিত আরও নির্দিষ্ট বিষয় (যেমন CPU, RAM, AI) লিখে জানা যাবে।";
       }
+    }
+
+    // Feature 3: ভয়েস ইনপুট (Speech to Text)
+    function startVoiceRecognition() {
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert("আপনার ব্রাউজারে ভয়েস ইনপুট সাপোর্ট করছে না। গুগল ক্রোম ব্যবহার করুন।");
+        return;
+      }
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = 'bn-BD';
+
+      recognition.onstart = function() {
+        addChatMessage("🎙️ শুনছি... এখন আপনার প্রশ্ন বলুন...", 'bot-msg');
+      };
+
+      recognition.onresult = function(event) {
+        const voiceQuery = event.results[0][0].transcript;
+        sendMessage(voiceQuery);
+      };
+
+      recognition.start();
     }
 
     // কুইজ ডাটাবেজ
     const quizData = {
       hardware: [
         { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit"], ans: 1 },
-        { q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি (Permanent Memory)?", options: ["RAM", "ROM", "Cache"], ans: 1 },
-        { q: "কম্পিউটারের মস্তিষ্ক (Brain of Computer) কাকে বলা হয়?", options: ["Monitor", "Hard Disk", "Microprocessor/CPU"], ans: 2 },
-        { q: "নিচের কোনটি একটি ইনপুট ডিভাইস?", options: ["Keyboard", "Printer", "Speaker"], ans: 0 }
+        { q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি?", options: ["RAM", "ROM", "Cache"], ans: 1 },
+        { q: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?", options: ["Monitor", "Hard Disk", "Microprocessor/CPU"], ans: 2 }
       ],
       internet: [
         { q: "www-এর পূর্ণরূপ কী?", options: ["World Wide Web", "World Whole Web", "Web World Wide"], ans: 0 },
-        { q: "ইন্টারনেটে নেটওয়ার্ক ঠিকানার পরিচয়কে কী বলা হয়?", options: ["IP Address", "USB Drive", "E-mail"], ans: 0 },
-        { q: "ওয়েবসাইট দেখার জন্য কোনটি ব্যবহৃত হয়?", options: ["Google Chrome Browser", "MS Excel", "Photoshop"], ans: 0 },
-        { q: "ইমেইল (E-mail)-এর পূর্ণরূপ কী?", options: ["Electrical Mail", "Electronic Mail", "Engine Mail"], ans: 1 }
+        { q: "ইন্টারনেটে নেটওয়ার্ক ঠিকানার পরিচয়কে কী বলা হয়?", options: ["IP Address", "USB Drive", "E-mail"], ans: 0 }
       ],
       cyber: [
-        { q: "পাসওয়ার্ড সুরক্ষিত রাখার সবচেয়ে ভালো উপায় কোনটি?", options: ["সব জায়গায় একই পাসওয়ার্ড ব্যবহার", "সহজ মোবাইল নম্বর দেওয়া", "অনন্য, শক্তিশালী ও গোপন রাখা"], ans: 2 },
-        { q: "অপরিচিত ব্যক্তির পাঠানো ইমেইলের সন্দেহজনক লিংকে কী করা উচিত?", options: ["সাথে সাথে ক্লিক করা", "ক্লিক না করে ডিলিট করা", "বন্ধুদের পাঠানো"], ans: 1 },
-        { q: "ফিশিং (Phishing) মূলত কীসের সাথে সম্পর্কিত?", options: ["মাছ ধরা", "অনলাইন প্রতারণা বা তথ্য চুরি", "কম্পিউটার স্পিড বাড়ানো"], ans: 1 },
-        { q: "ফেসবুক বা জিমেইলে বাড়তি সুরক্ষার জন্য কোনটি চালু রাখা উচিত?", options: ["2-Factor Authentication (2FA)", "Public Wi-Fi", "Auto-login"], ans: 0 }
+        { q: "পাসওয়ার্ড সুরক্ষিত রাখার সবচেয়ে ভালো উপায় কোনটি?", options: ["সব জায়গায় একই পাসওয়ার্ড দেওয়া", "সহজ নাম্বার দেওয়া", "শক্তিশালী ও গোপন রাখা"], ans: 2 },
+        { q: "ফিশিং (Phishing) মূলত কীসের সাথে সম্পর্কিত?", options: ["মাছ ধরা", "অনলাইন তথ্য চুরি", "কম্পিউটার স্পিড বাড়ানো"], ans: 1 }
       ],
       ai: [
-        { q: "AI-এর পূর্ণরূপ কী?", options: ["Artificial Intelligence", "Automated Information", "Advanced Internet"], ans: 0 },
-        { q: "নিচের কোনটি এআই চালিত চ্যাটবট?", options: ["ChatGPT", "Calculator", "MS Paint"], ans: 0 },
-        { q: "স্বয়ংক্রিয় গাড়ি (Self-driving Car) পরিচালনায় কোনটি ব্যবহৃত হয়?", options: ["Robotics & AI", "Bluetooth", "Radio Wave"], ans: 0 },
-        { q: "মানুষের মতো চিন্তাভাবনা করার কম্পিউটার ক্ষমতাকে কী বলে?", options: ["Hardware", "Machine Learning & AI", "Database"], ans: 1 }
+        { q: "AI-এর পূর্ণরূপ কী?", options: ["Artificial Intelligence", "Automated Info", "Advanced Internet"], ans: 0 },
+        { q: "নিচের কোনটি এআই চ্যাটবট?", options: ["ChatGPT", "Calculator", "MS Paint"], ans: 0 }
       ],
       programming: [
-        { q: "HTML মূলত কিসের জন্য ব্যবহৃত হয়?", options: ["ওয়েব পেজের কাঠামো তৈরিতে", "ভিডিও এডিটিং করতে", "গেম খেলতে"], ans: 0 },
-        { q: "নিচের কোনটি প্রোগ্রামিং ল্যাঙ্গুয়েজ?", options: ["Python", "Google", "Windows"], ans: 0 },
-        { q: "ওয়েবসাইটে ইন্টারঅ্যাক্টিভিটি ও বাটন কাজের জন্য কোনটি দরকার?", options: ["CSS", "JavaScript", "JPEG"], ans: 1 },
-        { q: "কম্পিউটারের বাইনারি কোড মূলত কোন দুটি সংখ্যা নিয়ে গঠিত?", options: ["১ এবং ২", "০ এবং ১", "১ এবং ১০"], ans: 1 }
+        { q: "HTML কিসের জন্য ব্যবহৃত হয়?", options: ["ওয়েব পেজের কাঠামো তৈরিতে", "ভিডিও এডিটিংয়ে", "গেম খেলতে"], ans: 0 },
+        { q: "বাইনারি কোড কোন দুটি সংখ্যা নিয়ে গঠিত?", options: ["১ এবং ২", "০ এবং ১", "১ এবং ১০"], ans: 1 }
       ]
     };
+
+    // Feature 1: কুইজ টাইমার
+    let timerInterval;
+    let timeLeft = 60;
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timeLeft = 60;
+      document.getElementById("time-left").innerText = timeLeft;
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById("time-left").innerText = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          alert("⏰ সময় শেষ! আপনার উত্তর স্বয়ংক্রিয়ভাবে জমা নেওয়া হচ্ছে।");
+          checkAnswer(true);
+        }
+      }, 1000);
+    }
 
     function loadQuiz() {
       const subject = document.getElementById("quiz-subject").value;
@@ -273,9 +338,13 @@
 
       document.getElementById("quiz-box").innerHTML = html;
       document.getElementById("quiz-result").innerHTML = "";
+      document.getElementById("certificate-card").style.display = "none";
+      startTimer();
     }
 
-    function checkAnswer() {
+    // Feature 2: কুইজ স্কোর ও সার্টিফিকেট
+    function checkAnswer(isAutoSubmit = false) {
+      clearInterval(timerInterval);
       const subject = document.getElementById("quiz-subject").value;
       const questions = quizData[subject];
       let score = 0;
@@ -300,15 +369,20 @@
       });
 
       const resElem = document.getElementById("quiz-result");
-      if (!answeredAll) {
-        alert("দয়া করে এই ক্যাটাগরির সবগুলো প্রশ্নের উত্তর সিলেক্ট করুন!");
+      if (!answeredAll && !isAutoSubmit) {
+        alert("দয়া করে সবগুলো প্রশ্নের উত্তর সিলেক্ট করুন!");
+        startTimer();
         return;
       }
 
-      if(score === total) {
-        resElem.innerHTML = `<span style="color: green;">🏆 চমৎকার! আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়ে পূর্ণ নম্বর পেয়েছেন!</span>`;
-      } else {
-        resElem.innerHTML = `<span style="color: #d9534f;">📊 আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন। আরও চেষ্টা করুন!</span>`;
+      resElem.innerHTML = `<span style="color: green;">🎉 আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।</span>`;
+
+      // ৮০% বা তার বেশি স্কোর পেলে সার্টিফিকেট দেখাবে
+      if (score >= Math.ceil(total * 0.7)) {
+        const userName = prompt("চমৎকার স্কোর! সার্টিফিকেট জেনারেট করার জন্য আপনার নাম লিখুন:") || "আইসিটি অংশগ্রহণকারী";
+        document.getElementById("cert-name").innerText = userName;
+        document.getElementById("cert-score").innerText = `${score} / ${total}`;
+        document.getElementById("certificate-card").style.display = "block";
       }
     }
 
