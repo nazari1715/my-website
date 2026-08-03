@@ -143,32 +143,67 @@ async function askAI() {
     utterance.lang = "bn-BD";
     speechSynthesis.speak(utterance);
   }
+<script>
+  // ১. ডার্ক মোড
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+  }
 
-  // কুইজ উত্তর চেক
+  // ২. লাইভ ঘড়ি
+  function updateClock() {
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString();
+    const dateStr = now.toLocaleDateString();
+    const clockElem = document.getElementById("live-clock");
+    if(clockElem) {
+      clockElem.innerText = "⏰ " + timeStr + " | " + dateStr;
+    }
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // ৩. ভয়েস রিডার (বাটন চাপলে আগের ভয়েস থেমে নতুন করে শুরু হবে)
+  function readText() {
+    window.speechSynthesis.cancel(); 
+    const text = document.getElementById("speech-text").innerText;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "bn-BD";
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // ৪. কুইজ উত্তর চেক ও জমা
   function checkQuiz() {
     const options = document.getElementsByName("q1");
-    let selected = false;
+    let selectedValue = null;
+    
     for (let opt of options) {
       if (opt.checked) {
-        selected = true;
-        if (opt.value === "correct") {
-          document.getElementById("quiz-result").innerHTML = "🎉 চমৎকার! আপনার উত্তর সঠিক হয়েছে। (+১০ পয়েন্ট)";
-          document.getElementById("quiz-result").style.color = "green";
-        } else {
-          document.getElementById("quiz-result").innerHTML = "❌ ভুল উত্তর! সঠিক উত্তর: Central Processing Unit";
-          document.getElementById("quiz-result").style.color = "red";
-        }
+        selectedValue = opt.value;
+        break;
       }
     }
-    if (!selected) {
+
+    const resultElem = document.getElementById("quiz-result");
+
+    if (!selectedValue) {
       alert("দয়া করে একটি উত্তর বেছে নিন!");
+      return;
+    }
+
+    if (selectedValue === "correct") {
+      resultElem.innerHTML = "🎉 চমৎকার! আপনার উত্তর সঠিক হয়েছে। (+১০ পয়েন্ট)";
+      resultElem.style.color = "green";
+    } else {
+      resultElem.innerHTML = "❌ ভুল উত্তর! সঠিক উত্তর: Central Processing Unit";
+      resultElem.style.color = "red";
     }
   }
 
-  // স্ক্রোল টু টপ
+  // ৫. স্ক্রোল টু টপ
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+</script>
 </script>
 </body>
 </html>
