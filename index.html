@@ -92,5 +92,83 @@ async function askAI() {
   document.getElementById("answer").innerText = data;
 }
 </script>
+<div class="card" id="features">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+    <button onclick="toggleDarkMode()" style="background: #333; cursor: pointer;">🌙 Dark/Light Mode</button>
+    <p id="live-clock" style="font-weight: bold; margin-top: 10px; color: #007bff;"></p>
+  </div>
+</div>
+
+<div class="card" id="voice-section">
+  <h2>🔊 ভয়েস রিডার (Text-to-Speech)</h2>
+  <p id="speech-text">আইসিটি প্রতিযোগিতায় আপনাকে স্বাগতম! আমাদের ওয়েবসাইটে এআই চ্যাটবট এবং কুইজ সিস্টেম রয়েছে।</p>
+  <button onclick="readText()">পড়ে শোনাও 🗣️</button>
+</div>
+
+<div class="card" id="quiz-section">
+  <h2>🧠 আইসিটি কুইজ প্রতিযোগিতা</h2>
+  <div id="quiz-container">
+    <p><b>প্রশ্ন:</b> সিপিইউ (CPU)-এর পূর্ণরূপ কী?</p>
+    <label><input type="radio" name="q1" value="wrong"> Central Process Unit</label><br>
+    <label><input type="radio" name="q1" value="correct"> Central Processing Unit</label><br>
+    <label><input type="radio" name="q1" value="wrong"> Computer Processing Unit</label><br><br>
+    <button onclick="checkQuiz()">উত্তর জমা দিন</button>
+    <p id="quiz-result" style="font-weight: bold; margin-top: 10px;"></p>
+  </div>
+</div>
+
+<footer style="text-align: center; padding: 20px; margin-top: 30px; background: rgba(0,0,0,0.2);">
+  <p>© 2026 My ICT Project | All Rights Reserved</p>
+  <button onclick="scrollToTop()" style="background: #ff4757; margin-top: 5px;">⬆️ ওপরে যান</button>
+</footer>
+
+<script>
+  // ডার্ক মোড
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+  }
+
+  // লাইভ ঘড়ি
+  function updateClock() {
+    const now = new Date();
+    document.getElementById("live-clock").innerText = "⏰ " + now.toLocaleTimeString() + " | " + now.toLocaleDateString();
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // ভয়েস রিডার
+  function readText() {
+    const text = document.getElementById("speech-text").innerText;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "bn-BD";
+    speechSynthesis.speak(utterance);
+  }
+
+  // কুইজ উত্তর চেক
+  function checkQuiz() {
+    const options = document.getElementsByName("q1");
+    let selected = false;
+    for (let opt of options) {
+      if (opt.checked) {
+        selected = true;
+        if (opt.value === "correct") {
+          document.getElementById("quiz-result").innerHTML = "🎉 চমৎকার! আপনার উত্তর সঠিক হয়েছে। (+১০ পয়েন্ট)";
+          document.getElementById("quiz-result").style.color = "green";
+        } else {
+          document.getElementById("quiz-result").innerHTML = "❌ ভুল উত্তর! সঠিক উত্তর: Central Processing Unit";
+          document.getElementById("quiz-result").style.color = "red";
+        }
+      }
+    }
+    if (!selected) {
+      alert("দয়া করে একটি উত্তর বেছে নিন!");
+    }
+  }
+
+  // স্ক্রোল টু টপ
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 </body>
 </html>
