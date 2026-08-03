@@ -56,8 +56,6 @@
     .dark-mode .q-box {
       background: rgba(255,255,255,0.05);
     }
-
-    /* চ্যাটবট স্টাইল */
     #chat-box {
       height: 220px;
       overflow-y: auto;
@@ -94,8 +92,6 @@
       background: #3a3a3a;
       color: white;
     }
-
-    /* টাইমার ও সার্টিফিকেট স্টাইল */
     #timer-display {
       font-size: 18px;
       font-weight: bold;
@@ -125,7 +121,7 @@
 <body>
 
   <div class="card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
-    <button onclick="toggleDarkMode()" style="background:#333; color:white; padding:10px 18px;">🌙 Dark/Light Mode</button>
+    <button id="dark-mode-btn" style="background:#333; color:white; padding:10px 18px;">🌙 Dark/Light Mode</button>
     <p id="live-clock" style="font-weight:bold; color:#007bff; margin:10px 0 0 0;"></p>
   </div>
 
@@ -138,9 +134,9 @@
     </div>
 
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <input type="text" id="user-input" placeholder="এখানে আপনার প্রশ্ন লিখুন..." style="flex:1; min-width:200px;" onkeypress="handleKeyPress(event)">
-      <button onclick="sendMessage()" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
-      <button onclick="startVoiceRecognition()" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
+      <input type="text" id="user-input" placeholder="এখানে আপনার প্রশ্ন লিখুন..." style="flex:1; min-width:200px;">
+      <button id="send-btn" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
+      <button id="voice-btn" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
     </div>
   </div>
 
@@ -159,7 +155,7 @@
           <option value="programming">৫. প্রোগ্রামিং, এইচটিএমএল ও ডেটাবেজ</option>
         </select>
       </div>
-      <button id="start-btn" onclick="startQuiz()" style="background:#28a745; color:white; padding:12px 24px; font-size:16px; font-weight:bold;">▶️ কুইজ শুরু করুন</button>
+      <button id="start-btn" style="background:#28a745; color:white; padding:12px 24px; font-size:16px; font-weight:bold;">▶️ কুইজ শুরু করুন</button>
     </div>
 
     <div id="timer-display">⏱️ সময় বাকি: <span id="time-left">৩০০</span> সেকেন্ড</div>
@@ -167,7 +163,7 @@
     <br>
     <div id="quiz-box"></div>
 
-    <button id="submit-btn" onclick="checkAnswer()" style="background:#007bff; color:white; padding:12px 25px; font-size:16px; font-weight:bold; margin-top:10px; display:none;">উত্তর জমা দিন 🚀</button>
+    <button id="submit-btn" style="background:#007bff; color:white; padding:12px 25px; font-size:16px; font-weight:bold; margin-top:10px; display:none;">উত্তর জমা দিন 🚀</button>
     <p id="quiz-result" style="font-weight:bold; font-size:16px; margin-top:15px;"></p>
 
     <div id="certificate-card">
@@ -177,128 +173,4 @@
       <p style="font-size:18px;">প্ৰমাণ করা যাচ্ছে যে,</p>
       <h2 id="cert-name" style="color:#28a745; text-decoration:underline; font-size:26px; margin:10px 0;">[আপনার নাম]</h2>
       <p style="font-size:16px;">আইসিটি কুইজ প্রতিযোগিতায় অংশ নিয়ে চমৎকার ফলাফল অর্জন করেছেন!</p>
-      <p><b>অর্জিত স্কোর: <span id="cert-score">0</span></b></p>
-      <button onclick="window.print()" style="background:#28a745; color:white; padding:8px 20px; font-size:14px; margin-top:15px;">🖨️ সার্টিফিকেট প্রিন্ট / সেভ করুন</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>🔊 ভয়েস অ্যাসিস্ট্যান্ট</h2>
-    <p id="speech-text">আমাদের আইসিটি পোর্টালে আপনাকে স্বাগতম। কুইজে অংশ নিন এবং সার্টিফিকেট অর্জন করুন!</p>
-    <button onclick="readText()" style="background:#28a745; color:white; padding:10px 18px;">পড়ে শোনাও 🗣️</button>
-  </div>
-
-  <footer style="text-align:center; padding:15px; margin-top:20px;">
-    <button onclick="scrollToTop()" style="background:#ff4757; color:white; padding:10px 20px;">⬆️ উপরে যান</button>
-  </footer>
-
-  <script>
-    // ডার্ক মোড
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark-mode");
-    }
-
-    // ঘড়ি
-    function updateClock() {
-      const now = new Date();
-      const elem = document.getElementById("live-clock");
-      if(elem) elem.innerText = "⏰ " + now.toLocaleTimeString() + " | " + now.toLocaleDateString();
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // ভয়েস রিডার
-    function readText() {
-      window.speechSynthesis.cancel();
-      const txt = document.getElementById("speech-text").innerText;
-      const uttr = new SpeechSynthesisUtterance(txt);
-      uttr.lang = "bn-BD";
-      window.speechSynthesis.speak(uttr);
-    }
-
-    // চ্যাটবট লজিক
-    function handleKeyPress(e) {
-      if (e.key === 'Enter') sendMessage();
-    }
-
-    function sendMessage(customText) {
-      const inputField = document.getElementById("user-input");
-      const text = customText || inputField.value.trim();
-      if (!text) return;
-
-      addChatMessage(text, 'user-msg');
-      if(!customText) inputField.value = "";
-
-      setTimeout(() => {
-        const reply = getBotResponse(text.toLowerCase());
-        addChatMessage(reply, 'bot-msg');
-      }, 500);
-    }
-
-    function addChatMessage(msg, className) {
-      const box = document.getElementById("chat-box");
-      const div = document.createElement("div");
-      div.className = "chat-msg " + className;
-      div.innerText = msg;
-      box.appendChild(div);
-      box.scrollTop = box.scrollHeight;
-    }
-
-    function getBotResponse(input) {
-      if (input.includes("cpu") || input.includes("সিপিইউ")) {
-        return "CPU (Central Processing Unit) হলো কম্পিউটারের মস্তিষ্ক।";
-      } else if (input.includes("ai") || input.includes("এআই")) {
-        return "AI হলো Artificial Intelligence বা কৃত্রিম বুদ্ধিমত্তা।";
-      } else if (input.includes("ram") || input.includes("র্যাম")) {
-        return "RAM হলো কম্পিউটারের দ্রুত প্রসেসিং করার অস্থায়ী মেমোরি।";
-      } else if (input.includes("internet") || input.includes("ইন্টারনেট")) {
-        return "ইন্টারনেট হলো পুরো বিশ্বের কম্পিউটার নেটওয়ার্ক সিস্টেম।";
-      } else {
-        return "ধন্যবাদ প্রশ্নের জন্য! আইসিটি সম্পর্কিত আরও নির্দিষ্ট বিষয় (যেমন CPU, RAM, AI, HTML) লিখে জানা যাবে।";
-      }
-    }
-
-    function startVoiceRecognition() {
-      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        alert("আপনার ব্রাউজারে ভয়েস ইনপুট সাপোর্ট করছে না। গুগল ক্রোম ব্যবহার করুন।");
-        return;
-      }
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      const recognition = new SpeechRecognition();
-      recognition.lang = 'bn-BD';
-
-      recognition.onstart = function() {
-        addChatMessage("🎙️ শুনছি... এখন আপনার প্রশ্ন বলুন...", 'bot-msg');
-      };
-
-      recognition.onresult = function(event) {
-        const voiceQuery = event.results[0][0].transcript;
-        sendMessage(voiceQuery);
-      };
-
-      recognition.start();
-    }
-
-    // প্রতি বিষয়ভিত্তিক ২০টি প্রশ্নের বিশাল ডাটাবেজ
-    const quizData = {
-      hardware: [
-        { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit"], ans: 1 },
-        { q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি?", options: ["RAM", "ROM", "Cache"], ans: 1 },
-        { q: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?", options: ["Monitor", "Hard Disk", "Microprocessor/CPU"], ans: 2 },
-        { q: "নিচের কোনটি একটি ইনপুট ডিভাইস?", options: ["Keyboard", "Printer", "Speaker"], ans: 0 },
-        { q: "মনিটর কোন ধরনের ডিভাইস?", options: ["Input", "Output", "Storage"], ans: 1 },
-        { q: "কম্পিউটারের অস্থায়ী মেমোরি কোনটি?", options: ["Hard Disk", "RAM", "CD-ROM"], ans: 1 },
-        { q: "SSD-এর পূর্ণরূপ কী?", options: ["Solid State Drive", "Super Speed Disk", "System Software Drive"], ans: 0 },
-        { q: "ALU-এর পূর্ণরূপ কী?", options: ["Arithmetic Logic Unit", "Array Logic Unit", "Auto Processing Unit"], ans: 0 },
-        { q: "মাউস প্রথম কে আবিষ্কার করেন?", options: ["ডগলাস এঙ্গেলবার্ট", "বিল গেটস", "স্টিভ জবস"], ans: 0 },
-        { q: "কম্পিউটার মাদারবোর্ডে প্রসেসর বসানোর স্থানকে কী বলে?", options: ["Socket", "Port", "Slot"], ans: 0 },
-        { q: "১ গিগাবাইট (1 GB) সমান কত মেগাবাইট?", options: ["1000 MB", "1024 MB", "512 MB"], ans: 1 },
-        { q: "কম্পিউটারের পাওয়ার সাপ্লাইয়ের সংক্ষিপ্ত রূপ কোনটি?", options: ["SMPS", "UPS", "CPU"], ans: 0 },
-        { q: "নিচের কোনটি অপটিক্যাল স্টোরেজ ডিভাইস?", options: ["Hard Disk", "DVD", "Pen Drive"], ans: 1 },
-        { q: "কম্পিউটারের স্থায়ী নির্দেশাবলী কোথায় লেখা থাকে?", options: ["RAM", "ROM BIOS", "Cache"], ans: 1 },
-        { q: "পেনড্রাইভ কী ধরনের মেমোরি?", options: ["Flash Memory", "Primary Memory", "Cache Memory"], ans: 0 },
-        { q: "প্রসেসরের ক্লক স্পিড মেপে প্রকাশ করা হয় কিসে?", options: ["Hertz / GHz", "Megabyte", "Bits"], ans: 0 },
-        { q: "কম্পিউটারের স্ক্রিন রেজোলিউশন মাপা হয় কিসে?", options: ["Pixels", "Inches", "Bytes"], ans: 0 },
-        { q: "নিচের কোনটি সেকেন্ডারি মেমোরি নয়?", options: ["Hard Disk", "RAM", "Memory Card"], ans: 1 },
-        { q: "ইউএসবি (USB)-এর পূর্ণরূপ কী?", options: ["Universal Serial Bus", "United Speed Bus", "Universal System Bus"], ans: 0 },
-        { q: "বাইনারি সিগন্যাল প্রসেস করতে প্রসেসরে কী থাকে?", options:
+      <p><b>
