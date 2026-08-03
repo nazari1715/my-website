@@ -1,277 +1,194 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>আমার ওয়েবসাইট</title>
-
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>আইসিটি প্রতিযোগিতা ও কুইজ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f7f6;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
+    }
+    .dark-mode {
+      background-color: #1e1e1e;
+      color: #ffffff;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .dark-mode .card {
+      background: #2d2d2d;
+      color: white;
+    }
+    button {
+      cursor: pointer;
+      font-size: 14px;
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
-<h1>🌐 আমার ওয়েবসাইট</h1>
-
-<nav>
-<a href="#home">হোম</a>
-<a href="#video">ভিডিও</a>
-<a href="#movie">মুভি</a>
-<a href="#shop">শপ</a>
-</nav>
-
-</header>
-
-<div class="container">
-
-<div class="card" id="home">
-<h2>স্বাগতম!</h2>
-<p>এটি আমার ব্যক্তিগত ওয়েবসাইট।</p>
-</div>
-
-<div class="card" id="video">
-<h2>📺 ভিডিও</h2>
-
-<iframe width="100%" height="220"
-src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-allowfullscreen>
-</iframe>
-
-</div>
-
-<div class="card" id="movie">
-<h2>🎬 মুভি</h2>
-
-<p>নিচের বাটনে চাপুন</p>
-
-<a href="https://www.youtube.com" target="_blank">
-<button>মুভি দেখুন</button>
-</a>
-
-</div>
-
-<div class="card" id="shop">
-<h2>🛒 অনলাইন শপ</h2>
-
-<a href="https://www.daraz.com.bd" target="_blank">
-<button>Daraz</button>
-</a>
-
-<br><br>
-
-<a href="https://www.amazon.com" target="_blank">
-<button>Amazon</button>
-</a>
-
-</div>
-
-</div>
-
-<div class="card">
-<h2>🤖 AI Assistant</h2>
-
-<input type="text" id="prompt" placeholder="আপনার প্রশ্ন লিখুন">
-<button onclick="askAI()">জিজ্ঞাসা করুন</button>
-
-<p id="answer"></p>
-</div>
-
-<script>
-async function askAI() {
-  const prompt = document.getElementById("prompt").value;
-
-  const res = await fetch("https://wp-ai.nazari1717179.workers.dev/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ prompt })
-  });
-
-  const data = await res.text();
-  document.getElementById("answer").innerText = data;
-}
-</script>
-<div class="card" id="features">
-  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-    <button onclick="toggleDarkMode()" style="background: #333; cursor: pointer;">🌙 Dark/Light Mode</button>
-    <p id="live-clock" style="font-weight: bold; margin-top: 10px; color: #007bff;"></p>
+  <div class="card">
+    <button onclick="toggleDarkMode()" style="background:#333; color:white; padding:8px 15px; border:none; border-radius:5px;">🌙 Dark/Light Mode</button>
+    <p id="live-clock" style="font-weight:bold; margin-top:10px; color:#007bff;"></p>
   </div>
-</div>
 
-<div class="card" id="voice-section">
-  <h2>🔊 ভয়েস রিডার (Text-to-Speech)</h2>
-  <p id="speech-text">আইসিটি প্রতিযোগিতায় আপনাকে স্বাগতম! আমাদের ওয়েবসাইটে এআই চ্যাটবট এবং কুইজ সিস্টেম রয়েছে।</p>
-  <button onclick="readText()">পড়ে শোনাও 🗣️</button>
-</div>
-
-<div class="card" id="quiz-section">
-  <h2>🧠 আইসিটি কুইজ প্রতিযোগিতা</h2>
-  <div id="quiz-container">
-    <p><b>প্রশ্ন:</b> সিপিইউ (CPU)-এর পূর্ণরূপ কী?</p>
-    <label><input type="radio" name="q1" value="wrong"> Central Process Unit</label><br>
-    <label><input type="radio" name="q1" value="correct"> Central Processing Unit</label><br>
-    <label><input type="radio" name="q1" value="wrong"> Computer Processing Unit</label><br><br>
-    <button onclick="checkQuiz()">উত্তর জমা দিন</button>
-    <p id="quiz-result" style="font-weight: bold; margin-top: 10px;"></p>
+  <div class="card">
+    <h2>🔊 ভয়েস রিডার (Text-to-Speech)</h2>
+    <p id="speech-text">আইসিটি প্রতিযোগিতায় আপনাকে স্বাগতম! আমাদের ওয়েবসাইটে বিষয়ভিত্তিক কুইজ এবং আধুনিক তথ্যপ্রযুক্তির ফিচার রয়েছে।</p>
+    <button onclick="readText()" style="background:#28a745; color:white; padding:8px 15px; border:none; border-radius:5px;">পড়ে শোনাও 🗣️</button>
   </div>
-</div>
 
-<footer style="text-align: center; padding: 20px; margin-top: 30px; background: rgba(0,0,0,0.2);">
-  <p>© 2026 My ICT Project | All Rights Reserved</p>
-  <button onclick="scrollToTop()" style="background: #ff4757; margin-top: 5px;">⬆️ ওপরে যান</button>
-</footer>
-
-  // ডার্ক মোড
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-  }
-
-  // লাইভ ঘড়ি
-  function updateClock() {
-    const now = new Date();
-    document.getElementById("live-clock").innerText = "⏰ " + now.toLocaleTimeString() + " | " + now.toLocaleDateString();
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  // ভয়েস রিডার
-  function readText() {
-    const text = document.getElementById("speech-text").innerText;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "bn-BD";
-    speechSynthesis.speak(utterance);
-  }
-<script>
-  // ১. ডার্ক মোড
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-  }
-
-  // ২. লাইভ ঘড়ি
-  function updateClock() {
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString();
-    const dateStr = now.toLocaleDateString();
-    const clockElem = document.getElementById("live-clock");
-    if(clockElem) {
-      clockElem.innerText = "⏰ " + timeStr + " | " + dateStr;
-    }
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  // ৩. ভয়েস রিডার (বাটন চাপলে আগের ভয়েস থেমে নতুন করে শুরু হবে)
-  function readText() {
-    window.speechSynthesis.cancel(); 
-    const text = document.getElementById("speech-text").innerText;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "bn-BD";
-    window.speechSynthesis.speak(utterance);
-  }
-
-  // ৪. কুইজ উত্তর চেক ও জমা
-  function checkQuiz() {
-    const options = document.getElementsByName("q1");
-    let selectedValue = null;
+  <div class="card" id="quiz-section">
+    <h2>🧠 বিষয়ভিত্তিক আইসিটি কুইজ প্রতিযোগিতা</h2>
     
-    for (let opt of options) {
-      if (opt.checked) {
-        selectedValue = opt.value;
-        break;
-      }
+    <label for="quiz-subject"><b>বিষয় নির্বাচন করুন:</b></label><br>
+    <select id="quiz-subject" onchange="loadQuiz()" style="padding: 8px; margin: 10px 0; border-radius: 5px; width: 100%; max-width: 300px;">
+      <option value="hardware">১. কম্পিউটার হার্ডওয়্যার</option>
+      <option value="network">২. নেটওয়ার্ক ও ইন্টারনেট</option>
+      <option value="cyber">৩. সাইবার নিরাপত্তা</option>
+    </select>
+
+    <div id="quiz-box">
+      </div>
+
+    <button onclick="checkAnswer()" style="background:#007bff; color:white; padding:8px 15px; border:none; border-radius:5px; margin-top:10px;">উত্তর জমা দিন</button>
+    <p id="quiz-result" style="font-weight:bold; margin-top:10px;"></p>
+  </div>
+
+  <footer style="text-align:center; padding:15px; margin-top:20px;">
+    <button onclick="scrollToTop()" style="background:#ff4757; color:white; padding:8px 15px; border:none; border-radius:5px;">⬆️ ওপরে যান</button>
+  </footer>
+
+  <script>
+    // ডার্ক মোড
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
     }
 
-    const resultElem = document.getElementById("quiz-result");
-
-    if (!selectedValue) {
-      alert("দয়া করে একটি উত্তর বেছে নিন!");
-      return;
+    // লাইভ ঘড়ি
+    function updateClock() {
+      const now = new Date();
+      const elem = document.getElementById("live-clock");
+      if(elem) elem.innerText = "⏰ " + now.toLocaleTimeString() + " | " + now.toLocaleDateString();
     }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-    if (selectedValue === "correct") {
-      resultElem.innerHTML = "🎉 চমৎকার! আপনার উত্তর সঠিক হয়েছে। (+১০ পয়েন্ট)";
-      resultElem.style.color = "green";
-    } else {
-      resultElem.innerHTML = "❌ ভুল উত্তর! সঠিক উত্তর: Central Processing Unit";
-      resultElem.style.color = "red";
-    }
-  }
-
-  // ৫. স্ক্রোল টু টপ
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-</script>
-<div class="card">
-  <button onclick="toggleDarkMode()" style="background:#333; color:white; padding:8px 15px; border:none; border-radius:5px; cursor:pointer;">🌙 Dark/Light Mode</button>
-  <p id="live-clock" style="font-weight:bold; margin-top:10px; color:#007bff;"></p>
-</div>
-
-<div class="card">
-  <h2>🔊 ভয়েস রিডার (Text-to-Speech)</h2>
-  <p id="speech-text">আইসিটি প্রতিযোগিতায় আপনাকে স্বাগতম! আমাদের ওয়েবসাইটে এআই চ্যাটবট এবং কুইজ সিস্টেম রয়েছে।</p>
-  <button onclick="readText()" style="background:#28a745; color:white; padding:8px 15px; border:none; border-radius:5px; cursor:pointer;">পড়ে শোনাও 🗣️</button>
-</div>
-
-<div class="card">
-  <h2>🧠 আইসিটি কুইজ প্রতিযোগিতা</h2>
-  <p><b>প্রশ্ন:</b> সিপিইউ (CPU)-এর পূর্ণরূপ কী?</p>
-  <label style="display:block; margin:5px 0;"><input type="radio" name="q1" value="wrong"> Central Process Unit</label>
-  <label style="display:block; margin:5px 0;"><input type="radio" name="q1" value="correct"> Central Processing Unit</label>
-  <label style="display:block; margin:5px 0;"><input type="radio" name="q1" value="wrong"> Computer Processing Unit</label><br>
-  <button onclick="checkQuiz()" style="background:#007bff; color:white; padding:8px 15px; border:none; border-radius:5px; cursor:pointer;">উত্তর জমা দিন</button>
-  <p id="quiz-result" style="font-weight:bold; margin-top:10px;"></p>
-</div>
-
-<footer style="text-align:center; padding:15px; margin-top:20px;">
-  <button onclick="scrollToTop()" style="background:#ff4757; color:white; padding:8px 15px; border:none; border-radius:5px; cursor:pointer;">⬆️ ওপরে যান</button>
-</footer>
-
-<script>
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-  }
-
-  function updateClock() {
-    const now = new Date();
-    const elem = document.getElementById("live-clock");
-    if(elem) elem.innerText = "⏰ " + now.toLocaleTimeString() + " | " + now.toLocaleDateString();
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  function readText() {
-    try {
+    // ভয়েস রিডার
+    function readText() {
       window.speechSynthesis.cancel();
       const txt = document.getElementById("speech-text").innerText;
       const uttr = new SpeechSynthesisUtterance(txt);
       uttr.lang = "bn-BD";
       window.speechSynthesis.speak(uttr);
-    } catch(e) {
-      alert("ভয়েস ফিচারের জন্য ক্রোম ব্রাউজার ব্যবহার করুন।");
     }
-  }
 
-  function checkQuiz() {
-    const opts = document.getElementsByName("q1");
-    let val = "";
-    for(let o of opts) {
-      if(o.checked) val = o.value;
-    }
-    const res = document.getElementById("quiz-result");
-    if(!val) {
-      alert("দয়া করে একটি উত্তর সিলেক্ট করুন!");
-    } else if(val === "correct") {
-      res.innerHTML = "<span style='color:green;'>🎉 চমৎকার! সঠিক উত্তর (+১০ পয়েন্ট)</span>";
-    } else {
-      res.innerHTML = "<span style='color:red;'>❌ ভুল উত্তর! সঠিক: Central Processing Unit</span>";
-    }
-  }
+    // বিষয়ভিত্তিক প্রশ্নাবলী
+    const quizData = {
+      hardware: [
+        {
+          q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?",
+          options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit"],
+          ans: 1
+        },
+        {
+          q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি?",
+          options: ["RAM", "ROM", "Cache"],
+          ans: 1
+        }
+      ],
+      network: [
+        {
+          q: "ইন্টারনেট ব্যবহারের জন্য কোনটি অবশ্য প্রয়োজনীয়?",
+          options: ["IP Address", "Pen Drive", "Printer"],
+          ans: 0
+        },
+        {
+          q: "www-এর পূর্ণরূপ কী?",
+          options: ["World Wide Web", "World Whole Web", "Web World Wide"],
+          ans: 0
+        }
+      ],
+      cyber: [
+        {
+          q: "পাসওয়ার্ড সুরক্ষিত রাখার সবচেয়ে ভালো উপায় কোনটি?",
+          options: ["সবার সাথে শেয়ার করা", "সহজ নাম্বার দেওয়া", "স্ট্রং ও গোপন রাখা"],
+          ans: 2
+        }
+      ]
+    };
 
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-</script>
+    // কুইজ লোড করার ফাংশন
+    function loadQuiz() {
+      const subject = document.getElementById("quiz-subject").value;
+      const questions = quizData[subject];
+      let html = "";
+
+      questions.forEach((qObj, index) => {
+        html += `<div style="text-align: left; margin-bottom: 15px; background: rgba(0,0,0,0.03); padding: 10px; border-radius: 5px;">`;
+        html += `<p><b>${index + 1}. ${qObj.q}</b></p>`;
+        qObj.options.forEach((opt, optIndex) => {
+          html += `<label style="display:block; margin: 4px 0;"><input type="radio" name="q_${index}" value="${optIndex}"> ${opt}</label>`;
+        });
+        html += `</div>`;
+      });
+
+      document.getElementById("quiz-box").innerHTML = html;
+      document.getElementById("quiz-result").innerHTML = "";
+    }
+
+    // উত্তর চেক করার ফাংশন
+    function checkAnswer() {
+      const subject = document.getElementById("quiz-subject").value;
+      const questions = quizData[subject];
+      let score = 0;
+      let total = questions.length;
+      let answeredAll = true;
+
+      questions.forEach((qObj, index) => {
+        const options = document.getElementsByName(`q_${index}`);
+        let selected = -1;
+        for (let i = 0; i < options.length; i++) {
+          if (options[i].checked) {
+            selected = parseInt(options[i].value);
+            break;
+          }
+        }
+
+        if (selected === -1) {
+          answeredAll = false;
+        } else if (selected === qObj.ans) {
+          score++;
+        }
+      });
+
+      const resElem = document.getElementById("quiz-result");
+      if (!answeredAll) {
+        alert("দয়া করে সবগুলো প্রশ্নের উত্তর দিন!");
+        return;
+      }
+
+      resElem.innerHTML = `<span style="color: green;">🎉 চমৎকার! আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।</span>`;
+    }
+
+    // ওপরে যাওয়ার ফাংশন
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // প্রথমবার অটোমেটিক কুইজ লোড
+    window.onload = function() {
+      loadQuiz();
+    };
+  </script>
 </body>
 </html>
