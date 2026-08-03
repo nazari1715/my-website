@@ -204,5 +204,75 @@ async function askAI() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 </script>
+<div class="card">
+  <button onclick="toggleDarkMode()" style="background:#333; color:white; padding:8px 15px; border:none; border-radius:5px; cursor:pointer;">🌙 Dark/Light Mode</button>
+  <p id="live-clock" style="font-weight:bold; margin-top:10px; color:#007bff;"></p>
+</div>
+
+<div class="card">
+  <h2>🔊 ভয়েস রিডার (Text-to-Speech)</h2>
+  <p id="speech-text">আইসিটি প্রতিযোগিতায় আপনাকে স্বাগতম! আমাদের ওয়েবসাইটে এআই চ্যাটবট এবং কুইজ সিস্টেম রয়েছে।</p>
+  <button onclick="readText()" style="background:#28a745; color:white; padding:8px 15px; border:none; border-radius:5px; cursor:pointer;">পড়ে শোনাও 🗣️</button>
+</div>
+
+<div class="card">
+  <h2>🧠 আইসিটি কুইজ প্রতিযোগিতা</h2>
+  <p><b>প্রশ্ন:</b> সিপিইউ (CPU)-এর পূর্ণরূপ কী?</p>
+  <label style="display:block; margin:5px 0;"><input type="radio" name="q1" value="wrong"> Central Process Unit</label>
+  <label style="display:block; margin:5px 0;"><input type="radio" name="q1" value="correct"> Central Processing Unit</label>
+  <label style="display:block; margin:5px 0;"><input type="radio" name="q1" value="wrong"> Computer Processing Unit</label><br>
+  <button onclick="checkQuiz()" style="background:#007bff; color:white; padding:8px 15px; border:none; border-radius:5px; cursor:pointer;">উত্তর জমা দিন</button>
+  <p id="quiz-result" style="font-weight:bold; margin-top:10px;"></p>
+</div>
+
+<footer style="text-align:center; padding:15px; margin-top:20px;">
+  <button onclick="scrollToTop()" style="background:#ff4757; color:white; padding:8px 15px; border:none; border-radius:5px; cursor:pointer;">⬆️ ওপরে যান</button>
+</footer>
+
+<script>
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+  }
+
+  function updateClock() {
+    const now = new Date();
+    const elem = document.getElementById("live-clock");
+    if(elem) elem.innerText = "⏰ " + now.toLocaleTimeString() + " | " + now.toLocaleDateString();
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  function readText() {
+    try {
+      window.speechSynthesis.cancel();
+      const txt = document.getElementById("speech-text").innerText;
+      const uttr = new SpeechSynthesisUtterance(txt);
+      uttr.lang = "bn-BD";
+      window.speechSynthesis.speak(uttr);
+    } catch(e) {
+      alert("ভয়েস ফিচারের জন্য ক্রোম ব্রাউজার ব্যবহার করুন।");
+    }
+  }
+
+  function checkQuiz() {
+    const opts = document.getElementsByName("q1");
+    let val = "";
+    for(let o of opts) {
+      if(o.checked) val = o.value;
+    }
+    const res = document.getElementById("quiz-result");
+    if(!val) {
+      alert("দয়া করে একটি উত্তর সিলেক্ট করুন!");
+    } else if(val === "correct") {
+      res.innerHTML = "<span style='color:green;'>🎉 চমৎকার! সঠিক উত্তর (+১০ পয়েন্ট)</span>";
+    } else {
+      res.innerHTML = "<span style='color:red;'>❌ ভুল উত্তর! সঠিক: Central Processing Unit</span>";
+    }
+  }
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 </body>
 </html>
