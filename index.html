@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>স্মার্ট আইসিটি অলিম্পিয়াড ও অফলাইন এআই সহকারী</title>
+  <title>স্মার্ট আইসিটি অলিম্পিয়াড ও সহকারী</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -100,22 +100,23 @@
   </div>
 
   <div class="card">
-    <h2>🤖 স্মার্ট আইসিটি ও ডিকশনারি স্মার্ট সহকারী</h2>
-    <p style="margin-bottom:12px; color:#555;">১ম থেকে ১০ম শ্রেণীর আইসিটি প্রশ্ন, হার্ডওয়্যার, ইন্টারনেট বা যেকোনো শব্দের অর্থ লিখুন:</p>
+    <h2>🤖 স্মার্ট আইসিটি ও ডিকশনারি সহকারী</h2>
+    <p style="margin-bottom:12px; color:#555;">আইসিটি প্রশ্ন বা যেকোনো শব্দের অর্থ (যেমন: টেলিফোন, আইসিটি, ম্যান) লিখুন বা মুখে বলুন:</p>
     
     <div id="chat-box">
-      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার স্মার্ট আইসিটি সহকারী। যেকোনো প্রশ্ন বা শব্দের অর্থ জানতে নিচে লিখুন!</div>
+      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার আইসিটি সহকারী। যেকোনো প্রশ্ন জিজ্ঞেস করুন!</div>
     </div>
 
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <input type="text" id="user-input" placeholder="যেমন: সিপিইউ কি? RAM কি? Man অর্থ কি?" style="flex:1; min-width:200px;">
+      <input type="text" id="user-input" placeholder="যেমন: টেলিফোন কে আবিষ্কার করেন?" style="flex:1; min-width:200px;">
       <button id="send-btn" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
+      <button id="voice-btn" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
     </div>
   </div>
 
   <div class="card" id="quiz-section">
     <h2>🧠 জাতীয় আইসিটি কুইজ প্রতিযোগিতা (প্রতি অধ্যায়ে ২০টি প্রশ্ন)</h2>
-    <p>বিষয় নির্বাচন করে <b>"কুইজ শুরু করুন"</b> বাটনে চাপ দিলে ২০ মিনিটের টাইমার ও ২০টি প্রশ্ন চালু হবে:</p>
+    <p>বিষয় নির্বাচন করে <b>"কুইজ শুরু করুন"</b> বাটনে চাপ দিন:</p>
     
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
       <div>
@@ -185,7 +186,7 @@
 
         setTimeout(() => {
           getSmartAnswer(text);
-        }, 500);
+        }, 400);
       }
 
       function addChatMessage(msg, className) {
@@ -200,32 +201,49 @@
 
       function getSmartAnswer(query) {
         const q = query.toLowerCase();
-        let reply = "💡 আপনার এই প্রশ্নটি সম্পর্কে আইসিটি বইয়ে আরও বিস্তারিত আলোচনা করা হয়েছে। আপনি কুইজ সেকশন থেকে প্রস্তুতি নিতে পারেন!";
+        let reply = "💡 আপনার এই প্রশ্নটি সম্পর্কে আইসিটি বইয়ে বিস্তারিত আলোচনা করা হয়েছে। নিচে কুইজ অংশ থেকে আপনি প্রস্তুতি নিতে পারেন!";
 
-        if (q.includes("সিপিইউ") || q.includes("cpu")) {
-          reply = "💻 CPU (Central Processing Unit)-কে কম্পিউটারের মস্তিষ্ক বলা হয়। এটি কম্পিউটারের সমস্ত তথ্য প্রক্রিয়াকরণ ও হিসাব-নিকাশ পরিচালনা করে।";
+        if (q.includes("টেলিফোন") || q.includes("telephone")) {
+          reply = "📞 টেলিফোন আবিষ্কার করেন আলেকজান্ডার গ্রাহাম বেল (Alexander Graham Bell) ১৮৭৬ সালে।";
+        } else if (q.includes("আইসিটি") || q.includes("ict")) {
+          reply = "🌐 ICT-এর পূর্ণরূপ Information and Communication Technology (তথ্য ও যোগাযোগ প্রযুক্তি)। এটি তথ্য সংগ্রহ, প্রক্রিয়াকরণ এবং আদান-প্রদানের প্রযুক্তি।";
+        } else if (q.includes("সিপিইউ") || q.includes("cpu")) {
+          reply = "💻 CPU (Central Processing Unit)-কে কম্পিউটারের মস্তিষ্ক বলা হয়। এটি সমস্ত গণনা ও নির্দেশ পরিচালনা করে।";
         } else if (q.includes("রাম") || q.includes("ram")) {
-          reply = "⚡ RAM (Random Access Memory) হলো কম্পিউটারের প্রাথমিক বা অস্থায়ী মেমোরি। কম্পিউটার বন্ধ করলে এর ভেতরের ডেটা মুছে যায়।";
+          reply = "⚡ RAM (Random Access Memory) হলো কম্পিউটারের প্রাথমিক বা অস্থায়ী মেমোরি।";
         } else if (q.includes("রম") || q.includes("rom")) {
-          reply = "🔒 ROM (Read Only Memory) হলো কম্পিউটারের স্থায়ী মেমোরি, যেখানে সিস্টেমের বুটিং বা নির্দেশাবলী সংরক্ষিত থাকে।";
+          reply = "🔒 ROM (Read Only Memory) হলো কম্পিউটারের স্থায়ী মেমোরি।";
         } else if (q.includes("ঘড়ি") || q.includes("watch")) {
-          reply = "⌚ প্রথম পকেট ঘড়ি ১৬ শতকে পিটার হেনলেইন আবিষ্কার করেন। পরবর্তীতে ১৯৭২ সালে ডিজিটাল ঘড়ি বাজারে আসে।";
+          reply = "⌚ প্রথম পকেট ঘড়ি ১৬ শতকে পিটার হেনলেইন আবিষ্কার করেন।";
         } else if (q.includes("man") || q.includes("ম্যান")) {
-          reply = "📖 'Man' একটি ইংরেজি শব্দ। এর বাংলা অর্থ হলো: 'মানুষ' বা 'পুরুষ'।";
-        } else if (q.includes("ict") || q.includes("আইসিটি")) {
-          reply = "🌐 ICT-এর পূর্ণরূপ হলো Information and Communication Technology (তথ্য ও যোগাযোগ প্রযুক্তি)। এটি তথ্য সংগ্রহ, প্রক্রিয়াকরণ এবং সংরক্ষণের প্রযুক্তি।";
+          reply = "📖 'Man' শব্দের বাংলা অর্থ হলো: 'মানুষ' বা 'পুরুষ'।";
         } else if (q.includes("www")) {
-          reply = "🌍 WWW-এর পূর্ণরূপ World Wide Web। এটি ইন্টারনেটের মাধ্যমে পরস্পর সংযুক্ত বিভিন্ন ওয়েবসাইটের একটি বিশাল ভাণ্ডার।";
+          reply = "🌍 WWW-এর পূর্ণরূপ World Wide Web। এটি ইন্টারনেটের মাধ্যমে সংযুক্ত ওয়েবসাইটের ভাণ্ডার।";
         } else if (q.includes("ভাইরাস") || q.includes("virus")) {
-          reply = "🦠 কম্পিউটার ভাইরাস হলো এক ধরণের ক্ষতিকারক সফটওয়্যার বা প্রোগ্রাম যা কম্পিউটারের ফাইল ক্ষতি করে বা ধীরগতির করে দেয়।";
+          reply = "🦠 কম্পিউটার ভাইরাস হলো একটি ক্ষতিকারক সফটওয়্যার যা ফাইলের ক্ষতি করে।";
         } else if (q.includes("এআই") || q.includes("ai")) {
-          reply = "🤖 AI (Artificial Intelligence) বা কৃত্রিম বুদ্ধিমত্তা হলো মানুষের মতো চিন্তা ও সিদ্ধান্ত নেওয়ার ক্ষমতা সম্পন্ন কম্পিউটার প্রযুক্তি।";
+          reply = "🤖 AI (Artificial Intelligence) হলো কৃত্রিম বুদ্ধিমত্তা, যা মানুষের মতো চিন্তা করতে পারে।";
         } else if (q.includes("হাই") || q.includes("হ্যালো") || q.includes("hello")) {
-          reply = "👋 হ্যালো! কেমন আছেন? আইসিটি বা কম্পিউটার বিষয়ক যেকোনো প্রশ্ন আমাকে করতে পারেন।";
+          reply = "👋 হ্যালো! কেমন আছেন? আইসিটি বা যেকোনো প্রশ্ন আমাকে করতে পারেন।";
         }
 
         addChatMessage(reply, 'bot-msg');
       }
+
+      // Voice Input Feature
+      document.getElementById("voice-btn").addEventListener("click", function() {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+          alert("আপনার ব্রাউজারে ভয়েস ইনপুট সাপোর্ট করছে না।");
+          return;
+        }
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'bn-BD';
+
+        recognition.onstart = () => addChatMessage("🎙️ শুনছি... বলুন...", 'bot-msg');
+        recognition.onresult = (e) => sendMessage(e.results[0][0].transcript);
+        recognition.start();
+      });
 
       const quizData = {
         hardware: [
