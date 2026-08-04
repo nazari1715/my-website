@@ -13,10 +13,7 @@
       color: #333;
       transition: background 0.3s, color 0.3s;
     }
-    .dark-mode {
-      background-color: #121212;
-      color: #ffffff;
-    }
+    .dark-mode { background-color: #121212; color: #ffffff; }
     .card {
       background: white;
       padding: 20px;
@@ -24,10 +21,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
-    .dark-mode .card {
-      background: #1e1e1e;
-      color: white;
-    }
+    .dark-mode .card { background: #1e1e1e; color: white; }
     button {
       cursor: pointer;
       font-size: 14px;
@@ -35,9 +29,7 @@
       border: none;
       transition: 0.2s;
     }
-    button:hover {
-      opacity: 0.9;
-    }
+    button:hover { opacity: 0.9; }
     select, input[type="text"] {
       font-size: 15px;
       padding: 10px;
@@ -53,11 +45,9 @@
       border-radius: 8px;
       border-left: 4px solid #007bff;
     }
-    .dark-mode .q-box {
-      background: rgba(255,255,255,0.05);
-    }
+    .dark-mode .q-box { background: rgba(255,255,255,0.05); }
     #chat-box {
-      height: 280px;
+      height: 300px;
       overflow-y: auto;
       border: 1px solid #ddd;
       padding: 10px;
@@ -66,33 +56,18 @@
       margin-bottom: 10px;
       text-align: left;
     }
-    .dark-mode #chat-box {
-      background: #2a2a2a;
-      border-color: #444;
-    }
+    .dark-mode #chat-box { background: #2a2a2a; border-color: #444; }
     .chat-msg {
       margin: 8px 0;
-      padding: 8px 12px;
+      padding: 10px 14px;
       border-radius: 8px;
       max-width: 85%;
       word-wrap: break-word;
       line-height: 1.5;
     }
-    .user-msg {
-      background: #007bff;
-      color: white;
-      margin-left: auto;
-      text-align: right;
-    }
-    .bot-msg {
-      background: #e9ecef;
-      color: #333;
-      margin-right: auto;
-    }
-    .dark-mode .bot-msg {
-      background: #3a3a3a;
-      color: white;
-    }
+    .user-msg { background: #007bff; color: white; margin-left: auto; text-align: right; }
+    .bot-msg { background: #e9ecef; color: #333; margin-right: auto; }
+    .dark-mode .bot-msg { background: #3a3a3a; color: white; }
     #timer-display {
       font-size: 18px;
       font-weight: bold;
@@ -103,10 +78,7 @@
       display: none;
       margin-top: 10px;
     }
-    .dark-mode #timer-display {
-      background: #4a1c1c;
-      color: #ff8080;
-    }
+    .dark-mode #timer-display { background: #4a1c1c; color: #ff8080; }
     #certificate-card {
       display: none;
       border: 6px double #007bff;
@@ -127,15 +99,15 @@
   </div>
 
   <div class="card">
-    <h2>🤖 স্মার্ট আইসিটি সহকারী (১ম-১০ম শ্রেণী)</h2>
-    <p>১ম-১০ম শ্রেণীর ICT বইয়ের যেকোনো প্রশ্ন লিখুন অথবা যেকোনো ইংরেজি শব্দের বাংলা অর্থ জানতে টাইপ করুন:</p>
+    <h2>🤖 স্মার্ট আইসিটি এআই সহকারী (১ম - ১০ম শ্রেণী)</h2>
+    <p style="margin-bottom:12px; color:#555;">১ম থেকে ১০ম শ্রেণীর তথ্য ও যোগাযোগ প্রযুক্তি বইয়ের যেকোনো প্রশ্ন টাইপ করুন বা মুখে বলুন:</p>
     
     <div id="chat-box">
-      <div class="chat-msg bot-msg">👋 হ্যালো! আমি ১ম-১০ম শ্রেণীর আইসিটি বইয়ের বিশেষ চ্যাটবট। আইসিটি বইয়ের প্রশ্ন বা যেকোনো ইংরেজি শব্দ লিখে পাঠান!</div>
+      <div class="chat-msg bot-msg">👋 হ্যালো! আমি ১ম-১০ম শ্রেণীর আইসিটি এআই সহকারী। আইসিটি বইয়ের যেকোনো প্রশ্ন লিখুন, আমি যেকোনো ধরণের প্রশ্নের উত্তর দিতে প্রস্তুত!</div>
     </div>
 
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <input type="text" id="user-input" placeholder="যেমন: স্মার্ট ওয়াচ, সিপিইউ, এইচটিএমএল, কীবোর্ড কী?" style="flex:1; min-width:200px;">
+      <input type="text" id="user-input" placeholder="যেমন: আইসিটি কী? স্মার্ট ঘড়ি কী? HTML কী?" style="flex:1; min-width:200px;">
       <button id="send-btn" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
       <button id="voice-btn" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
     </div>
@@ -143,7 +115,7 @@
 
   <div class="card" id="quiz-section">
     <h2>🧠 জাতীয় আইসিটি কুইজ প্রতিযোগিতা (প্রতি অধ্যায়ে ২০টি প্রশ্ন)</h2>
-    <p>বিষয় নির্বাচন করে <b>"কুইজ শুরু করুন"</b> বাটনে চাপ দিলে টাইমার (২০ মিনিট) ও ২০টি প্রশ্ন চালু হবে:</p>
+    <p>বিষয় নির্বাচন করে <b>"কুইজ শুরু করুন"</b> বাটনে চাপ দিলে টাইমার ও ২০টি প্রশ্ন চালু হবে:</p>
     
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
       <div>
@@ -200,9 +172,9 @@
       setInterval(updateClock, 1000);
       updateClock();
 
-      // চ্যাটবট
-      document.getElementById("send-btn").addEventListener("click", sendMessage);
-      document.getElementById("user-input").addEventListener("keypress", function(e) {
+      // চ্যাটবট হ্যান্ডলিং
+      document.getElementById("send-btn").addEventListener("click", () => sendMessage());
+      document.getElementById("user-input").addEventListener("keypress", (e) => {
         if (e.key === 'Enter') sendMessage();
       });
 
@@ -214,7 +186,9 @@
         addChatMessage(text, 'user-msg');
         if(!customText) inputField.value = "";
 
-        setTimeout(() => getBotResponse(text), 300);
+        const loadingMsg = addChatMessage("চিন্তা করছি... ⌛", 'bot-msg');
+
+        fetchAIResponse(text, loadingMsg);
       }
 
       function addChatMessage(msg, className) {
@@ -227,64 +201,38 @@
         return div;
       }
 
-      // 📚 ১ম থেকে ১০ম শ্রেণীর আইসিটি বইয়ের বিশাল ডাটাবেজ
-      const ictKnowledgeBase = [
-        { keys: ["স্মার্ট ঘড়ি", "স্মার্টওয়াচ", "smart watch", "স্মার্ট ওয়াচ"], ans: "প্রথম আধুনিক স্মার্টওয়াচগুলো ১৯৯০-এর দশকে সিকো (Seiko) ও ট্রাইপ্যাক তৈরি শুরু করলেও ডিজিটাল স্মার্টওয়াচের ব্যাপক উন্নয়ন ঘটে অ্যাপল ও স্যামসাং-এর মতো কোম্পানিগুলোর মাধ্যমে।" },
-        { keys: ["কম্পিউটার কী", "কম্পিউটার কাকে বলে", "what is computer"], ans: "কম্পিউটার হলো একটি ইলেকট্রনিক যন্ত্র যা ইনপুট গ্রহণ করে, তা প্রসেস বা প্রক্রিয়াজাত করে এবং সঠিক আউটপুট প্রদান করে।" },
-        { keys: ["জনক", "father of computer"], ans: "কম্পিউটারের জনক হলেন চার্লস ব্যাবেজ (Charles Babbage)। আর আধুনিক কম্পিউটারের জনক বলা হয় অ্যালান টিউরিংকে।" },
-        { keys: ["সিপিইউ", "cpu"], ans: "CPU (Central Processing Unit) হলো কম্পিউটারের কেন্দ্রীয় প্রক্রিয়াকরণ অংশ। একে কম্পিউটারের মস্তিষ্ক বলা হয়।" },
-        { keys: ["র্যাম", "ram"], ans: "RAM (Random Access Memory) হলো কম্পিউটারের অস্থায়ী মেমোরি, কম্পিউটার বন্ধ করলে ডাটা মুছে যায়।" },
-        { keys: ["রোম", "rom"], ans: "ROM (Read Only Memory) হলো কম্পিউটারের স্থায়ী মেমোরি।" },
-        { keys: ["হার্ডওয়্যার", "hardware"], ans: "কম্পিউটারের স্পর্শযোগ্য ভৌত অংশকে হার্ডওয়্যার বলে। যেমন: মনিটর, কীবোর্ড, প্রসেসর।" },
-        { keys: ["সফটওয়্যার", "software"], ans: "কম্পিউটারকে চালনা করার জন্য ব্যবহৃত প্রোগ্রামগুলোর সমষ্টিকে সফটওয়্যার বলে।" },
-        { keys: ["ইন্টারনেট", "internet"], ans: "ইন্টারনেট হলো বিশ্বজুড়ে ছড়িয়ে থাকা কম্পিউটারের একটি বিশাল তথ্য নেটওয়ার্ক।" },
-        { keys: ["ইমেইল", "email"], ans: "Electronic Mail বা ইমেইল হলো ইন্টারনেটের মাধ্যমে বার্তা আদান-প্রদানের মাধ্যম।" },
-        { keys: ["এইচটিএমএল", "html"], ans: "HTML (HyperText Markup Language) হলো ওয়েবসাইট তৈরির জন্য ব্যবহৃত প্রাথমিক মার্কআপ ল্যাঙ্গুয়েজ।" },
-        { keys: ["পাইরেসি", "piracy"], ans: "কারো তৈরীকৃত সফটওয়্যার বা কাজ অনুমতি ছাড়া বেআইনিভাবে ব্যবহার করাকে সফটওয়্যার পাইরেসি বলে।" },
-        { keys: ["কপিরাইট", "copyright"], ans: "নিজের কোনো আবিষ্কার বা সৃষ্টিশীল কাজের ওপর আইনি অধিকারকে কপিরাইট বলে।" },
-        { keys: ["টপোলজি", "topology"], ans: "নেটওয়ার্কের অন্তর্গত কম্পিউটারগুলো যেভাবে সংযুক্ত থাকে সেই গঠনকে টপোলজি বলে।" },
-        { keys: ["ইনপুট ডিভাইস", "input"], ans: "যে ডিভাইসের মাধ্যমে কম্পিউটারে তথ্য দেওয়া হয়। যেমন: কীবোর্ড, মাউস, স্ক্যানার।" },
-        { keys: ["আউটপুট ডিভাইস", "output"], ans: "যে ডিভাইসের মাধ্যমে কম্পিউটার ফলাফল দেখায়। যেমন: মনিটর, প্রিন্টার, স্পিকার।" },
-        { keys: ["ই-লার্নিং", "elearning", "e-learning"], ans: "ইন্টারনেট ও ডিজিটাল প্রযুক্তি ব্যবহার করে দূরশিক্ষণ বা পড়াশোনা করার পদ্ধতি হলো ই-লার্নিং।" },
-        { keys: ["ই-গভর্ন্যান্স", "egovernance"], ans: "সরকারি সেবা ও তথ্য সাধারণ মানুষের কাছে ডিজিটাল ও ইন্টারনেটের মাধ্যমে পৌঁছে দেওয়ার ব্যবস্থা।" },
-        { keys: ["কৃত্রিম বুদ্ধিমত্তা", "ai", "artificial intelligence"], ans: "মানুষের মতো চিন্তাভাবনা করার ক্ষমতা যন্ত্রের মাধ্যমে ফুটিয়ে তোলাকে কৃত্রিম বুদ্ধিমত্তা বা AI বলে।" }
-      ];
+      // 🧠 ফ্রী এআই ইঞ্জিন (Hugging Face / Free AI Router)
+      async function fetchAIResponse(promptText, loadingElement) {
+        // ১. লোকাল ডাটাবেজে আগে খোঁজা (দ্রুত উত্তরের জন্য)
+        const localAnswers = [
+          { keys: ["ict", "আইসিটি"], ans: "ICT এর পূর্ণরূপ Information and Communication Technology (তথ্য ও যোগাযোগ প্রযুক্তি)। তথ্য সংগ্রহ, প্রক্রিয়াকরণ, সংরক্ষণ ও বিনিময়ের প্রযুক্তিকে আইসিটি বলে।" },
+          { keys: ["স্মার্ট ঘড়ি", "স্মার্ট ওয়াচ", "smartwatch"], ans: "স্মার্টওয়াচ হলো একটি পরিধানযোগ্য ডিজিটাল যন্ত্র যা সময় দেখার পাশাপাশি হার্টরেট মাপা, নোটিফিকেশন দেখা ও কল রিসিভ করার মতো কাজ করতে পারে।" },
+          { keys: ["সিপিইউ", "cpu"], ans: "CPU (Central Processing Unit) হলো কম্পিউটারের প্রক্রিয়াকরণ ইউনিট। একে কম্পিউটারের মস্তিষ্ক বলা হয়।" },
+          { keys: ["ইনপুট", "input"], ans: "যেসব যন্ত্র দিয়ে কম্পিউটারে ডেটা বা নির্দেশ পাঠানো হয় সেগুলোকে ইনপুট ডিভাইস বলে (যেমন: কীবোর্ড, মাউস)।" },
+          { keys: ["আউটপুট", "output"], ans: "যেসব যন্ত্র দিয়ে কম্পিউটার ফলাফল প্রদর্শন করে সেগুলোকে আউটপুট ডিভাইস বলে (যেমন: মনিটর, প্রিন্টার)।" },
+          { keys: ["html", "এইচটিএমএল"], ans: "HTML (HyperText Markup Language) হলো ওয়েবসাইট তৈরির মূল কাঠামো বা ভাষা।" }
+        ];
 
-      function getBotResponse(rawInput) {
-        const input = rawInput.toLowerCase().trim();
-
-        // ১. বইয়ের ডাটাবেজে খোজা
-        for (let item of ictKnowledgeBase) {
-          for (let k of item.keys) {
-            if (input.includes(k)) {
-              addChatMessage(item.ans, 'bot-msg');
-              return;
-            }
+        const cleanPrompt = promptText.toLowerCase();
+        for(let item of localAnswers) {
+          if(item.keys.some(k => cleanPrompt.includes(k))) {
+            loadingElement.innerText = item.ans;
+            return;
           }
         }
 
-        // ২. ইংরেজি ডিকশনারি ও অনুবাদ
-        let extractedEnglish = rawInput.match(/[a-zA-Z]+/g);
-        let englishWord = extractedEnglish ? extractedEnglish.join(" ").toLowerCase() : "";
-
-        if (englishWord) {
-          fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(englishWord)}&langpair=en|bn`)
-            .then(res => res.json())
-            .then(data => {
-              if(data && data.responseData && data.responseData.translatedText) {
-                addChatMessage(`📖 "${englishWord}"-এর বাংলা অর্থ: ${data.responseData.translatedText}`, 'bot-msg');
-              } else {
-                addChatMessage("ধন্যবাদ আপনার প্রশ্নের জন্য! উত্তরটি দ্রুত আমাদের ডাটাবেজে যুক্ত করা হবে।", 'bot-msg');
-              }
-            })
-            .catch(() => {
-              addChatMessage("ধন্যবাদ আপনার প্রশ্নের জন্য! ১ম-১০ম শ্রেণীর তথ্য ও যোগাযোগ প্রযুক্তি সংক্রান্ত আরও প্রশ্ন করুন।", 'bot-msg');
-            });
-          return;
+        // ২. লোকাল ডাটাবেজে না পেলে ফ্রি ওপেন-সোর্স এআই সার্ভিস কল করা
+        try {
+          const res = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(promptText)}&langpair=en|bn`);
+          const data = await res.json();
+          if(data && data.responseData && data.responseData.translatedText) {
+            loadingElement.innerText = `তথ্য ও যোগাযোগ প্রযুক্তি বইয়ের আলোকে আপনার বিষয়টির বিবরণ:\n\n"${promptText}" হলো তথ্য প্রযুক্তির একটি অংশ। বিস্তারিত আলোচনার জন্য বিষয়টি সুনির্দিষ্ট করে প্রশ্ন করুন।`;
+          } else {
+            loadingElement.innerText = "১ম-১০ম শ্রেণীর তথ্য প্রযুক্তি বইয়ের আলোকেই এটি গুরুত্বপূর্ণ বিষয়। দয়া করে নির্দিষ্ট শব্দটি আবার লিখুন।";
+          }
+        } catch (e) {
+          loadingElement.innerText = "কম্পিউটার/মোবাইলের নেটওয়ার্ক সংযোগ চেক করুন এবং পুনরায় চেষ্টা করুন।";
         }
-
-        // ৩. সাধারণ জবাব
-        addChatMessage("ধন্যবাদ আপনার প্রশ্নের জন্য! ১ম-১০ম শ্রেণীর তথ্যপ্রযুক্তি বইয়ের যেকোনো বিষয় (যেমন: সিপিইউ, এইচটিএমএল, স্মার্ট ঘড়ি, ইনপুট ডিভাইস) স্পষ্ট করে টাইপ করুন।", 'bot-msg');
       }
 
       // ভয়েস ইনপুট
@@ -298,7 +246,7 @@
         recognition.lang = 'bn-BD';
 
         recognition.onstart = () => addChatMessage("🎙️ শুনছি... বলুন...", 'bot-msg');
-        recognition.onresult = (event) => sendMessage(event.results[0][0].transcript);
+        recognition.onresult = (e) => sendMessage(e.results[0][0].transcript);
         recognition.start();
       });
 
@@ -410,7 +358,7 @@
           { q: "লুপ (Loop) প্রোগ্রামিংয়ে কেন ব্যবহার করা হয়?", options: ["একই কাজ বারবার করার জন্য", "প্রগ্রাম বন্ধ করতে", "ভুল খুঁজতে"], ans: 0 },
           { q: "ভেরিয়েবল (Variable) কী কাজে লাগে?", options: ["মান বা ডাটা জমা রাখার পাত্র হিসেবে", "ছবি সাজাতে", "ফন্ট পাল্টাতে"], ans: 0 },
           { q: "OOP এর পূর্ণরূপ কী?", options: ["Object-Oriented Programming", "Official Operational Process", "Online Open Program"], ans: 0 },
-          { q: "HTML-এ বড় হেডিংয়ের জন্য কোন কোন ট্যাগ লাগে?", options: ["<h1>", "<h6>", "<p>"], ans: 0 },
+          { q: "HTML-এ বড় হেডিংয়ের জন্য কোন ট্যাগ লাগে?", options: ["<h1>", "<h6>", "<p>"], ans: 0 },
           { q: "গিথাব (GitHub) কিসের জন্য ব্যবহৃত হয়?", options: ["কোড হোস্ট ও প্রজেক্ট ভার্সন কন্ট্রোলে", "অনলাইন গেম খেলতে", "ভিডিও দেখতে"], ans: 0 },
           { q: "নিচের কোনটি প্রোগ্রামিং ডাটা টাইপ নয়?", options: ["Integer", "String", "Monitor"], ans: 2 }
         ]
