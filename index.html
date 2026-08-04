@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>স্মার্ট আইসিটি অলিম্পিয়াড ও সহকারী</title>
+  <title>স্মার্ট আইসিটি অলিম্পিয়াড ও সহকারী (১ম - ১০ম শ্রেণি)</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -47,7 +47,7 @@
     }
     .dark-mode .q-box { background: rgba(255,255,255,0.05); }
     #chat-box {
-      height: 320px;
+      height: 350px;
       overflow-y: auto;
       border: 1px solid #ddd;
       padding: 10px;
@@ -95,20 +95,20 @@
 <body>
 
   <div class="card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
-    <button id="dark-mode-btn" style="background:#333; color:white; padding:10px 18px;">🌙 Dark/Light Mode</button>
+    <button id="dark-mode-btn" style="background:#333; color:white; padding:10px 18px;">🌙 ডার্ক/লাইট মোড</button>
     <p id="live-clock" style="font-weight:bold; color:#007bff; margin:10px 0 0 0;"></p>
   </div>
 
   <div class="card">
-    <h2>🤖 স্মার্ট আইসিটি ও ডিকশনারি সহকারী</h2>
-    <p style="margin-bottom:12px; color:#555;">আইসিটি প্রশ্ন বা যেকোনো শব্দের অর্থ (যেমন: টেলিফোন, আইসিটি, ম্যান) লিখুন বা মুখে বলুন:</p>
+    <h2>🤖 স্মার্ট আইসিটি ও ডিকশনারি সহকারী (১ম - ১০ম শ্রেণি)</h2>
+    <p style="margin-bottom:12px; color:#555;">১ম থেকে ১০ম শ্রেণির আইসিটি বা কম্পিউটার বিষয়ক যেকোনো প্রশ্ন বা শব্দের অর্থ লিখুন বা মুখে বলুন:</p>
     
     <div id="chat-box">
-      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার আইসিটি সহকারী। যেকোনো প্রশ্ন জিজ্ঞেস করুন!</div>
+      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার স্মার্ট আইসিটি সহকারী। ১ম থেকে ১০ম শ্রেণির যেকোনো আইসিটি প্রশ্ন বা শব্দের অর্থ আমাকে জিজ্ঞেস করতে পারেন!</div>
     </div>
 
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <input type="text" id="user-input" placeholder="যেমন: টেলিফোন কে আবিষ্কার করেন?" style="flex:1; min-width:200px;">
+      <input type="text" id="user-input" placeholder="যেমন: কম্পিউটার কি? RAM কি? মডেম কাকে বলে?" style="flex:1; min-width:200px;">
       <button id="send-btn" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
       <button id="voice-btn" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
     </div>
@@ -186,7 +186,7 @@
 
         setTimeout(() => {
           getSmartAnswer(text);
-        }, 400);
+        }, 300);
       }
 
       function addChatMessage(msg, className) {
@@ -199,32 +199,55 @@
         return div;
       }
 
+      // ১ম থেকে ১০ম শ্রেণির আইসিটি সিলেবাস ভিত্তিক বিশাল ডাটাবেজ
       function getSmartAnswer(query) {
         const q = query.toLowerCase();
-        let reply = "💡 আপনার এই প্রশ্নটি সম্পর্কে আইসিটি বইয়ে বিস্তারিত আলোচনা করা হয়েছে। নিচে কুইজ অংশ থেকে আপনি প্রস্তুতি নিতে পারেন!";
+        let reply = "💡 আপনার এই প্রশ্নটি সম্পর্কে ১ম-১০ম শ্রেণির আইসিটি বইয়ে বিস্তারিত আলোচনা করা হয়েছে। নিচে কুইজ অংশ থেকে আরও প্রস্তুতি নিতে পারেন!";
 
-        if (q.includes("টেলিফোন") || q.includes("telephone")) {
+        if (q.includes("কম্পিউটার কি") || q.includes("what is computer")) {
+          reply = "💻 কম্পিউটার হলো একটি ইলেকট্রনিক যন্ত্র, যা তথ্য গ্রহণ করে এবং বিভিন্ন প্রক্রিয়াকরণের মাধ্যমে নির্ভুল ফলাফল প্রদান করে। চার্লস ব্যাবেজকে আধুনিক কম্পিউটারের জনক বলা হয়।";
+        } else if (q.includes("টেলিফোন") || q.includes("telephone")) {
           reply = "📞 টেলিফোন আবিষ্কার করেন আলেকজান্ডার গ্রাহাম বেল (Alexander Graham Bell) ১৮৭৬ সালে।";
         } else if (q.includes("আইসিটি") || q.includes("ict")) {
-          reply = "🌐 ICT-এর পূর্ণরূপ Information and Communication Technology (তথ্য ও যোগাযোগ প্রযুক্তি)। এটি তথ্য সংগ্রহ, প্রক্রিয়াকরণ এবং আদান-প্রদানের প্রযুক্তি।";
+          reply = "🌐 ICT-এর পূর্ণরূপ Information and Communication Technology (তথ্য ও যোগাযোগ প্রযুক্তি)। তথ্য সংগ্রহ, প্রক্রিয়াকরণ, সংরক্ষণ এবং আদান-প্রদানের প্রযুক্তি হলো আইসিটি।";
         } else if (q.includes("সিপিইউ") || q.includes("cpu")) {
-          reply = "💻 CPU (Central Processing Unit)-কে কম্পিউটারের মস্তিষ্ক বলা হয়। এটি সমস্ত গণনা ও নির্দেশ পরিচালনা করে।";
+          reply = "🧠 CPU (Central Processing Unit)-কে কম্পিউটারের মস্তিষ্ক বলা হয়। এটি কম্পিউটারের সমস্ত ডেটা প্রসেস ও হিসাব-নিকাশ পরিচালনা করে।";
         } else if (q.includes("রাম") || q.includes("ram")) {
-          reply = "⚡ RAM (Random Access Memory) হলো কম্পিউটারের প্রাথমিক বা অস্থায়ী মেমোরি।";
+          reply = "⚡ RAM (Random Access Memory) হলো কম্পিউটারের প্রাথমিক ও অস্থায়ী মেমোরি। কম্পিউটার বন্ধ করলে এর ডেটা মুছে যায়।";
         } else if (q.includes("রম") || q.includes("rom")) {
-          reply = "🔒 ROM (Read Only Memory) হলো কম্পিউটারের স্থায়ী মেমোরি।";
-        } else if (q.includes("ঘড়ি") || q.includes("watch")) {
-          reply = "⌚ প্রথম পকেট ঘড়ি ১৬ শতকে পিটার হেনলেইন আবিষ্কার করেন।";
-        } else if (q.includes("man") || q.includes("ম্যান")) {
-          reply = "📖 'Man' শব্দের বাংলা অর্থ হলো: 'মানুষ' বা 'পুরুষ'।";
+          reply = "🔒 ROM (Read Only Memory) হলো কম্পিউটারের স্থায়ী মেমোরি, যেখানে কম্পিউটার চালুর প্রয়োজনীয় নির্দেশাবলি সংরক্ষিত থাকে।";
+        } else if (q.includes("মডেম") || q.includes("modem")) {
+          reply = "📡 মডেম (Modem) হলো এমন একটি ডিভাইস যা ডিজিটাল সিগন্যালকে অ্যানালগ এবং অ্যানালগ সিগন্যালকে ডিজিটাল সিগন্যালে রূপান্তর করে ইন্টারনেট সংযোগে সহায়তা করে।";
+        } else if (q.includes("ইনপুট") || q.includes("input device")) {
+          reply = "📥 যে ডিভাইসের মাধ্যমে কম্পিউটারে তথ্য বা নির্দেশ পাঠানো হয় তাকে ইনপুট ডিভাইস বলে। যেমন: কিবোর্ড, মাউস, স্ক্যানার, মাইক্রোফোন ইত্যাদি।";
+        } else if (q.includes("আউটপুট") || q.includes("output device")) {
+          reply = "📤 প্রসেসিংয়ের পর কম্পিউটার যে ডিভাইসের মাধ্যমে ফলাফল প্রকাশ করে তাকে আউটপুট ডিভাইস বলে। যেমন: মনিটর, প্রিন্টার, স্পিকার ইত্যাদি।";
+        } else if (q.includes("সফটওয়্যার") || q.includes("software"))  {
+          reply = "💿 সফটওয়্যার হলো কতগুলো প্রোগ্রামের সমষ্টি যা কম্পিউটারকে পরিচালনা করে। যেমন: উইন্ডোজ, এমএস ওয়ার্ড, ব্রাউজার ইত্যাদি।";
+        } else if (q.includes("হার্ডওয়্যার") || q.includes("hardware")) {
+          reply = "⚙️ কম্পিউটারের শারীরিক বা দৃশ্যমান যন্ত্রাংশগুলোকে হার্ডওয়্যার বলে। যেমন: মনিটর, মাদারবোর্ড, হার্ডডিস্ক ইত্যাদি।";
+        } else if (q.includes("ইন্টারনেট") || q.includes("internet")) {
+          reply = "🌍 ইন্টারনেট হলো সারা পৃথিবীর ছড়িয়ে থাকা কম্পিউটার নেটওয়ার্কের একটি বিশাল জাল বা নেটওয়ার্কের নেটওয়ার্ক।";
         } else if (q.includes("www")) {
-          reply = "🌍 WWW-এর পূর্ণরূপ World Wide Web। এটি ইন্টারনেটের মাধ্যমে সংযুক্ত ওয়েবসাইটের ভাণ্ডার।";
+          reply = "🌐 WWW-এর পূর্ণরূপ World Wide Web। এটি ইন্টারনেটের মাধ্যমে সংযুক্ত ওয়েবসাইটের বিশাল ভাণ্ডার, যার জনক টিম বার্নার্স-লি।";
         } else if (q.includes("ভাইরাস") || q.includes("virus")) {
-          reply = "🦠 কম্পিউটার ভাইরাস হলো একটি ক্ষতিকারক সফটওয়্যার যা ফাইলের ক্ষতি করে।";
+          reply = "🦠 কম্পিউটার ভাইরাস হলো মানুষের তৈরি এক ধরণের ক্ষতিকারক সফটওয়্যার বা প্রোগ্রাম যা কম্পিউটারের ফাইল ও ডেটা নষ্ট করে।";
+        } else if (q.includes("পাসওয়ার্ড") || q.includes("password")) {
+          reply = "🔑 পাসওয়ার্ড হলো গোপন কোড যা ব্যবহার করে নিজের অ্যাকাউন্ট বা কম্পিউটারকে অন্যন্যের হাত থেকে নিরাপদ রাখা হয়।";
+        } else if (q.includes("ইমেইল") || q.includes("email")) {
+          reply = "✉️ ইমেইল (E-mail) হলো ইলেকট্রনিক মেইল, যার মাধ্যমে ইন্টারনেটের সাহায্যে খুব দ্রুত এক কম্পিউটার থেকে অন্য কম্পিউটারে বার্তা পাঠানো যায়।";
+        } else if (q.includes("অ্যালগরিদম") || q.includes("algorithm")) {
+          reply = "📝 কোনো সমস্যা সমাধানের জন্য ধাপে ধাপে বা পর্যায়ক্রমে নিয়ম অনুসরণের প্রক্রিয়াকে অ্যালগরিদম বলে।";
+        } else if (q.includes("ফ্লোচার্ট") || q.includes("flowchart")) {
+          reply = "📊 যে চিত্রের মাধ্যমে কোনো সমস্যার অ্যালগরিদম বা কাজের ধারাকে প্রকাশ করা হয় তাকে ফ্লোচার্ট বা প্রবাহচিত্র বলে।";
+        } else if (q.includes("html")) {
+          reply = "🌐 HTML-এর পূর্ণরূপ Hyper Text Markup Language। এটি একটি মার্কআপ ভাষা যা দিয়ে ওয়েব পেজ তৈরি করা হয়।";
         } else if (q.includes("এআই") || q.includes("ai")) {
-          reply = "🤖 AI (Artificial Intelligence) হলো কৃত্রিম বুদ্ধিমত্তা, যা মানুষের মতো চিন্তা করতে পারে।";
+          reply = "🤖 AI (Artificial Intelligence) হলো কৃত্রিম বুদ্ধিমত্তা, যার মাধ্যমে কম্পিউটার বা যন্ত্র মানুষের মতো চিন্তা করতে ও সিদ্ধান্ত নিতে পারে।";
+        } else if (q.includes("মেমোরি") || q.includes("memory")) {
+          reply = "💾 মেমোরি হলো কম্পিউটারের তথ্য বা ডেটা ধরে রাখার স্থান। এটি প্রধানত দুই প্রকার: প্রাইমারি মেমোরি ও সেকেন্ডারি মেমোরি।";
         } else if (q.includes("হাই") || q.includes("হ্যালো") || q.includes("hello")) {
-          reply = "👋 হ্যালো! কেমন আছেন? আইসিটি বা যেকোনো প্রশ্ন আমাকে করতে পারেন।";
+          reply = "👋 হ্যালো! কেমন আছেন? আপনি ১ম থেকে ১০ম শ্রেণির আইসিটি বিষয়ের যেকোনো প্রশ্ন আমাকে করতে পারেন।";
         }
 
         addChatMessage(reply, 'bot-msg');
