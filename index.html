@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>স্মার্ট আইসিটি অলিম্পিয়াড ও এআই সহকারী</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 15px;
+      background-color: #f4f7f6;
+      color: #333;
+      transition: background 0.3s, color 0.3s;
+    }
+    .dark-mode { background-color: #121212; color: #ffffff; }
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    .dark-mode .card { background: #1e1e1e; color: white; }
+    button {
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 6px;
+      border: none;
+      transition: 0.2s;
+    }
+    button:hover { opacity: 0.9; }
+    select, input[type="text"], input[type="password"] {
+      font-size: 15px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .q-box {
+      text-align: left;
+      margin-bottom: 15px;
+      background: rgba(0,0,0,0.03);
+      padding: 12px;
+      border-radius: 8px;
+      border-left: 4px solid #007bff;
+    }
+    .dark-mode .q-box { background: rgba(255,255,255,0.05); }
+    #chat-box {
+      height: 320px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 8px;
+      background: #fafafa;
+      margin-bottom: 10px;
+      text-align: left;
+    }
+    .dark-mode #chat-box { background: #2a2a2a; border-color: #444; }
+    .chat-msg {
+      margin: 8px 0;
+      padding: 10px 14px;
+      border-radius: 8px;
+      max-width: 85%;
+      word-wrap: break-word;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+    .user-msg { background: #007bff; color: white; margin-left: auto; text-align: right; }
+    .bot-msg { background: #e9ecef; color: #333; margin-right: auto; }
+    .dark-mode .bot-msg { background: #3a3a3a; color: white; }
+    #timer-display {
+      font-size: 18px;
+      font-weight: bold;
+      color: #d9534f;
+      background: #ffe6e6;
+      padding: 8px 15px;
+      border-radius: 6px;
+      display: none;
+      margin-top: 10px;
+    }
+    .dark-mode #timer-display { background: #4a1c1c; color: #ff8080; }
+    #certificate-card {
+      display: none;
+      border: 6px double #007bff;
+      padding: 25px;
+      text-align: center;
+      background: #fdfdfd;
+      border-radius: 10px;
+      margin-top: 20px;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+    <button id="dark-mode-btn" style="background:#333; color:white; padding:10px 18px;">🌙 Dark/Light Mode</button>
+    <p id="live-clock" style="font-weight:bold; color:#007bff; margin:10px 0 0 0;"></p>
+  </div>
+
+  <div class="card">
+    <h2>🤖 স্মার্ট আইসিটি ও ডিকশনারি এআই সহকারী (১ম - ১০ম শ্রেণী)</h2>
+    
+    <div style="margin-bottom: 15px; background: #eef5ff; padding: 10px; border-radius: 8px;">
+      <label for="api-key-input"><b>🔑 OpenRouter API Key দিন (ঐচ্ছিক):</b></label><br>
+      <input type="password" id="api-key-input" placeholder="sk-or-v1-..." style="width: 100%; max-width: 400px; margin-top: 5px;">
+      <small style="display:block; color:#666; margin-top:3px;">কি না দিলেও অফলাইন ইনবিল্ট এআই কাজ করবে।</small>
+    </div>
+
+    <p style="margin-bottom:12px; color:#555;">১ম থেকে ১০ম শ্রেণীর তথ্য ও যোগাযোগ প্রযুক্তি প্রশ্ন বা যেকোনো শব্দের অর্থ লিখুন:</p>
+    
+    <div id="chat-box">
+      <div class="chat-msg bot-msg">👋 হ্যালো! আমি স্মার্ট আইসিটি সহকারী। যেকোনো প্রশ্ন জিজ্ঞেস করুন, আমি উত্তর বুঝিয়ে দেব!</div>
+    </div>
+
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <input type="text" id="user-input" placeholder="যেমন: প্রথম স্মার্ট ঘড়ি কে আবিষ্কার করেন? Man অর্থ কি?" style="flex:1; min-width:200px;">
+      <button id="send-btn" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
+      <button id="voice-btn" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
+    </div>
+  </div>
+
+  <div class="card" id="quiz-section">
+    <h2>🧠 জাতীয় আইসিটি কুইজ প্রতিযোগিতা (প্রতি অধ্যায়ে ২০টি প্রশ্ন)</h2>
+    <p>বিষয় নির্বাচন করে <b>"কুইজ শুরু করুন"</b> বাটনে চাপ দিলে ২০ মিনিটের টাইমার ও ২০টি প্রশ্ন চালু হবে:</p>
+    
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <div>
+        <label for="quiz-subject"><b>বিষয় নির্বাচন করুন:</b></label><br>
+        <select id="quiz-subject" style="width:100%; max-width:300px; margin-top:5px;">
+          <option value="hardware">১. কম্পিউটার হার্ডওয়্যার ও ফান্ডামেন্টালস</option>
+          <option value="internet">২. ইন্টারনেট, WWW ও নেটওয়ার্কিং</option>
+          <option value="cyber">৩. সাইবার নিরাপত্তা ও ডিজিটাল সুরক্ষা</option>
+          <option value="ai">৪. কৃত্রিম বুদ্ধিমত্তা (AI) ও ফিউচার টেক</option>
+          <option value="programming">৫. প্রোগ্রামিং, এইচটিএমএল ও ডেটাবেজ</option>
+        </select>
+      </div>
+      <button id="start-btn" style="background:#28a745; color:white; padding:12px 24px; font-size:16px; font-weight:bold;">▶️ কুইজ শুরু করুন</button>
+    </div>
+
+    <div id="timer-display">⏱️ সময় বাকি: <span id="time-left">20:00</span> মিনিট</div>
+
+    <br>
+    <div id="quiz-box"></div>
+
+    <button id="submit-btn" style="background:#007bff; color:white; padding:12px 25px; font-size:16px; font-weight:bold; margin-top:10px; display:none;">উত্তর জমা দিন 🚀</button>
+    <p id="quiz-result" style="font-weight:bold; font-size:16px; margin-top:15px;"></p>
+
+    <div id="certificate-card">
+      <h1 style="color:#007bff; margin-bottom:5px;">📜 আইসিটি মেধা সার্টিফিকেট</h1>
+      <p style="font-size:14px; color:#666;">জাতীয় আইসিটি অলিম্পিয়াড প্রতিযোগিতা</p>
+      <hr style="width:80%; margin:15px auto;">
+      <p style="font-size:18px;">প্রমাণ করা যাচ্ছে যে,</p>
+      <h2 id="cert-name" style="color:#28a745; text-decoration:underline; font-size:26px; margin:10px 0;">[আপনার নাম]</h2>
+      <p style="font-size:16px;">আইসিটি কুইজ প্রতিযোগিতায় অংশ নিয়ে চমৎকার ফলাফল অর্জন করেছেন!</p>
+      <p><b>অর্জিত স্কোর: <span id="cert-score">0</span></b></p>
+      <button id="print-btn" style="background:#28a745; color:white; padding:8px 20px; font-size:14px; margin-top:15px;">🖨️ সার্টিফিকেট প্রিন্ট / সেভ করুন</button>
+    </div>
+  </div>
+
+  <footer style="text-align:center; padding:15px; margin-top:20px;">
+    <button id="scroll-btn" style="background:#ff4757; color:white; padding:10px 20px;">⬆️ উপরে যান</button>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      
+      const savedKey = localStorage.getItem("user_openrouter_key") || "";
+      if (savedKey) {
+        document.getElementById("api-key-input").value = savedKey;
+      }
+
+      document.getElementById("api-key-input").addEventListener("input", function(e) {
+        localStorage.setItem("user_openrouter_key", e.target.value.trim());
+      });
+
+      document.getElementById("dark-mode-btn").addEventListener("click", function() {
+        document.body.classList.toggle("dark-mode");
+      });
+
+      function updateClock() {
+        const now = new Date();
+        const elem = document.getElementById("live-clock");
+        if(elem) elem.innerText = "⏰ " + now.toLocaleTimeString() + " | " + now.toLocaleDateString();
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      document.getElementById("send-btn").addEventListener("click", () => sendMessage());
+      document.getElementById("user-input").addEventListener("keypress", (e) => {
+        if (e.key === 'Enter') sendMessage();
+      });
+
+      function sendMessage(customText) {
+        const inputField = document.getElementById("user-input");
+        const text = customText || inputField.value.trim();
+        if (!text) return;
+
+        addChatMessage(text, 'user-msg');
+        if(!customText) inputField.value = "";
+
+        const loadingMsg = addChatMessage("উত্তর তৈরি হচ্ছে... ⌛", 'bot-msg');
+        fetchAIResponse(text, loadingMsg);
+      }
+
+      function addChatMessage(msg, className) {
+        const box = document.getElementById("chat-box");
+        const div = document.createElement("div");
+        div.className = "chat-msg " + className;
+        div.innerText = msg;
+        box.appendChild(div);
+        box.scrollTop = box.scrollHeight;
+        return div;
+      }
+
+      async function fetchAIResponse(promptText, loadingElement) {
+        const userApiKey = document.getElementById("api-key-input").value.trim();
+
+        if (!userApiKey) {
+          smartOfflineAI(promptText, loadingElement);
+          return;
+        }
+
+        try {
+          const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${userApiKey}`,
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              model: "google/gemini-2.0-flash-001",
+              messages: [
+                {
+                  role: "system",
+                  content: "You are a helpful ICT and Dictionary AI assistant for Bangladeshi school students. Answer clearly in simple Bengali."
+                },
+                { role: "user", content: promptText }
+              ]
+            })
+          });
+
+          const data = await response.json();
+          if (data && data.choices && data.choices[0] && data.choices[0].message) {
+            loadingElement.innerText = data.choices[0].message.content.trim();
+          } else {
+            smartOfflineAI(promptText, loadingElement);
+          }
+        } catch (e) {
+          smartOfflineAI(promptText, loadingElement);
+        }
+      }
+
+      function smartOfflineAI(text, element) {
+        const q = text.toLowerCase().trim();
+
+        if (q.includes("পাঁচটি") || q.includes("5টি") || q.includes("গুরুত্বপূর্ণ")) {
+          element.innerText = "💡 তথ্য প্রযুক্তির ৫টি গুরুত্বপূর্ণ দিক:\n১. দ্রুত যোগাযোগ (ইমেইল/ইন্টারনেট)\n২. অনলাইন শিক্ষা ও ই-লার্নিং\n৩. চিকিৎসা ক্ষেত্রে টেলিমেডিসিন\n৪. ই-কমার্স ও ফ্রিল্যান্সিং\n৫. ডিজিটাল ব্যাংকিং সেবা।";
+          return;
+        }
+        if (q.includes("ঘড়ি") || q.includes("স্মার্ট ওয়াচ")) {
+          element.innerText = "⌚ প্রথম পকেট ঘড়ি ১৬ শতকে পিটার হেনলেইন আবিষ্কার করেন। পরবর্তীতে ১৯৭২ সালে প্রথম আধুনিক ডিজিটাল ও মেমোরি ঘড়ি বাজারে আনা হয়।";
+          return;
+        }
+        if (q.includes("man") || q.includes("ম্যান")) {
+          element.innerText = "💡 'Man' একটি ইংরেজি শব্দ, যার বাংলা অর্থ: 'মানুষ' বা 'পুরুষ'।";
+          return;
+        }
+
+        element.innerText = `💡 "${text}" সম্পর্কে উত্তর পেতে উপরে আপনার API Key প্রদান করুন অথবা সংযোগ পরীক্ষা করুন।`;
+      }
+
+      document.getElementById("voice-btn").addEventListener("click", function() {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+          alert("আপনার ব্রাউজারে ভয়েস ইনপুট সাপোর্ট করছে না।");
+          return;
+        }
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'bn-BD';
+
+        recognition.onstart = () => addChatMessage("🎙️ শুনছি... বলুন...", 'bot-msg');
+        recognition.onresult = (e) => sendMessage(e.results[0][0].transcript);
+        recognition.start();
+      });
+
+      const quizData = {
+        hardware: [
+          { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit"], ans: 1 },
+          { q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি?", options: ["RAM", "ROM", "Cache"], ans: 1 },
+          { q: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?", options: ["Monitor", "Hard Disk", "Microprocessor/CPU"], ans: 2 },
+          { q: "নিচের কোনটি একটি ইনপুট ডিভাইস?", options: ["Keyboard", "Printer", "Speaker"], ans: 0 },
+          { q: "মনিটর কোন ধরনের ডিভাইস?", options: ["Input", "Output", "Storage"], ans: 1 },
+          { q: "কম্পিউটারের অস্থায়ী মেমোরি কোনটি?", options: ["Hard Disk", "RAM", "CD-ROM"], ans: 1 },
+          { q: "SSD-এর পূর্ণরূপ কী?", options: ["Solid State Drive", "Super Speed Disk", "System Software Drive"], ans: 0 },
+          { q: "ALU-এর পূর্ণরূপ কী?", options: ["Arithmetic Logic Unit", "Array Logic Unit", "Auto Processing Unit"], ans: 0 },
+          { q: "মাউস প্রথম কে আবিষ্কার করেন?", options: ["ডগলাস এঙ্গেলবার্ট", "বিল গেটস", "স্টিভ জবস"], ans: 0 },
+          { q: "কম্পিউটার মাদারবোর্ডে প্রসেসর বসানোর স্থানকে কী বলে?", options: ["Socket", "Port", "Slot"], ans: 0 },
+          { q: "১ গিগাবাইট (1 GB) সমান কত মেগাবাইট?", options: ["1000 MB", "1024 MB", "512 MB"], ans: 1 },
+          { q: "কম্পিউটারের পাওয়ার সাপ্লাইয়ের সংক্ষিপ্ত রূপ কোনটি?", options: ["SMPS", "UPS", "CPU"], ans: 0 },
+          { q: "নিচের কোনটি অপটিক্যাল স্টোরেজ ডিভাইস?", options: ["Hard Disk", "DVD", "Pen Drive"], ans: 1 },
+          { q: "কম্পিউটারের স্থায়ী নির্দেশাবলী কোথায় লেখা থাকে?", options: ["RAM", "ROM BIOS", "Cache"], ans: 1 },
+          { q: "পেনড্রাইভ কী ধরনের মেমোরি?", options: ["Flash Memory", "Primary Memory", "Cache Memory"], ans: 0 },
+          { q: "প্রসেসরের ক্লক স্পিড মেপে প্রকাশ করা হয় কিসে?", options: ["Hertz / GHz", "Megabyte", "Bits"], ans: 0 },
+          { q: "কম্পিউটারের স্ক্রিন রেজোলিউশন মাপা হয় কিসে?", options: ["Pixels", "Inches", "Bytes"], ans: 0 },
+          { q: "নিচের কোনটি সেকেন্ডারি মেমোরি নয়?", options: ["Hard Disk", "RAM", "Memory Card"], ans: 1 },
+          { q: "ইউএসবি (USB)-এর পূর্ণরূপ কী?", options: ["Universal Serial Bus", "United Speed Bus", "Universal System Bus"], ans: 0 },
+          { q: "বাইনারি সিগন্যাল প্রসেস করতে প্রসেসরে কী থাকে?", options: ["Transistors", "Vacuum Tubes", "Capacitors"], ans: 0 }
+        ],
+        internet: [
+          { q: "www-এর পূর্ণরূপ কী?", options: ["World Wide Web", "World Whole Web", "Web World Wide"], ans: 0 },
+          { q: "ইন্টারনেটে নেটওয়ার্ক ঠিকানার পরিচয়কে কী বলা হয়?", options: ["IP Address", "USB Drive", "E-mail"], ans: 0 },
+          { q: "ওয়েবসাইট দেখার জন্য কোনটি ব্যবহৃত হয়?", options: ["Web Browser", "MS Excel", "Photoshop"], ans: 0 },
+          { q: "ইমেইল (E-mail)-এর পূর্ণরূপ কী?", options: ["Electrical Mail", "Electronic Mail", "Engine Mail"], ans: 1 },
+          { q: "HTML-এর পূর্ণরূপ কী?", options: ["Hyper Text Markup Language", "High Tech Language", "Hyper Tech Mail"], ans: 0 },
+          { q: "HTTP-এর পূর্ণরূপ কী?", options: ["Hypertext Transfer Protocol", "High Text Protocol", "Hyper Transfer Page"], ans: 0 },
+          { q: "সার্চ ইঞ্জিন কোনটি?", options: ["Google", "Facebook", "WhatsApp"], ans: 0 },
+          { q: "URL-এর পূর্ণরূপ কী?", options: ["Uniform Resource Locator", "Universal Regional Link", "United Resource List"], ans: 0 },
+          { q: "ডোমেইন নেমের .bd অংশটি কী নির্দেশ করে?", options: ["বাংলাদেশ দেশীয় কোড", "বিজনেস ডোমেইন", "ব্যান্ডউইথ"], ans: 0 },
+          { q: "ওয়াইফাই (Wi-Fi)-এর পূর্ণরূপ কী?", options: ["Wireless Fidelity", "Wired Fiber", "Wireless Firewall"], ans: 0 },
+          { q: "ব্লুটুথ প্রযুক্তির সীমা সাধারণত কত মিটার?", options: ["১০ মিটার", "১০০ মিটার", "১ কিলোমিটার"], ans: 0 },
+          { q: "IP Address (IPv4) কত বিটের হয়ে থাকে?", options: ["32 bit", "64 bit", "128 bit"], ans: 0 },
+          { q: "সোশ্যাল মিডিয়া প্ল্যাটফর্ম কোনটি?", options: ["LinkedIn", "Wikipedia", "Google Search"], ans: 0 },
+          { q: "ইন্টারনেটের জনক কাকে বলা হয়?", options: ["ভিন্টন সার্ফ", "চার্লস ব্যাবেজ", "টিন বার্নার্স লি"], ans: 0 },
+          { q: "WWW এর আবিষ্কারক কে?", options: ["টিম বার্নার্স-লি", "মার্ক জুকারবার্গ", "বিল গেটস"], ans: 0 },
+          { q: "ক্লাউড স্টোরেজের উদাহরণ কোনটি?", options: ["Google Drive", "MS Word", "VLC Player"], ans: 0 },
+          { q: "ব্যান্ডউইথ (Bandwidth) কী মাপে?", options: ["ডেটা ট্রান্সমিশন স্পিড", "কম্পিউটার মেমোরি", "মনিটর রেজোলিউশন"], ans: 0 },
+          { q: "৫জি (5G) প্রযুক্তিতে G এর অর্থ কী?", options: ["Generation", "Gigabyte", "Global"], ans: 0 },
+          { q: "অনলাইনে কেনাকাটা করার প্রক্রিয়াকে কী বলে?", options: ["E-Commerce", "E-Mail", "E-Learning"], ans: 0 },
+          { q: "ISP-এর পূর্ণরূপ কী?", options: ["Internet Service Provider", "Internal System Process", "International Server Provider"], ans: 0 }
+        ],
+        cyber: [
+          { q: "পাসওয়ার্ড সুরক্ষিত রাখার সবচেয়ে ভালো উপায় কোনটি?", options: ["সব জায়গায় একই পাসওয়ার্ড দেওয়া", "সহজ নাম্বার দেওয়া", "শক্তিশালী ও অনন্য রাখা"], ans: 2 },
+          { q: "ফিশিং (Phishing) মূলত কীসের সাথে সম্পর্কিত?", options: ["মাছ ধরা", "অনলাইন তথ্য চুরি", "কম্পিউটার স্পিড বাড়ানো"], ans: 1 },
+          { q: "2FA এর পূর্ণরূপ কী?", options: ["Two-Factor Authentication", "Two-File Access", "Fast Fast Access"], ans: 0 },
+          { q: "কম্পিউটার ভাইরাস কী?", options: ["এক ধরণের ক্ষতিকারক প্রোগ্রাম", "এক প্রকার জৈব অনুজীব", "হার্ডওয়্যার সমস্যা"], ans: 0 },
+          { q: "ফায়ারওয়াল (Firewall) কিসের কাজ করে?", options: ["নেটওয়ার্ক নিরাপত্তা ও অননুমোদিত অ্যাক্সেস রোধ", "কম্পিউটার ঠান্ডা রাখা", "স্পিড বাড়ানো"], ans: 0 },
+          { q: "সাইবার বুলিং কী?", options: ["অনলাইনে কাউকে হেনস্থা বা হুমকি দেওয়া", "অনলাইন গেম খেলা", "কম্পিউটার ফরম্যাট করা"], ans: 0 },
+          { q: "র্যানসমওয়্যার (Ransomware) কী করে?", options: ["ফাইল এনক্রিপ্ট করে মুক্তিপণ দাবি করে", "বিনামূল্যে অ্যান্টিভাইরাস দেয়", "ইন্টারনেট স্পিড বাড়ায়"], ans: 0 },
+          { q: "স্প্যাম (Spam) বলতে কী বোঝায়?", options: ["অযাচিত বা বাল্ক ইমেইল", "জরুরি ফাইল", "সুরক্ষিত পাসওয়ার্ড"], ans: 0 },
+          { q: "ওটিপি (OTP)-এর পূর্ণরূপ কী?", options: ["One Time Password", "On Time Process", "Official Task Pass"], ans: 0 },
+          { q: "হ্যাকিং শব্দের অর্থ কী?", options: ["অনুমতি ছাড়া অন্য কারো সিস্টেমে প্রবেশ করা", "প্রগ্রামিং শেখা", "কম্পিউটার মেরামত"], ans: 0 },
+          { q: "নিরাপদ ওয়েবসাইটের শুরুতে কোনটি থাকে?", options: ["https://", "http://", "ftp://"], ans: 0 },
+          { q: "কুকিজ (Cookies) ব্রাউজারে কী সংরক্ষণ করে?", options: ["ব্যবহারকারীর ব্রাউজিং তথ্য ও প্রিফারেন্স", "ভাইরাস ফাইল", "পাসওয়ার্ড হ্যাক ফাইল"], ans: 0 },
+          { q: "ডিজিটাল স্বাক্ষর (Digital Signature) কী কাজে লাগে?", options: ["প্রমাণীকরণ ও সত্যতা যাচাইয়ে", "ছবি আঁকতে", "অ্যানিমেশন তৈরিতে"], ans: 0 },
+          { q: "ভাইরাস প্রথম প্রতিরোধ করে কোনটি?", options: ["Antivirus Software", "Web Browser", "Media Player"], ans: 0 },
+          { q: "পাবলিক ওয়াইফাই (Public Wi-Fi) ব্যবহারের ঝুঁকি কোনটি?", options: ["ডেটা চুরি ও হ্যাকিংয়ের ঝুঁকি", "ব্যাটারি দ্রুত শেষ হওয়া", "নেট স্লো হওয়া"], ans: 0 },
+          { q: "ম্যালওয়্যার (Malware) শব্দের অর্থ কী?", options: ["Malicious Software", "Multiple Application", "Main Software"], ans: 0 },
+          { q: "আইডি কার্ড বা পাসওয়ার্ড গোপন রাখা কেন জরুরি?", options: ["আইডেন্টিটি চুরি রোধ করতে", "স্মৃতিশক্তি বাড়াতে", "কম্পিউটার ফাস্ট রাখতে"], ans: 0 },
+          { q: "সাইবার অপরাধের বিচার কোন আইনে হয়?", options: ["সাইবার নিরাপত্তা / ডিজিটাল নিরাপত্তা আইন", "সড়ক পরিবহন আইন", "পরিবেশ সুরক্ষা আইন"], ans: 0 },
+          { q: "কি-লগার (Keylogger) কী কাজ করে?", options: ["কীবোর্ডের টাইপ করা স্ট্রোক রেকর্ড করে চুরি করা", "কীবোর্ড ঠিক করা", "শব্দ টাইপ করা"], ans: 0 },
+          { q: "VPN-এর পূর্ণরূপ কী?", options: ["Virtual Private Network", "Very Personal Network", "Visual Process Node"], ans: 0 }
+        ],
+        ai: [
+          { q: "AI-এর পূর্ণরূপ কী?", options: ["Artificial Intelligence", "Automated Info", "Advanced Internet"], ans: 0 },
+          { q: "নিচের কোনটি এআই চালিত চ্যাটবট?", options: ["ChatGPT", "Calculator", "MS Paint"], ans: 0 },
+          { q: "মেশিন লার্নিং (Machine Learning) কিসের একটি শাখা?", options: ["Artificial Intelligence", "Cyber Security", "Web Design"], ans: 0 },
+          { q: "রোবোটিক্স প্রযুক্তির মূল ভিত্তি কোনটি?", options: ["AI & Sensors", "Photoshop", "HTML Code"], ans: 0 },
+          { q: "NLP-এর পূর্ণরূপ কী?", options: ["Natural Language Processing", "New Language Program", "Network Link Protocol"], ans: 0 },
+          { q: "স্বয়ংক্রিয় গাড়ি (Self-Driving Car) চালাতে কোন প্রযুক্তি লাগে?", options: ["AI & Computer Vision", "Bluetooth", "Radio Wave"], ans: 0 },
+          { q: "ডিপ লার্নিং (Deep Learning) কিসের ওপর ভিত্তি করে কাজ করে?", options: ["Artificial Neural Networks", "Hard Disk Space", "RAM Speed"], ans: 0 },
+          { q: "কম্পিউটার ভিশন (Computer Vision) কী কাজ করে?", options: ["ছবি ও ভিডিও বিশ্লেষণ করে বুঝতে পারা", "গেম খেলা", "গান শোনা"], ans: 0 },
+          { q: "টিউরিং টেস্ট (Turing Test) কিসের জন্য করা হয়?", options: ["যন্ত্রের বুদ্ধিমত্তা পরিমাপ করতে", "ইন্টারনেট স্পিড মাপতে", "ডিসপ্লে চেক করতে"], ans: 0 },
+          { q: "কৃত্রিম বুদ্ধিমত্তার জনক কাকে বলা হয়?", options: ["জন ম্যাককার্থি", "এ্যালান টিউরিং", "এডা লাভলেস"], ans: 0 },
+          { q: "DALL-E বা Midjourney দিয়ে কী তৈরি করা হয়?", options: ["এআই জেনারেটেড ছবি", "অডিও গান", "ভিডিও গেম কোড"], ans: 0 },
+          { q: "জেনারেটিভ এআই (Generative AI) এর কাজ কী?", options: ["নতুন টেক্সট, ছবি ও কন্টেন্ট তৈরি করা", "ভাইরাস মোছা", "কম্পিউটার চার্জ করা"], ans: 0 },
+          { q: "ফেস রিকগনিশন (Face Recognition) কিসের উদাহরণ?", options: ["AI & Biometrics", "Manual Graphics", "Spreadsheet"], ans: 0 },
+          { q: "ভয়েস অ্যাসিস্ট্যান্ট কোনটি?", options: ["Google Assistant / Siri", "Google Chrome", "MS Excel"], ans: 0 },
+          { q: "হিউম্যানয়েড রোবটের উদাহরণ কোনটি?", options: ["Sophia", "ChatGPT", "Windows 11"], ans: 0 },
+          { q: "এআই প্রম্পট (Prompt) বলতে কী বোঝায়?", options: ["এআই-কে দেওয়া নির্দেশ বা প্রশ্ন", "প্রগ্রামিং এরর", "কম্পিউটার ভাইরাস"], ans: 0 },
+          { q: "ড্রোন (Drone) উড্ডয়ন ও নেভিগেশনে কোনটি সহায়তা করে?", options: ["AI & GPS", "MS Office", "Bluetooth"], ans: 0 },
+          { q: "দাবা খেলায় বিশ্বচ্যাম্পিয়নকে হারানো এআই সুপারকম্পিউটারের নাম কী?", options: ["Deep Blue", "Alpha Go", "ChatGPT"], ans: 0 },
+          { q: "বিগ ডেটা (Big Data) প্রসেস করতে কোনটি দরকার?", options: ["AI & Cloud Computing", "Notepad", "Pen Drive"], ans: 0 },
+          { q: "এআই প্রযুক্তি ব্যবহারের প্রধান নৈতিক ঝুঁকি কোনটি?", options: ["ভুল তথ্য ও চাকরি হারানোর ভয়", "কম্পিউটার গরম হওয়া", "ইন্টারনেট খরচ হওয়া"], ans: 0 }
+        ],
+        programming: [
+          { q: "HTML কিসের জন্য ব্যবহৃত হয়?", options: ["ওয়েব পেজের কাঠামো তৈরিতে", "ভিডিও এডিটিংয়ে", "গেম খেলতে"], ans: 0 },
+          { q: "বাইনারি কোড কোন দুটি সংখ্যা নিয়ে গঠিত?", options: ["১ এবং ২", "০ এবং ১", "১ এবং ১০"], ans: 1 },
+          { q: "পাইথন (Python) কী?", options: ["হাই-লেভেল প্রোগ্রামিং ল্যাঙ্গুয়েজ", "কম্পিউটার ভাইরাস", "এক ধরণের সাপ"], ans: 0 },
+          { q: "CSS-এর পূর্ণরূপ কী?", options: ["Cascading Style Sheets", "Creative Style System", "Computer Style Sheet"], ans: 0 },
+          { q: "জাভাস্ক্রিপ্ট (JavaScript) কেন ব্যবহৃত হয়?", options: ["ওয়েবসাইটকে ইন্টারঅ্যাক্টিভ ও ডাইনামিক করতে", "হার্ডওয়্যার তৈরি করতে", "ছবি এডিট করতে"], ans: 0 },
+          { q: "কম্পিউটার কোন ভাষা সরাসরি বুঝতে পারে?", options: ["Machine Language (Binary)", "High Level Language", "English Language"], ans: 0 },
+          { q: "C Programming ভাষার জনক কে?", options: ["ডেনিস রিচি", "বিল গেটস", "স্টিভ জবস"], ans: 0 },
+          { q: "SQL কিসের জন্য ব্যবহৃত হয়?", options: ["Database Management", "Web Designing", "Video Rendering"], ans: 0 },
+          { q: "অ্যালগরিদম (Algorithm) বলতে কী বোঝায়?", options: ["কোনো সমস্যা সমাধানের ধাপভিত্তিক নিয়ম", "প্রগ্রামিং কোড", "কম্পিউটার পার্টস"], ans: 0 },
+          { q: "ফ্লোচার্ট (Flowchart) কী?", options: ["অ্যালগরিদমের চিত্ররূপ", "নেটওয়ার্ক ক্যাবল", "ওয়েবসাইট লেআউট"], ans: 0 },
+          { q: "কম্পাইলার (Compiler) কী কাজ করে?", options: ["পুরো সোর্স কোডকে একবারে মেশিন কোডে রূপান্তর করে", "লাইন বাই লাইন কোড অনুবাদ করে", "কোড ফরম্যাট করে"], ans: 0 },
+          { q: "ইন্টারপ্রেটার (Interpreter) অনুবাদ করে কীভাবে?", options: ["এক লাইন এক লাইন করে", "একবারে পুরো ফাইল", "অনুবাদ করে না"], ans: 0 },
+          { q: "প্রগ্রামের ভুল থাকাকে কী বলা হয়?", options: ["Bug", "Virus", "Lag"], ans: 0 },
+          { q: "প্রগ্রামের ভুল সংশোধন করার প্রক্রিয়াকে কী বলে?", options: ["Debugging", "Coding", "Compiling"], ans: 0 },
+          { q: "লুপ (Loop) প্রোগ্রামিংয়ে কেন ব্যবহার করা হয়?", options: ["একই কাজ বারবার করার জন্য", "প্রগ্রাম বন্ধ করতে", "ভুল খুঁজতে"], ans: 0 },
+          { q: "ভেরিয়েবল (Variable) কী কাজে লাগে?", options: ["মান বা ডাটা জমা রাখার পাত্র হিসেবে", "ছবি সাজাতে", "ফন্ট পাল্টাতে"], ans: 0 },
+          { q: "OOP এর পূর্ণরূপ কী?", options: ["Object-Oriented Programming", "Official Operational Process", "Online Open Program"], ans: 0 },
+          { q: "HTML-এ বড় হেডিংয়ের জন্য কোন ট্যাগ লাগে?", options: ["<h1>", "<h6>", "<p>"], ans: 0 },
+          { q: "গিথাব (GitHub) কিসের জন্য ব্যবহৃত হয়?", options: ["কোড হোস্ট ও প্রজেক্ট ভার্সন কন্ট্রোলে", "অনলাইন গেম খেলতে", "ভিডিও দেখতে"], ans: 0 },
+          { q: "নিচের কোনটি প্রোগ্রামিং ডাটা টাইপ নয়?", options: ["Integer", "String", "Monitor"], ans: 2 }
+        ]
+      };
+
+      let timerInterval;
+      let timeLeft = 1200;
+
+      function formatTime(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m}:${s < 10 ? '0' : ''}${s}`;
+      }
+
+      document.getElementById("start-btn").addEventListener("click", function() {
+        const subject = document.getElementById("quiz-subject").value;
+        const questions = quizData[subject];
+        let html = "";
+
+        questions.forEach((qObj, index) => {
+          html += `<div class="q-box">`;
+          html += `<p style="margin-top:0;"><b>${index + 1}. ${qObj.q}</b></p>`;
+          qObj.options.forEach((opt, optIndex) => {
+            html += `<label style="display:block; margin: 6px 0; cursor:pointer;"><input type="radio" name="q_${index}" value="${optIndex}"> ${opt}</label>`;
+          });
+          html += `</div>`;
+        });
+
+        document.getElementById("quiz-box").innerHTML = html;
+        document.getElementById("quiz-result").innerHTML = "";
+        document.getElementById("certificate-card").style.display = "none";
+        
+        document.getElementById("submit-btn").style.display = "inline-block";
+        document.getElementById("timer-display").style.display = "inline-block";
+        document.getElementById("start-btn").innerText = "🔄 পুনরায় শুরু করুন";
+        document.getElementById("quiz-subject").disabled = true;
+
+        clearInterval(timerInterval);
+        timeLeft = 1200; 
+        document.getElementById("time-left").innerText = formatTime(timeLeft);
+
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          document.getElementById("time-left").innerText = formatTime(timeLeft);
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            alert("⏰ সময় শেষ! উত্তর জমা দেওয়া হচ্ছে।");
+            checkAnswer(true);
+          }
+        }, 1000);
+      });
+
+      document.getElementById("submit-btn").addEventListener("click", function() {
+        checkAnswer(false);
+      });
+
+      function checkAnswer(isAutoSubmit) {
+        clearInterval(timerInterval);
+        const subject = document.getElementById("quiz-subject").value;
+        const questions = quizData[subject];
+        let score = 0;
+        let total = questions.length;
+        let answeredAll = true;
+
+        questions.forEach((qObj, index) => {
+          const options = document.getElementsByName(`q_${index}`);
+          let selected = -1;
+          for (let i = 0; i < options.length; i++) {
+            if (options[i].checked) {
+              selected = parseInt(options[i].value);
+              break;
+            }
+          }
+
+          if (selected === -1) {
+            answeredAll = false;
+          } else if (selected === qObj.ans) {
+            score++;
+          }
+        });
+
+        const resElem = document.getElementById("quiz-result");
+        if (!answeredAll && !isAutoSubmit) {
+          alert("দয়া করে ২০টি প্রশ্নেরই উত্তর সিলেক্ট করুন!");
+          return;
+        }
+
+        resElem.innerHTML = `<span style="color: green;">🎉 আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।</span>`;
+        document.getElementById("quiz-subject").disabled = false;
+
+        if (score >= Math.ceil(total * 0.7)) {
+          const userName = prompt("আপনার সার্টিফিকেট এর জন্য নাম দিন:") || "অংশগ্রহণকারী";
+          document.getElementById("cert-name").innerText = userName;
+          document.getElementById("cert-score").innerText = `${score} / ${total}`;
+          document.getElementById("certificate-card").style.display = "block";
+        }
+      }
+
+      document.getElementById("print-btn").addEventListener("click", function() {
+        window.print();
+      });
+
+      document.getElementById("scroll-btn").addEventListener("click", function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+    });
+  </script>
+</body>
+</html>
