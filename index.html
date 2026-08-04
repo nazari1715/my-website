@@ -131,11 +131,11 @@
     <p>১ম-১০ম শ্রেণীর ICT প্রশ্ন লিখুন অথবা যেকোনো ইংরেজি শব্দের বাংলা অর্থ জানতে টাইপ করুন:</p>
     
     <div id="chat-box">
-      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার স্মার্ট আইসিটি সহকারী ও ডিকশনারি। আইসিটি বিষয় ছাড়াও যেকোনো ইংরেজি শব্দ লিখলে আমি বাংলা অর্থ বলে দেব! (যেমন: Computer, Software, Apple, Education)</div>
+      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার স্মার্ট আইসিটি সহকারী ও ডিকশনারি। আইসিটি বিষয় ছাড়াও যেকোনো ইংরেজি শব্দ লিখলে আমি বাংলা অর্থ বলে দেব! (যেমন: Computer, Software, Loyal, Education)</div>
     </div>
 
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <input type="text" id="user-input" placeholder="যেমন: HTML কী? অথবা ইংরেজি শব্দ: Algorithm, Knowledge..." style="flex:1; min-width:200px;">
+      <input type="text" id="user-input" placeholder="যেমন: HTML কী? অথবা ইংরেজি শব্দ: Loyal, Knowledge..." style="flex:1; min-width:200px;">
       <button id="send-btn" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
       <button id="voice-btn" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
     </div>
@@ -231,7 +231,7 @@
         box.scrollTop = box.scrollHeight;
       }
 
-      // ডিকশনারি ডাটাবেস
+      // অফলাইন ডিকশনারি ডাটাবেস
       const dictionary = {
         "computer": "গণকযন্ত্র / কম্পিউটার",
         "keyboard": "কীবোর্ড (তথ্য ইনপুট দেওয়ার যন্ত্র)",
@@ -243,82 +243,73 @@
         "network": "নেটওয়ার্ক (যোগাযোগ ব্যবস্থা)",
         "data": "উপাত্ত বা তথ্য",
         "information": "তথ্য বা সংবাদ",
-        "memory": "স্মৃতি বা মেমোরি",
-        "input": "ইনপুট (তথ্য প্রবেশ করানো)",
-        "output": "আউটপুট (ফলাফল বা তথ্য প্রকাশ)",
-        "algorithm": "অ্যালগরিদম (ধাপভিত্তিক সমাধান)",
-        "code": "কোড বা প্রোগ্রাম নির্দেশিকা",
-        "file": "নথি বা ফাইল",
-        "folder": "ফোল্ডার (ফাইল রাখার স্থান)",
-        "system": "ব্যবস্থা বা সিস্টেম",
-        "device": "যন্ত্র বা ডিভাইস",
-        "screen": "পর্দা",
-        "book": "বই",
-        "student": "ছাত্র / ছাত্রী",
-        "teacher": "শিক্ষক / শিক্ষিকা",
-        "school": "বিদ্যালয় / স্কুল",
+        "loyal": "বিশ্বস্ত / অনুগত",
         "education": "শিক্ষা",
         "science": "বিজ্ঞান",
         "technology": "প্রযুক্তি",
         "knowledge": "জ্ঞান",
-        "security": "নিরাপত্তা",
-        "password": "পাসওয়ার্ড (গোপন সংকেত)",
-        "search": "খোঁজা বা অনুসন্ধান",
-        "language": "ভাষা",
-        "apple": "আপেল",
-        "water": "পানি / জল",
-        "world": "পৃথিবী / বিশ্ব",
-        "light": "আলো",
-        "sound": "শব্দ / আওয়াজ",
-        "power": "ক্ষমতা / বিদ্যুৎ",
         "smart": "চতুর / বুদ্ধিমান"
       };
 
-      // এআই ও ডিকশনারি ইন্টিগ্রেশন
+      // এআই ও ডিকশনারি লজিক
       function getBotResponse(rawInput) {
         const input = rawInput.toLowerCase().trim();
 
-        if (input.includes("জনক") || input.includes("father of computer") || input.includes("আবিষ্কারক")) {
+        // ১. ICT উত্তরসমূহ
+        if (input.includes("জনক") || input.includes("father of computer")) {
           addChatMessage("কম্পিউটারের জনক হলেন চার্লস ব্যাবেজ (Charles Babbage)। আর আধুনিক কম্পিউটারের জনক বলা হয় অ্যালান টিউরিংকে।", 'bot-msg');
+          return;
         } else if (input.includes("cpu") || input.includes("সিপিইউ")) {
-          addChatMessage("CPU এর পূর্ণরূপ Central Processing Unit। একে কম্পিউটারের মস্তিষ্ক বলা হয়। এর প্রধান ৩টি অংশ: ALU, Control Unit এবং Memory Unit।", 'bot-msg');
+          addChatMessage("CPU এর পূর্ণরূপ Central Processing Unit। একে কম্পিউটারের মস্তিষ্ক বলা হয়।", 'bot-msg');
+          return;
         } else if (input.includes("ram") && input.includes("rom")) {
-          addChatMessage("RAM হলো অস্থায়ী মেমোরি (বিদ্যুৎ গেলে তথ্য মুছে যায়), আর ROM হলো স্থায়ী মেমোরি (বিদ্যুৎ গেলেও তথ্য মোছে না)।", 'bot-msg');
+          addChatMessage("RAM হলো অস্থায়ী মেমোরি, আর ROM হলো স্থায়ী মেমোরি।", 'bot-msg');
+          return;
         } else if (input.includes("ram") || input.includes("র্যাম")) {
-          addChatMessage("RAM (Random Access Memory) হলো কম্পিউটারের অস্থায়ী মেমোরি। এটি ডিভাইসের প্রসেসিং স্পিড বাড়ায়।", 'bot-msg');
+          addChatMessage("RAM (Random Access Memory) হলো কম্পিউটারের অস্থায়ী মেমোরি।", 'bot-msg');
+          return;
         } else if (input.includes("rom") || input.includes("রোম")) {
-          addChatMessage("ROM (Read Only Memory) হলো কম্পিউটারের স্থায়ী মেমোরি, যেখানে কম্পিউটার চালুর প্রয়োজনীয় BIOS নির্দেশাবলী সংরক্ষিত থাকে।", 'bot-msg');
+          addChatMessage("ROM (Read Only Memory) হলো কম্পিউটারের স্থায়ী মেমোরি।", 'bot-msg');
+          return;
         } else if (input.includes("software") || input.includes("সফটওয়্যার")) {
-          addChatMessage("সফটওয়্যার হলো কিছু প্রোগ্রামের সমষ্টি যা হার্ডওয়্যারকে পরিচালনা করে। এটি ২ প্রকার: ১. সিস্টেম সফটওয়্যার (Windows) ২. অ্যাপ্লিকেশন সফটওয়্যার (MS Word)।", 'bot-msg');
+          addChatMessage("সফটওয়্যার হলো কিছু প্রোগ্রামের সমষ্টি যা হার্ডওয়্যারকে পরিচালনা করে।", 'bot-msg');
+          return;
         } else if (input.includes("hardware") || input.includes("হার্ডওয়্যার")) {
-          addChatMessage("কম্পিউটারের যেসব স্পর্শযোগ্য যন্ত্রাংশ রয়েছে সেগুলোকে হার্ডওয়্যার বলে। যেমন: কীবোর্ড, মনিটর, মাউস, প্রসেসর।", 'bot-msg');
+          addChatMessage("কম্পিউটারের স্পর্শযোগ্য যন্ত্রাংশগুলোকে হার্ডওয়্যার বলে।", 'bot-msg');
+          return;
         } else if (input.includes("internet") || input.includes("ইন্টারনেট")) {
-          addChatMessage("ইন্টারনেট (Internet) হলো বিশ্বজুড়ে ছড়িয়ে থাকা লাখ লাখ কম্পিউটারের একটি বিশাল নেটওয়ার্ক সিস্টেম (Interconnected Network)।", 'bot-msg');
-        } else if (input.includes("www")) {
-          addChatMessage("WWW এর পূর্ণরূপ World Wide Web। এটি ইন্টারনেটের মাধ্যমে তথ্য দেখার ও শেয়ার করার বিশ্বব্যাপী মাধ্যম (আবিষ্কারক: টিম বার্নার্স লি)।", 'bot-msg');
-        } else if (input.includes("html") || input.includes("এইচটিএমএল")) {
-          addChatMessage("HTML (Hyper Text Markup Language) হলো ওয়েবসাইট তৈরি করার সাধারণ মার্কআপ ল্যাঙ্গুয়েজ।", 'bot-msg');
-        } else if (input.includes("binary") || input.includes("বাইনারি")) {
-          addChatMessage("বাইনারি হলো ০ এবং ১ এই দুটি সংখ্যার ওপর ভিত্তি করে তৈরি সংখ্যা পদ্ধতি। কম্পিউটার শুধু বাইনারি ভাষা বোঝে।", 'bot-msg');
-        } else if (input.includes("virus") || input.includes("ভাইরাস")) {
-          addChatMessage("কম্পিউটার ভাইরাস হলো এক ধরনের ক্ষতিকারক সফটওয়্যার প্রোগ্রাম যা ফাইলের ক্ষতি করে বা মুছে দেয়।", 'bot-msg');
+          addChatMessage("ইন্টারনেট হলো বিশ্বজুড়ে ছড়িয়ে থাকা কম্পিউটারের একটি বিশাল নেটওয়ার্ক।", 'bot-msg');
+          return;
+        } else if (input.includes("html")) {
+          addChatMessage("HTML (Hyper Text Markup Language) হলো ওয়েবসাইট তৈরির মার্কআপ ভাষা।", 'bot-msg');
+          return;
         } else if (input.includes("ai") || input.includes("এআই")) {
-          addChatMessage("AI (Artificial Intelligence) বা কৃত্রিম বুদ্ধিমত্তা হলো মানুষের চিন্তা করার ক্ষমতাকে যন্ত্রের মধ্যে অনুকরণ করার প্রযুক্তি।", 'bot-msg');
-        } else if (dictionary[input]) {
-          addChatMessage(`📖 Dictionary Meaning:\n"${rawInput}" শব্দটির বাংলা অর্থ হলো: ${dictionary[input]}`, 'bot-msg');
-        } else if (/^[a-zA-Z\s]+$/.test(input)) {
-          fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(rawInput)}&langpair=en|bn`)
-            .then(res => res.json())
-            .then(data => {
-              if(data && data.responseData && data.responseData.translatedText) {
-                addChatMessage(`📖 ডিকশনারি অর্থ:\n"${rawInput}" = ${data.responseData.translatedText}`, 'bot-msg');
-              } else {
-                addChatMessage(`📖 "${rawInput}" শব্দের বাংলা অর্থ খুঁজে পাওয়া যায়নি।`, 'bot-msg');
-              }
-            })
-            .catch(() => {
-              addChatMessage(`📖 "${rawInput}" শব্দের অর্থ বুঝতে পারিনি। দয়া করে সঠিক বানান লিখুন।`, 'bot-msg');
-            });
+          addChatMessage("AI (Artificial Intelligence) বা কৃত্রিম বুদ্ধিমত্তা হলো মানুষের চিন্তাশক্তিকে যন্ত্রের মাধ্যমে অনুকরণ করার প্রযুক্তি।", 'bot-msg');
+          return;
+        }
+
+        // ২. ডিকশনারি ও ট্রান্সলেশন স্মার্ট ফিল্টার (যেকোনো বাংলা/ইংরেজি শব্দের ভেতর থেকে ইংরেজি শব্দ খুঁজে নেওয়া)
+        let extractedEnglish = rawInput.match(/[a-zA-Z]+/g);
+        let englishWord = extractedEnglish ? extractedEnglish.join(" ").toLowerCase() : "";
+
+        if (englishWord) {
+          if (dictionary[englishWord]) {
+            addChatMessage(`📖 ডিকশনারি অর্থ:\n"${englishWord}" = ${dictionary[englishWord]}`, 'bot-msg');
+          } else {
+            // অনলাইন অনুবাদ
+            fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(englishWord)}&langpair=en|bn`)
+              .then(res => res.json())
+              .then(data => {
+                if(data && data.responseData && data.responseData.translatedText) {
+                  addChatMessage(`📖 ডিকশনারি অর্থ:\n"${englishWord}" = ${data.responseData.translatedText}`, 'bot-msg');
+                } else {
+                  addChatMessage(`📖 "${englishWord}" শব্দের বাংলা অর্থ খুঁজে পাওয়া যায়নি।`, 'bot-msg');
+                }
+              })
+              .catch(() => {
+                addChatMessage(`📖 "${englishWord}" শব্দের অর্থ বের করতে সমস্যা হচ্ছে।`, 'bot-msg');
+              });
+          }
         } else {
           addChatMessage("ধন্যবাদ আপনার প্রশ্নের জন্য! ১ম-১০ম শ্রেণীর তথ্যপ্রযুক্তি বইয়ের যেকোনো বিষয় বা ইংরেজি যেকোনো শব্দ বাংলায় অর্থ জানতে টাইপ করুন।", 'bot-msg');
         }
@@ -461,7 +452,7 @@
       };
 
       let timerInterval;
-      let timeLeft = 1200; // ⏱️ ২০ মিনিট = ১২০০ সেকেন্ড
+      let timeLeft = 1200; // ২০ মিনিট = ১২০০ সেকেন্ড
 
       function formatTime(seconds) {
         const m = Math.floor(seconds / 60);
@@ -494,7 +485,7 @@
         document.getElementById("quiz-subject").disabled = true;
 
         clearInterval(timerInterval);
-        timeLeft = 1200; // ⏱️ ২০ মিনিট থেকে শুরু হবে
+        timeLeft = 1200; 
         document.getElementById("time-left").innerText = formatTime(timeLeft);
 
         timerInterval = setInterval(() => {
