@@ -57,7 +57,7 @@
       background: rgba(255,255,255,0.05);
     }
     #chat-box {
-      height: 220px;
+      height: 250px;
       overflow-y: auto;
       border: 1px solid #ddd;
       padding: 10px;
@@ -74,8 +74,9 @@
       margin: 8px 0;
       padding: 8px 12px;
       border-radius: 8px;
-      max-width: 80%;
+      max-width: 85%;
       word-wrap: break-word;
+      line-height: 1.5;
     }
     .user-msg {
       background: #007bff;
@@ -126,15 +127,15 @@
   </div>
 
   <div class="card">
-    <h2>🤖 আইসিটি স্মার্ট এআই চ্যাটবট (Voice & Text)</h2>
-    <p>আইসিটি বা কম্পিউটার নিয়ে প্রশ্ন লিখুন অথবা মাইক্রোফোন চেপে কথা বলুন:</p>
+    <h2>🤖 স্মার্ট আইসিটি এআই চ্যাটবট ও ডিকশনারি (১ম-১০ম শ্রেণী)</h2>
+    <p>১ম-১০ম শ্রেণীর ICT প্রশ্ন লিখুন অথবা যেকোনো ইংরেজি শব্দের বাংলা অর্থ জানতে টাইপ করুন:</p>
     
     <div id="chat-box">
-      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার আইসিটি এআই সহকারী। কোনো প্রশ্ন থাকলে লিখুন বা মুখে বলুন!</div>
+      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার স্মার্ট আইসিটি সহকারী ও ডিকশনারি। আইসিটি বিষয় ছাড়াও যেকোনো ইংরেজি শব্দ লিখলে আমি বাংলা অর্থ বলে দেব! (যেমন: Computer, Software, Apple, Education)</div>
     </div>
 
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <input type="text" id="user-input" placeholder="এখানে আপনার প্রশ্ন লিখুন..." style="flex:1; min-width:200px;">
+      <input type="text" id="user-input" placeholder="যেমন: HTML কী? অথবা ইংরেজি শব্দ: Algorithm, Knowledge..." style="flex:1; min-width:200px;">
       <button id="send-btn" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
       <button id="voice-btn" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
     </div>
@@ -142,7 +143,7 @@
 
   <div class="card" id="quiz-section">
     <h2>🧠 জাতীয় আইসিটি কুইজ প্রতিযোগিতা (প্রতি অধ্যায়ে ২০টি প্রশ্ন)</h2>
-    <p>বিষয় নির্বাচন করে <b>"কুইজ শুরু করুন"</b> বাটনে চাপ দিলে টাইমার ও ২০টি প্রশ্ন চালু হবে:</p>
+    <p>বিষয় নির্বাচন করে <b>"কুইজ শুরু করুন"</b> বাটনে চাপ দিলে টাইমার (৭০ সেকেন্ড) ও ২০টি প্রশ্ন চালু হবে:</p>
     
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
       <div>
@@ -158,7 +159,7 @@
       <button id="start-btn" style="background:#28a745; color:white; padding:12px 24px; font-size:16px; font-weight:bold;">▶️ কুইজ শুরু করুন</button>
     </div>
 
-    <div id="timer-display">⏱️ সময় বাকি: <span id="time-left">৩০০</span> সেকেন্ড</div>
+    <div id="timer-display">⏱️ সময় বাকি: <span id="time-left">৭০</span> সেকেন্ড</div>
 
     <br>
     <div id="quiz-box"></div>
@@ -176,12 +177,6 @@
       <p><b>অর্জিত স্কোর: <span id="cert-score">0</span></b></p>
       <button id="print-btn" style="background:#28a745; color:white; padding:8px 20px; font-size:14px; margin-top:15px;">🖨️ সার্টিফিকেট প্রিন্ট / সেভ করুন</button>
     </div>
-  </div>
-
-  <div class="card">
-    <h2>🔊 ভয়েস অ্যাসিস্ট্যান্ট</h2>
-    <p id="speech-text">আমাদের আইসিটি পোর্টালে আপনাকে স্বাগতম। কুইজে অংশ নিন এবং সার্টিফিকেট অর্জন করুন!</p>
-    <button id="read-btn" style="background:#28a745; color:white; padding:10px 18px;">পড়ে শোনাও 🗣️</button>
   </div>
 
   <footer style="text-align:center; padding:15px; margin-top:20px;">
@@ -205,15 +200,6 @@
       setInterval(updateClock, 1000);
       updateClock();
 
-      // ভয়েস রিডার
-      document.getElementById("read-btn").addEventListener("click", function() {
-        window.speechSynthesis.cancel();
-        const txt = document.getElementById("speech-text").innerText;
-        const uttr = new SpeechSynthesisUtterance(txt);
-        uttr.lang = "bn-BD";
-        window.speechSynthesis.speak(uttr);
-      });
-
       // চ্যাটবট
       document.getElementById("send-btn").addEventListener("click", function() {
         sendMessage();
@@ -232,9 +218,8 @@
         if(!customText) inputField.value = "";
 
         setTimeout(() => {
-          const reply = getBotResponse(text.toLowerCase());
-          addChatMessage(reply, 'bot-msg');
-        }, 500);
+          getBotResponse(text);
+        }, 300);
       }
 
       function addChatMessage(msg, className) {
@@ -246,17 +231,104 @@
         box.scrollTop = box.scrollHeight;
       }
 
-      function getBotResponse(input) {
-        if (input.includes("cpu") || input.includes("সিপিইউ")) {
-          return "CPU (Central Processing Unit) হলো কম্পিউটারের মস্তিষ্ক।";
-        } else if (input.includes("ai") || input.includes("এআই")) {
-          return "AI হলো Artificial Intelligence বা কৃত্রিম বুদ্ধিমত্তা।";
+      // বড় ডিকশনারি ডেটাবেস
+      const dictionary = {
+        "computer": "গণকযন্ত্র / কম্পিউটার",
+        "keyboard": "কীবোর্ড (তথ্য ইনপুট দেওয়ার যন্ত্র)",
+        "mouse": "মাউস (পয়েন্টিং ডিভাইস)",
+        "monitor": "মনিটর (প্রদর্শন পর্দা)",
+        "software": "কম্পিউটার প্রোগ্রাম বা সফটওয়্যার",
+        "hardware": "কম্পিউটারের ভৌত বা স্পর্শযোগ্য অংশ",
+        "internet": "আন্তর্জাতিক তথ্য নেটওয়ার্ক",
+        "network": "নেটওয়ার্ক (যোগাযোগ ব্যবস্থা)",
+        "data": "উপাত্ত বা তথ্য",
+        "information": "তথ্য বা সংবাদ",
+        "memory": "স্মৃতি বা মেমোরি",
+        "input": "ইনপুট (তথ্য প্রবেশ করানো)",
+        "output": "আউটপুট (ফলাফল বা তথ্য প্রকাশ)",
+        "algorithm": "অ্যালগরিদম (ধাপভিত্তিক সমাধান)",
+        "code": "কোড বা প্রোগ্রাম নির্দেশিকা",
+        "file": "নথি বা ফাইল",
+        "folder": "ফোল্ডার (ফাইল রাখার স্থান)",
+        "system": "ব্যবস্থা বা সিস্টেম",
+        "device": "যন্ত্র বা ডিভাইস",
+        "screen": "পর্দা",
+        "book": "বই",
+        "student": "ছাত্র / ছাত্রী",
+        "teacher": "শিক্ষক / শিক্ষিকা",
+        "school": "বিদ্যালয় / স্কুল",
+        "education": "শিক্ষা",
+        "science": "বিজ্ঞান",
+        "technology": "প্রযুক্তি",
+        "knowledge": "জ্ঞান",
+        "security": "নিরাপত্তা",
+        "password": "পাসওয়ার্ড (গোপন সংকেত)",
+        "search": "খোঁজা বা অনুসন্ধান",
+        "language": "ভাষা",
+        "apple": "আপেল",
+        "water": "পানি / জল",
+        "world": "পৃথিবী / বিশ্ব",
+        "light": "আলো",
+        "sound": "শব্দ / আওয়াজ",
+        "power": "ক্ষমতা / বিদ্যুৎ",
+        "smart": "চতুর / বুদ্ধিমান"
+      };
+
+      // এআই ও ডিকশনারি ইন্টিগ্রেশন
+      function getBotResponse(rawInput) {
+        const input = rawInput.toLowerCase().trim();
+
+        // ১. তথ্য ও যোগাযোগ প্রযুক্তি (ICT) ১-১০ম শ্রেণী
+        if (input.includes("জনক") || input.includes("father of computer") || input.includes("আবিষ্কারক")) {
+          addChatMessage("কম্পিউটারের জনক হলেন চার্লস ব্যাবেজ (Charles Babbage)। আর আধুনিক কম্পিউটারের জনক বলা হয় অ্যালান টিউরিংকে।", 'bot-msg');
+        } else if (input.includes("cpu") || input.includes("সিপিইউ")) {
+          addChatMessage("CPU এর পূর্ণরূপ Central Processing Unit। একে কম্পিউটারের মস্তিষ্ক বলা হয়। এর প্রধান ৩টি অংশ: ALU, Control Unit এবং Memory Unit।", 'bot-msg');
+        } else if (input.includes("ram") && input.includes("rom")) {
+          addChatMessage("RAM হলো অস্থায়ী মেমোরি (বিদ্যুৎ গেলে তথ্য মুছে যায়), আর ROM হলো স্থায়ী মেমোরি (বিদ্যুৎ গেলেও তথ্য মোছে না)।", 'bot-msg');
         } else if (input.includes("ram") || input.includes("র্যাম")) {
-          return "RAM হলো কম্পিউটারের দ্রুত প্রসেসিং করার অস্থায়ী মেমোরি।";
+          addChatMessage("RAM (Random Access Memory) হলো কম্পিউটারের অস্থায়ী মেমোরি। এটি ডিভাইসের প্রসেসিং স্পিড বাড়ায়।", 'bot-msg');
+        } else if (input.includes("rom") || input.includes("রোম")) {
+          addChatMessage("ROM (Read Only Memory) হলো কম্পিউটারের স্থায়ী মেমোরি, যেখানে কম্পিউটার চালুর প্রয়োজনীয় BIOS নির্দেশাবলী সংরক্ষিত থাকে।", 'bot-msg');
+        } else if (input.includes("software") || input.includes("সফটওয়্যার")) {
+          addChatMessage("সফটওয়্যার হলো কিছু প্রোগ্রামের সমষ্টি যা হার্ডওয়্যারকে পরিচালনা করে। এটি ২ প্রকার: ১. সিস্টেম সফটওয়্যার (Windows) ২. অ্যাপ্লিকেশন সফটওয়্যার (MS Word)।", 'bot-msg');
+        } else if (input.includes("hardware") || input.includes("হার্ডওয়্যার")) {
+          addChatMessage("কম্পিউটারের যেসব স্পর্শযোগ্য যন্ত্রাংশ রয়েছে সেগুলোকে হার্ডওয়্যার বলে। যেমন: কীবোর্ড, মনিটর, মাউস, প্রসেসর।", 'bot-msg');
         } else if (input.includes("internet") || input.includes("ইন্টারনেট")) {
-          return "ইন্টারনেট হলো পুরো বিশ্বের কম্পিউটার নেটওয়ার্ক সিস্টেম।";
-        } else {
-          return "ধন্যবাদ প্রশ্নের জন্য! আইসিটি সম্পর্কিত আরও নির্দিষ্ট বিষয় (যেমন CPU, RAM, AI, HTML) লিখে জানা যাবে।";
+          addChatMessage("ইন্টারনেট (Internet) হলো বিশ্বজুড়ে ছড়িয়ে থাকা লাখ লাখ কম্পিউটারের একটি বিশাল নেটওয়ার্ক সিস্টেম (Interconnected Network)।", 'bot-msg');
+        } else if (input.includes("www")) {
+          addChatMessage("WWW এর পূর্ণরূপ World Wide Web। এটি ইন্টারনেটের মাধ্যমে তথ্য দেখার ও শেয়ার করার বিশ্বব্যাপী মাধ্যম (আবিষ্কারক: টিম বার্নার্স লি)।", 'bot-msg');
+        } else if (input.includes("html") || input.includes("এইচটিএমএল")) {
+          addChatMessage("HTML (Hyper Text Markup Language) হলো ওয়েবসাইট তৈরি করার সাধারণ মার্কআপ ল্যাঙ্গুয়েজ।", 'bot-msg');
+        } else if (input.includes("binary") || input.includes("বাইনারি")) {
+          addChatMessage("বাইনারি হলো ০ এবং ১ এই দুটি সংখ্যার ওপর ভিত্তি করে তৈরি সংখ্যা পদ্ধতি। কম্পিউটার শুধু বাইনারি ভাষা বোঝে।", 'bot-msg');
+        } else if (input.includes("virus") || input.includes("ভাইরাস")) {
+          addChatMessage("কম্পিউটার ভাইরাস হলো এক ধরনের ক্ষতিকারক সফটওয়্যার প্রোগ্রাম যা ফাইলের ক্ষতি করে বা মুছে দেয়।", 'bot-msg');
+        } else if (input.includes("ai") || input.includes("এআই")) {
+          addChatMessage("AI (Artificial Intelligence) বা কৃত্রিম বুদ্ধিমত্তা হলো মানুষের চিন্তা করার ক্ষমতাকে যন্ত্রের মধ্যে অনুকরণ করার প্রযুক্তি।", 'bot-msg');
+        } 
+        // ২. ইংলিশ ডিকশনারি (Dictionary Filter)
+        else if (dictionary[input]) {
+          addChatMessage(`📖 Dictionary Meaning:\n"${rawInput}" শব্দটির বাংলা অর্থ হলো: ${dictionary[input]}`, 'bot-msg');
+        } 
+        // ৩. ডাইনামিক অনলাইন ডিকশনারি ট্রান্সলেটর (যদি ইংরেজি শব্দ হয়)
+        else if (/^[a-zA-Z\s]+$/.test(input)) {
+          // অনলাইন এপিআই থেকে সরাসরি অর্থ এনে দেবে
+          fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(rawInput)}&langpair=en|bn`)
+            .then(res => res.json())
+            .then(data => {
+              if(data && data.responseData && data.responseData.translatedText) {
+                addChatMessage(`📖 ডিকশনারি অর্থ:\n"${rawInput}" = ${data.responseData.translatedText}`, 'bot-msg');
+              } else {
+                addChatMessage(`📖 "${rawInput}" শব্দের বাংলা অর্থ খুঁজে পাওয়া যায়নি।`, 'bot-msg');
+              }
+            })
+            .catch(() => {
+              addChatMessage(`📖 "${rawInput}" শব্দের অর্থ বুঝতে পারিনি। দয়া করে সঠিক বানান লিখুন।`, 'bot-msg');
+            });
+        } 
+        // ৪. ডিফল্ট মেসেজ
+        else {
+          addChatMessage("ধন্যবাদ আপনার প্রশ্নের জন্য! ১ম-১০ম শ্রেণীর তথ্যপ্রযুক্তি বইয়ের যেকোনো বিষয় বা ইংরেজি যেকোনো শব্দ বাংলায় অর্থ জানতে টাইপ করুন।", 'bot-msg');
         }
       }
 
@@ -271,7 +343,7 @@
         recognition.lang = 'bn-BD';
 
         recognition.onstart = function() {
-          addChatMessage("🎙️ শুনছি... এখন আপনার প্রশ্ন বলুন...", 'bot-msg');
+          addChatMessage("🎙️ শুনছি... আপনার প্রশ্ন বা ইংরেজি শব্দ বলুন...", 'bot-msg');
         };
 
         recognition.onresult = function(event) {
@@ -366,7 +438,7 @@
           { q: "ফেস রিকগনিশন (Face Recognition) কিসের উদাহরণ?", options: ["AI & Biometrics", "Manual Graphics", "Spreadsheet"], ans: 0 },
           { q: "ভয়েস অ্যাসিস্ট্যান্ট কোনটি?", options: ["Google Assistant / Siri", "Google Chrome", "MS Excel"], ans: 0 },
           { q: "হিউম্যানয়েড রোবটের উদাহরণ কোনটি?", options: ["Sophia", "ChatGPT", "Windows 11"], ans: 0 },
-          { q: "এআই প্রম্পট (Prompt) বলতে কী বোঝায়?", options: ["এআই-কে দেওয়া নির্দেশ বা প্রশ্ন", "প্রোগ্রামিং এরর", "কম্পিউটার ভাইরাস"], ans: 0 },
+          { q: "এআই প্রম্পট (Prompt) বলতে কী বোঝায়?", options: ["এআই-কে দেওয়া নির্দেশ বা প্রশ্ন", "প্রগ্রামিং এরর", "কম্পিউটার ভাইরাস"], ans: 0 },
           { q: "ড্রোন (Drone) উড্ডয়ন ও নেভিগেশনে কোনটি সহায়তা করে?", options: ["AI & GPS", "MS Office", "Bluetooth"], ans: 0 },
           { q: "দাবা খেলায় বিশ্বচ্যাম্পিয়নকে হারানো এআই সুপারকম্পিউটারের নাম কী?", options: ["Deep Blue", "Alpha Go", "ChatGPT"], ans: 0 },
           { q: "বিগ ডেটা (Big Data) প্রসেস করতে কোনটি দরকার?", options: ["AI & Cloud Computing", "Notepad", "Pen Drive"], ans: 0 },
@@ -397,7 +469,7 @@
       };
 
       let timerInterval;
-      let timeLeft = 300;
+      let timeLeft = 70; // ⏱️ সময় ৭০ সেকেন্ড
 
       // কুইজ শুরু করা
       document.getElementById("start-btn").addEventListener("click", function() {
@@ -424,7 +496,7 @@
         document.getElementById("quiz-subject").disabled = true;
 
         clearInterval(timerInterval);
-        timeLeft = 300;
+        timeLeft = 70; 
         document.getElementById("time-left").innerText = timeLeft;
 
         timerInterval = setInterval(() => {
