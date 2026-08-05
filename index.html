@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>স্মার্ট আইসিটি ও ডিকশনারি সহকারী (১ম - ১০ম শ্রেণি)</title>
+  <title>স্মার্ট আইসিটি ও ডিকশনারি সহকারী</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -30,7 +30,7 @@
       transition: 0.2s;
     }
     button:hover { opacity: 0.9; }
-    select, input[type="text"] {
+    input[type="text"] {
       font-size: 15px;
       padding: 10px;
       border-radius: 6px;
@@ -47,7 +47,7 @@
     }
     .dark-mode .q-box { background: rgba(255,255,255,0.05); }
     #chat-box {
-      height: 350px;
+      height: 300px;
       overflow-y: auto;
       border: 1px solid #ddd;
       padding: 10px;
@@ -64,7 +64,6 @@
       max-width: 85%;
       word-wrap: break-word;
       line-height: 1.5;
-      white-space: pre-line;
     }
     .user-msg { background: #007bff; color: white; margin-left: auto; text-align: right; }
     .bot-msg { background: #e9ecef; color: #333; margin-right: auto; }
@@ -100,33 +99,24 @@
   </div>
 
   <div class="card">
-    <h2>🤖 স্মার্ট আইসিটি ও ডিকশনারি সহকারী (১ম - ১০ম শ্রেণি)</h2>
-    <p style="margin-bottom:12px; color:#555;">১ম থেকে ১০ম শ্রেণির আইসিটি সিলেবাসের যেকোনো প্রশ্ন বা শব্দের অর্থ এখানে লিখুন:</p>
+    <h2>🤖 স্মার্ট আইসিটি ও ডিকশনারি সহকারী</h2>
+    <p style="margin-bottom:12px; color:#555;">কম্পিউটার, র‍্যাম, রম, মডেম বা যেকোনো শব্দের অর্থ জানতে নিচে লিখুন:</p>
     
     <div id="chat-box">
-      <div class="chat-msg bot-msg">👋 হ্যালো! আমি আপনার আইসিটি সহকারী। ১ম থেকে ১০ম শ্রেণির যেকোনো প্রশ্ন বা শব্দের অর্থ আমাকে জিজ্ঞেস করতে পারেন!</div>
+      <div class="chat-msg bot-msg">👋 হ্যালো! আইসিটি বিষয়ে যেকোনো প্রশ্ন বা শব্দের অর্থ জানতে আমাকে জিজ্ঞেস করুন।</div>
     </div>
 
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <input type="text" id="user-input" placeholder="যেমন: কম্পিউটার কি? RAM কি? মডেম কাকে বলে?" style="flex:1; min-width:200px;">
+      <input type="text" id="user-input" placeholder="যেমন: কম্পিউটার কি? RAM কি?" style="flex:1; min-width:200px;">
       <button id="send-btn" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
-      <button id="voice-btn" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
     </div>
   </div>
 
-  <div class="card" id="quiz-section">
+  <div class="card">
     <h2>🧠 জাতীয় আইসিটি কুইজ প্রতিযোগিতা (২০টি প্রশ্ন)</h2>
-    <p>বিষয় নির্বাচন করে কুইজ শুরু করুন:</p>
+    <p>কুইজ শুরু করতে নিচের বাটনে ক্লিক করুন:</p>
     
-    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-      <div>
-        <label for="quiz-subject"><b>বিষয় নির্বাচন করুন:</b></label><br>
-        <select id="quiz-subject" style="width:100%; max-width:300px; margin-top:5px;">
-          <option value="ict_general">১ম থেকে ১০ম শ্রেণি - আইসিটি সার্বিক সিলেবাস</option>
-        </select>
-      </div>
-      <button id="start-btn" style="background:#28a745; color:white; padding:12px 24px; font-size:16px; font-weight:bold;">▶️ কুইজ শুরু করুন</button>
-    </div>
+    <button id="start-btn" style="background:#28a745; color:white; padding:12px 24px; font-size:16px; font-weight:bold;">▶️ কুইজ শুরু করুন</button>
 
     <div id="timer-display">⏱️ সময় বাকি: <span id="time-left">20:00</span> মিনিট</div>
 
@@ -146,195 +136,157 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
+      // ডার্ক মোড টগল
       const darkModeBtn = document.getElementById("dark-mode-btn");
       if (darkModeBtn) {
         darkModeBtn.addEventListener("click", () => document.body.classList.toggle("dark-mode"));
       }
 
+      // ঘড়ি আপডেট
       function updateClock() {
         const now = new Date();
         const elem = document.getElementById("live-clock");
-        if(elem) elem.innerText = "⏰ " + now.toLocaleTimeString() + " | " + now.toLocaleDateString();
+        if(elem) elem.innerText = "⏰ " + now.toLocaleTimeString();
       }
       setInterval(updateClock, 1000);
       updateClock();
 
+      // ডিকশনারি বা চ্যাটবট ফাংশন
       const sendBtn = document.getElementById("send-btn");
       const userInput = document.getElementById("user-input");
       if (sendBtn && userInput) {
-        sendBtn.addEventListener("click", () => sendMessage());
-        userInput.addEventListener("keypress", (e) => { if (e.key === 'Enter') sendMessage(); });
+        sendBtn.addEventListener("click", () => processQuery());
+        userInput.addEventListener("keypress", (e) => { if (e.key === 'Enter') processQuery(); });
       }
 
-      function sendMessage(customText) {
-        const inputField = document.getElementById("user-input");
-        const text = customText || (inputField ? inputField.value.trim() : "");
+      function processQuery() {
+        const text = userInput.value.trim();
         if (!text) return;
 
-        addChatMessage(text, 'user-msg');
-        if(!customText && inputField) inputField.value = "";
-        setTimeout(() => getSmartAnswer(text), 300);
+        addMsg(text, 'user-msg');
+        userInput.value = "";
+        setTimeout(() => getAnswer(text), 300);
       }
 
-      function addChatMessage(msg, className) {
+      function addMsg(text, className) {
         const box = document.getElementById("chat-box");
         if (!box) return;
         const div = document.createElement("div");
         div.className = "chat-msg " + className;
-        div.innerText = msg;
+        div.innerText = text;
         box.appendChild(div);
         box.scrollTop = box.scrollHeight;
       }
 
-      function getSmartAnswer(query) {
+      function getAnswer(query) {
         const q = query.toLowerCase();
         let reply = "";
 
-        if (q.includes("কম্পিউটার") || q.includes("computer")) {
-          reply = "💻 কম্পিউটার হলো একটি ইলেকট্রনিক যন্ত্র, যা তথ্য গ্রহণ করে এবং প্রক্রিয়াকরণের মাধ্যমে নির্ভুল ফলাফল দেয়। চার্লস ব্যাবেজকে আধুনিক কম্পিউটারের জনক বলা হয়।";
-        } else if (q.includes("ঘড়ি") || q.includes("watch") || q.includes("clock") || q.includes("কে প্রথম ঘড়ি আবিষ্কার করে")) {
-          reply = "⌚ পিটার হেনলিন (Peter Henlein) ১৫১০ সালে প্রথম পকেট ঘড়ি বা ঘড়ি আবিষ্কার করেন।";
-        } else if (q.includes("man") || q.includes("ম্যান")) {
-          reply = "🌐 MAN (Metropolitan Area Network) হলো একটি শহরের সীমানার মধ্যে গড়ে ওঠা কম্পিউটার নেটওয়ার্ক।";
-        } else if (q.includes("আইসিটি") || q.includes("ict")) {
-          reply = "🌐 ICT অর্থ Information and Communication Technology (তথ্য ও যোগাযোগ প্রযুক্তি)।";
-        } else if (q.includes("সিপিইউ") || q.includes("cpu")) {
-          reply = "🧠 CPU হলো Central Processing Unit, যেটিকে কম্পিউটারের মস্তিষ্ক বলা হয়।";
+        if (q.includes("কম্পিউটার")) {
+          reply = "💻 কম্পিউটার হলো একটি ইলেকট্রনিক যন্ত্র যা তথ্য প্রক্রিয়াকরণ করে।";
         } else if (q.includes("রাম") || q.includes("ram")) {
-          reply = "⚡ RAM (Random Access Memory) হলো কম্পিউটারের অস্থায়ী বা প্রাইমারি মেমোরি।";
+          reply = "⚡ RAM হলো কম্পিউটারের অস্থায়ী বা প্রাইমারি মেমোরি।";
         } else if (q.includes("রম") || q.includes("rom")) {
-          reply = "🔒 ROM (Read Only Memory) হলো কম্পিউটারের স্থায়ী মেমোরি।";
-        } else if (q.includes("মডেম") || q.includes("modem")) {
-          reply = "📡 মডেম এমন একটি ডিভাইস যা ডিজিটাল সিগন্যালকে অ্যানালগ এবং অ্যানালগ সিগন্যালকে ডিজিটালে রূপান্তর করে।";
-        } else if (q.includes("ইনপুট") || q.includes("input")) {
-          reply = "📥 যে ডিভাইসের মাধ্যমে কম্পিউটারে ডেটা দেওয়া হয় তাকে ইনপুট ডিভাইস বলে (যেমন: কিবোর্ড, মাউস)।";
-        } else if (q.includes("আউটপুট") || q.includes("output")) {
-          reply = "📤 প্রসেস করা ফলাফল দেখার যন্ত্রকে আউটপুট ডিভাইস বলে (যেমন: মনিটর, প্রিন্টার)।";
-        } else if (q.includes("ইন্টারনেট") || q.includes("internet")) {
-          reply = "🌍 ইন্টারনেট হলো সারা পৃথিবীর নেটওয়ার্কের একটি বিশাল জাল।";
+          reply = "🔒 ROM হলো কম্পিউটারের স্থায়ী মেমোরি (Read Only Memory)।";
+        } else if (q.includes("সিপিইউ") || q.includes("cpu")) {
+          reply = "🧠 CPU হলো সেন্ট্রাল প্রসেসিং ইউনিট, যা কম্পিউটারের মস্তিষ্ক।";
+        } else if (q.includes("মডেম")) {
+          reply = "📡 মডেম ডিজিটাল সিগন্যালকে অ্যানালগ এবং অ্যানালগ সিগন্যালকে ডিজিটালে রূপান্তর করে।";
         } else {
-          reply = `📖 "${query}" সম্পর্কিত তথ্য ১ম থেকে ১০ম শ্রেণির আইসিটি পাঠ্যবইয়ের সিলেবাসের অন্তর্ভুক্ত রয়েছে।`;
+          reply = `📖 "${query}" সম্পর্কিত তথ্য আইসিটি সিলেবাসের অন্তর্ভুক্ত।`;
         }
-
-        addChatMessage(reply, 'bot-msg');
+        addMsg(reply, 'bot-msg');
       }
 
-      const voiceBtn = document.getElementById("voice-btn");
-      if (voiceBtn) {
-        voiceBtn.addEventListener("click", function() {
-          if (!('webkitSpeechRecognition' in window)) {
-            alert("ব্রাউজারে ভয়েস সাপোর্ট করছে না।");
-            return;
-          }
-          const recognition = new webkitSpeechRecognition();
-          recognition.lang = 'bn-BD';
-          recognition.onstart = () => addChatMessage("🎙️ শুনছি... বলুন...", 'bot-msg');
-          recognition.onresult = (e) => sendMessage(e.results[0][0].transcript);
-          recognition.start();
-        });
-      }
-
+      // কুইজ ডেটা (২০টি প্রশ্ন)
       const quizData = [
-        { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit", "Core Process Unit"], ans: 1 },
+        { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process", "Central Processing Unit", "Computer Processing", "Core Unit"], ans: 1 },
         { q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি?", options: ["RAM", "ROM", "Cache", "Register"], ans: 1 },
-        { q: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?", options: ["Monitor", "Hard Disk", "Microprocessor / CPU", "Motherboard"], ans: 2 },
-        { q: "www-এর পূর্ণরূপ কী?", options: ["World Wide Web", "World Whole Web", "Web World Wide", "Wide World Web"], ans: 0 },
-        { q: "ইন্টারনেটে নেটওয়ার্ক ঠিকানার পরিচয়কে কী বলা হয়?", options: ["IP Address", "USB Drive", "E-mail", "Bluetooth"], ans: 0 },
-        { q: "পাসওয়ার্ড সুরক্ষিত রাখার সবচেয়ে ভালো উপায় কোনটি?", options: ["একই পাসওয়ার্ড রাখা", "সহজ নাম্বার দেওয়া", "শক্তিশালী ও অনন্য রাখা", "বন্ধুকে জানিয়ে রাখা"], ans: 2 },
-        { q: "ফিশিং (Phishing) কীসের সাথে সম্পর্কিত?", options: ["মাছ ধরা", "অনলাইন তথ্য চুরি বা প্রতারণা", "কম্পিউটার স্পিড বৃদ্ধি", "প্রিন্ট করা"], ans: 1 },
-        { q: "যে ডিভাইসের মাধ্যমে কম্পিউটারে ডেটা দেওয়া হয় তাকে কী বলে?", options: ["ইনপুট ডিভাইস", "আউটপুট ডিভাইস", "স্টোরেজ", "প্রসেসর"], ans: 0 },
+        { q: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?", options: ["Monitor", "Hard Disk", "CPU", "Motherboard"], ans: 2 },
+        { q: "www-এর পূর্ণরূপ কী?", options: ["World Wide Web", "World Whole Web", "Web World Wide", "Wide Web"], ans: 0 },
+        { q: "ইন্টারনেট ঠিকানার পরিচয়কে কী বলা হয়?", options: ["IP Address", "USB", "E-mail", "Bluetooth"], ans: 0 },
+        { q: "পাসওয়ার্ড সুরক্ষার সবচেয়ে ভালো উপায় কোনটি?", options: ["একই পাসওয়ার্ড রাখা", "সহজ সংখ্যা দেওয়া", "শক্তিশালী ও অনন্য রাখা", "কাউকে না বলা"], ans: 2 },
+        { q: "ফিশিং (Phishing) কীসের সাথে সম্পর্কিত?", options: ["মাছ ধরা", "তথ্য চুরি বা প্রতারণা", "স্পিড বৃদ্ধি", "প্রিন্ট করা"], ans: 1 },
+        { q: "ইনপুট ডিভাইস কোনটি?", options: ["মনিটর", "প্রিন্টার", "কিবোর্ড", "স্পিকার"], ans: 2 },
         { q: "মনিটর কী ধরনের ডিভাইস?", options: ["ইনপুট", "আউটপুট", "স্টোরেজ", "কমিউনিকেশন"], ans: 1 },
-        { q: "কম্পিউটারের জনক কে?", options: ["বিল গেটস", "স্টিভ জবস", "চার্লস ব্যাবেজ", "অ্যালান টুরিং"], ans: 2 },
-        { q: "র‌্যাম (RAM) কোন ধরনের মেমোরি?", options: ["স্থায়ী", "অস্থায়ী", "সেকেন্ডারি", "রিড অনলি"], ans: 1 },
-        { q: "নিচের কোনটি ইনপুট ডিভাইস?", options: ["প্রিন্টার", "স্পিকার", "কিবোর্ড", "প্লটার"], ans: 2 },
-        { q: "কম্পিউটারের হার্ডডিস্ক কী কাজে ব্যবহৃত হয়?", options: ["হিসাব করতে", "তথ্য স্থায়ীভাবে সংরক্ষণ করতে", "বিদ্যুৎ সরবরাহ করতে", "ছবি দেখাতে"], ans: 1 },
-        { q: "ইন্টারনেট ব্যবহারের জন্য কোনটি আবশ্যক?", options: ["মডেম বা রাউটার", "স্ক্যানার", "জয়েস্টিক", "হেডফোন"], ans: 0 },
-        { q: "কম্পিউটার ভাইরাস হলো এক ধরণের—", options: ["ভালো সফটওয়্যার", "ক্ষতিকারক প্রোগ্রাম বা সফটওয়্যার", "হার্ডওয়্যার যন্ত্র", "অপারেটিং সিস্টেম"], ans: 1 },
-        { q: "ইমেল (Email) শব্দের পূর্ণরূপ কী?", options: ["Electronic Mail", "Electrical Mail", "Easy Mail", "Effective Mail"], ans: 0 },
-        { q: "অ্যালগরিদম কী?", options: ["কম্পিউটার গেম", "সমস্যা সমাধানের ধাপভিত্তিক নিয়ম", "নেটওয়ার্ক ক্যাবল", "ভাইরাস"], ans: 1 },
-        { q: "ফ্লোচার্ট বা প্রবাহচিত্রের চিত্র প্রতীক মূলত কী প্রকাশ করে?", options: ["কাজের ধারা বা ধাপ", "কম্পিউটারের গতি", "বিদ্যুতের ভোল্টেজ", "মনিটরের রেজুলেশন"], ans: 0 },
-        { q: "লোকাল এরিয়া নেটওয়ার্ককে সংক্ষেপে কী বলা হয়?", options: ["WAN", "MAN", "LAN", "PAN"], ans: 2 },
-        { q: "তথ্য ও যোগাযোগ প্রযুক্তির মূল ভিত্তি কী?", options: ["তথ্য", "উপাত্ত", "জ্ঞান ও প্রযুক্তি", "উপরের সবগুলো"], ans: 3 }
+        { q: "কম্পিউটারের জনক কে?", options: ["বিল গেটস", "স্টিভ জবস", "চার্লস ব্যাবেজ", "টুরিং"], ans: 2 },
+        { q: "র‌্যাম কোন ধরনের মেমোরি?", options: ["স্থায়ী", "অস্থায়ী", "সেকেন্ডারি", "রিড অনলি"], ans: 1 },
+        { q: "ইনপুট ডিভাইসের উদাহরণ কোনটি?", options: ["মাউস", "প্রিন্টার", "হেডফোন", "প্লটার"], ans: 0 },
+        { q: "হার্ডডিস্ক কী কাজে ব্যবহৃত হয়?", options: ["হিসাব করতে", "তথ্য সংরক্ষণ করতে", "বিদ্যুৎ দিতে", "ছবি দেখাতে"], ans: 1 },
+        { q: "ইন্টারনেটের জন্য আবশ্যক কোনটি?", options: ["মডেম বা রাউটার", "স্ক্যানার", "জয়েস্টিক", "প্রিন্টার"], ans: 0 },
+        { q: "কম্পিউটার ভাইরাস হলো—", options: ["ভালো সফটওয়্যার", "ক্ষতিকারক প্রোগ্রাম", "হার্ডওয়্যার", "অপারেটিং সিস্টেম"], ans: 1 },
+        { q: "ইমেইল শব্দের পূর্ণরূপ কী?", options: ["Electronic Mail", "Electrical Mail", "Easy Mail", "Effective Mail"], ans: 0 },
+        { q: "অ্যালগরিদম কী?", options: ["গেম", "ধাপভিত্তিক নিয়ম", "নেটওয়ার্ক ক্যাবল", "ভাইরাস"], ans: 1 },
+        { q: "ফ্লোচার্ট কী প্রকাশ করে?", options: ["কাজের ধারা বা ধাপ", "গতির মাপ", "ভোল্টেজ", "রেজুলেশন"], ans: 0 },
+        { q: "লোকাল এরিয়া নেটওয়ার্ককে কী বলা হয়?", options: ["WAN", "MAN", "LAN", "PAN"], ans: 2 },
+        { q: "তথ্য ও প্রযুক্তির মূল ভিত্তি কী?", options: ["তথ্য", "উপাত্ত", "জ্ঞান ও প্রযুক্তি", "সবগুলো"], ans: 3 }
       ];
 
       let timerInterval;
-      let timeLeft = 1200;
+      let timeLeft = 1200; // ২০ মিনিট
 
-      function formatTime(seconds) {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
+      function formatTime(secs) {
+        const m = Math.floor(secs / 60);
+        const s = secs % 60;
         return `${m}:${s < 10 ? '0' : ''}${s}`;
       }
 
+      // কুইজ শুরু বাটন
       const startBtn = document.getElementById("start-btn");
       if (startBtn) {
         startBtn.addEventListener("click", function() {
           let html = "";
-
-          quizData.forEach((qObj, index) => {
-            html += `<div class="q-box"><p><b>${index + 1}. ${qObj.q}</b></p>`;
-            qObj.options.forEach((opt, optIndex) => {
-              html += `<label style="display:block; margin: 5px 0;"><input type="radio" name="q_${index}" value="${optIndex}"> ${opt}</label>`;
+          quizData.forEach((item, idx) => {
+            html += `<div class="q-box"><p><b>${idx + 1}. ${item.q}</b></p>`;
+            item.options.forEach((opt, oIdx) => {
+              html += `<label style="display:block; margin: 5px 0;"><input type="radio" name="q_${idx}" value="${oIdx}"> ${opt}</label>`;
             });
             html += `</div>`;
           });
 
-          const quizBox = document.getElementById("quiz-box");
-          const quizResult = document.getElementById("quiz-result");
-          const certCard = document.getElementById("certificate-card");
-          const submitBtn = document.getElementById("submit-btn");
-          const timerDisplay = document.getElementById("timer-display");
-
-          if (quizBox) quizBox.innerHTML = html;
-          if (quizResult) quizResult.innerHTML = "";
-          if (certCard) certCard.style.display = "none";
-          if (submitBtn) submitBtn.style.display = "inline-block";
-          if (timerDisplay) timerDisplay.style.display = "inline-block";
+          document.getElementById("quiz-box").innerHTML = html;
+          document.getElementById("quiz-result").innerHTML = "";
+          document.getElementById("certificate-card").style.display = "none";
+          document.getElementById("submit-btn").style.display = "inline-block";
+          document.getElementById("timer-display").style.display = "inline-block";
 
           clearInterval(timerInterval);
           timeLeft = 1200;
-          const timeLeftSpan = document.getElementById("time-left");
-          if (timeLeftSpan) timeLeftSpan.innerText = formatTime(timeLeft);
-          
+          document.getElementById("time-left").innerText = formatTime(timeLeft);
+
           timerInterval = setInterval(() => {
             timeLeft--;
-            if (timeLeftSpan) timeLeftSpan.innerText = formatTime(timeLeft);
+            document.getElementById("time-left").innerText = formatTime(timeLeft);
             if (timeLeft <= 0) {
               clearInterval(timerInterval);
               alert("সময় শেষ!");
-              if (submitBtn) submitBtn.click();
+              document.getElementById("submit-btn").click();
             }
           }, 1000);
         });
       }
 
+      // উত্তর জমা দেওয়ার বাটন
       const submitBtn = document.getElementById("submit-btn");
       if (submitBtn) {
         submitBtn.addEventListener("click", function() {
           let score = 0;
-          const total = quizData.length;
-
-          quizData.forEach((qObj, index) => {
-            const options = document.getElementsByName(`q_${index}`);
-            for (let i = 0; i < options.length; i++) {
-              if (options[i].checked && parseInt(options[i].value) === qObj.ans) {
+          quizData.forEach((item, idx) => {
+            const opts = document.getElementsByName(`q_${idx}`);
+            for (let i = 0; i < opts.length; i++) {
+              if (opts[i].checked && parseInt(opts[i].value) === item.ans) {
                 score++;
               }
             }
           });
 
           clearInterval(timerInterval);
-          const quizResult = document.getElementById("quiz-result");
-          if (quizResult) quizResult.innerText = `🎉 আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।`;
+          document.getElementById("quiz-result").innerText = `🎉 আপনি ২০-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।`;
           
-          const userName = prompt("আপনার সার্টিফিকেট এর জন্য নাম দিন:") || "অংশগ্রহণকারী";
-          const certName = document.getElementById("cert-name");
-          const certScore = document.getElementById("cert-score");
-          const certCard = document.getElementById("certificate-card");
-
-          if (certName) certName.innerText = userName;
-          if (certScore) certScore.innerText = `${score} / ${total}`;
-          if (certCard) certCard.style.display = "block";
+          const name = prompt("সার্টিফিকেটের জন্য আপনার নাম লিখুন:") || "শিক্ষার্থী";
+          document.getElementById("cert-name").innerText = name;
+          document.getElementById("cert-score").innerText = `${score} / 20`;
+          document.getElementById("certificate-card").style.display = "block";
         });
       }
 
