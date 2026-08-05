@@ -115,7 +115,7 @@
     
     <div class="dashboard-stats">
       <div class="stat-box">
-        <span style="display:block; font-size:12px; color:#555;">সৈনিক সার্চ সংখ্যা</span>
+        <span style="display:block; font-size:12px; color:#555;">মোট সার্চ সংখ্যা</span>
         <strong id="stat-search-count" style="font-size:18px; color:#007bff;">0</strong> টি
       </div>
       <div class="stat-box">
@@ -200,13 +200,11 @@
       let searchCount = 0;
       let learnedWordsCount = 0;
 
-      // ডার্ক মোড টগল
       const darkModeBtn = document.getElementById("dark-mode-btn");
       if (darkModeBtn) {
         darkModeBtn.addEventListener("click", () => document.body.classList.toggle("dark-mode"));
       }
 
-      // ঘড়ি আপডেট
       function updateClock() {
         const now = new Date();
         const elem = document.getElementById("live-clock");
@@ -215,7 +213,6 @@
       setInterval(updateClock, 1000);
       updateClock();
 
-      // মিনি গেমের জন্য ভয়েস অন/অফ অপশন কন্ট্রোল
       let isVoiceActive = false;
       const voiceToggleBtn = document.getElementById("voice-toggle-btn");
       if (voiceToggleBtn) {
@@ -252,7 +249,6 @@
         }
       }
 
-      // ডিকশনারি বা চ্যাটবট ফাংশন
       const sendBtn = document.getElementById("send-btn");
       const userInput = document.getElementById("user-input");
       
@@ -269,7 +265,6 @@
         const text = customText || userInput.value.trim();
         if (!text) return;
 
-        // ১ নম্বর নতুন ফিচার: ভয়েস কমান্ড হ্যান্ডলিং (যেমন: "কুইজ শুরু করো" বা "ডার্ক মোড")
         const lowerText = text.toLowerCase();
         if (lowerText.includes("কুইজ শুরু") || lowerText.includes("quiz")) {
           addMsg(text, 'user-msg');
@@ -289,7 +284,6 @@
         addMsg(text, 'user-msg');
         if (!customText) userInput.value = "";
         
-        // ড্যাশবোর্ড কাউন্টার আপডেট
         searchCount++;
         document.getElementById("stat-search-count").innerText = searchCount;
 
@@ -306,7 +300,6 @@
         box.scrollTop = box.scrollHeight;
       }
 
-      // শক্তিশালী ডিকশনারি ডাটাবেজ
       function getDictionaryAnswer(query) {
         const q = query.toLowerCase().trim();
         let reply = "";
@@ -384,7 +377,6 @@
         document.getElementById("ai-status-text").innerText = `সর্বশেষ সার্চ করা শব্দ: "${query}" সফলভাবে প্রসেস করা হয়েছে!`;
       }
 
-      // ভয়েস সার্চ ফাংশন
       const voiceBtn = document.getElementById("voice-btn");
       if (voiceBtn) {
         voiceBtn.addEventListener("click", function() {
@@ -403,7 +395,6 @@
         });
       }
 
-      // কুইজ ডেটা (২০টি প্রশ্ন)
       const quizData = [
         { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process", "Central Processing Unit", "Computer Processing", "Core Unit"], ans: 1 },
         { q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি?", options: ["RAM", "ROM", "Cache", "Register"], ans: 1 },
@@ -428,7 +419,7 @@
       ];
 
       let timerInterval;
-      let timeLeft = 1200; // ২০ মিনিট
+      let timeLeft = 1200;
 
       function formatTime(secs) {
         const m = Math.floor(secs / 60);
@@ -436,7 +427,6 @@
         return `${m}:${s < 10 ? '0' : ''}${s}`;
       }
 
-      // কুইজ শুরু বাটন
       const startBtn = document.getElementById("start-btn");
       if (startBtn) {
         startBtn.addEventListener("click", function() {
@@ -472,7 +462,6 @@
         });
       }
 
-      // উত্তর জমা দেওয়ার বাটন
       const submitBtn = document.getElementById("submit-btn");
       if (submitBtn) {
         submitBtn.addEventListener("click", function() {
