@@ -129,6 +129,10 @@
 
   <div class="card">
     <h2>🎮 মিনি আইসিটি শব্দ মেলানো গেম</h2>
+    <div style="margin-bottom: 12px; display:flex; align-items:center; gap:10px;">
+      <span>ভয়েস অপশন কন্ট্রোল:</span>
+      <button id="voice-toggle-btn" style="background:#ffc107; color:#333; padding:6px 14px; font-weight:bold;">🔇 ভয়েস অফ আছে (ক্লিক করে চালু করুন)</button>
+    </div>
     <p id="game-question">নিচের কোনটি ইনপুট ডিভাইস?</p>
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
       <button onclick="checkGameAns(true)" style="background:#28a745; color:white; padding:8px 15px;">কিবোর্ড (সঠিক)</button>
@@ -150,11 +154,6 @@
 
     <button id="submit-btn" style="background:#007bff; color:white; padding:12px 25px; font-size:16px; font-weight:bold; margin-top:10px; display:none;">উত্তর জমা দিন 🚀</button>
     <p id="quiz-result" style="font-weight:bold; font-size:16px; margin-top:15px;"></p>
-
-    <div id="leaderboard-card" style="display:none; margin-top:15px; background:rgba(0,123,255,0.05); padding:12px; border-radius:8px;">
-      <h3>🏆 সাম্প্রতিক কুইজ স্কোর তালিকা</h3>
-      <ul id="score-list" style="padding-left:20px; text-align:left;"></ul>
-    </div>
 
     <div id="certificate-card">
       <h1 style="color:#007bff; margin-bottom:5px;">📜 আইসিটি সার্টিফিকেট</h1>
@@ -187,15 +186,41 @@
       setInterval(updateClock, 1000);
       updateClock();
 
-      // মিনি গেম চেক ফাংশন
+      // ৩ নম্বর মিনি গেমের জন্য ভয়েস অন/অফ অপশন কন্ট্রোল
+      let isVoiceActive = false;
+      const voiceToggleBtn = document.getElementById("voice-toggle-btn");
+      if (voiceToggleBtn) {
+        voiceToggleBtn.addEventListener("click", function() {
+          isVoiceActive = !isVoiceActive;
+          if (isVoiceActive) {
+            voiceToggleBtn.style.background = "#28a745";
+            voiceToggleBtn.style.color = "white";
+            voiceToggleBtn.innerText = "🔊 ভয়েস অন আছে (বন্ধ করতে ক্লিক করুন)";
+          } else {
+            voiceToggleBtn.style.background = "#ffc107";
+            voiceToggleBtn.style.color = "#333";
+            voiceToggleBtn.innerText = "🔇 ভয়েস অফ আছে (চালু করতে ক্লিক করুন)";
+          }
+        });
+      }
+
       window.checkGameAns = function(isCorrect) {
         const fb = document.getElementById("game-feedback");
+        let msg = "";
         if (isCorrect) {
           fb.style.color = "green";
-          fb.innerText = "🎉 অভিনন্দন! আপনার উত্তর সঠিক হয়েছে।";
+          msg = "🎉 অভিনন্দন! আপনার উত্তর সঠিক হয়েছে।";
         } else {
           fb.style.color = "red";
-          fb.innerText = "❌ ভুল উত্তর! সঠিক উত্তরটি হবে কিবোর্ড।";
+          msg = "❌ ভুল উত্তর! সঠিক উত্তরটি হবে কিবোর্ড।";
+        }
+        fb.innerText = msg;
+
+        // যদি ভয়েস অপশন অন করা থাকে তবেই ব্রাউজার মুখে পড়ে শোনাবে
+        if (isVoiceActive && 'speechSynthesis' in window) {
+          const speech = new SpeechSynthesisUtterance(msg);
+          speech.lang = 'bn-BD';
+          window.speechSynthesis.speak(speech);
         }
       }
 
@@ -374,7 +399,6 @@
           document.getElementById("certificate-card").style.display = "none";
           document.getElementById("submit-btn").style.display = "inline-block";
           document.getElementById("timer-display").style.display = "inline-block";
-          document.getElementById("leaderboard-card").style.display = "none";
 
           clearInterval(timerInterval);
           timeLeft = 1200;
@@ -409,17 +433,10 @@
           clearInterval(timerInterval);
           document.getElementById("quiz-result").innerText = `🎉 আপনি ২০-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।`;
           
-          const name = prompt("সার্টিফিকেট ও লিডারবোর্ডের জন্য আপনার নাম লিখুন:") || "শিক্ষার্থী";
+          const name = prompt("সার্টিফিকেটের জন্য আপনার নাম লিখুন:") || "শিক্ষার্থী";
           document.getElementById("cert-name").innerText = name;
           document.getElementById("cert-score").innerText = `${score} / 20`;
           document.getElementById("certificate-card").style.display = "block";
-
-          // লিডারবোর্ডে স্কোর যোগ করা
-          const scoreList = document.getElementById("score-list");
-          const li = document.createElement("li");
-          li.innerText = `${name}: ${score} / 20`;
-          scoreList.appendChild(li);
-          document.getElementById("leaderboard-card").style.display = "block";
         });
       }
 
