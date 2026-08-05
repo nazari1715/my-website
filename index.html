@@ -146,7 +146,10 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      document.getElementById("dark-mode-btn").addEventListener("click", () => document.body.classList.toggle("dark-mode"));
+      const darkModeBtn = document.getElementById("dark-mode-btn");
+      if (darkModeBtn) {
+        darkModeBtn.addEventListener("click", () => document.body.classList.toggle("dark-mode"));
+      }
 
       function updateClock() {
         const now = new Date();
@@ -156,21 +159,26 @@
       setInterval(updateClock, 1000);
       updateClock();
 
-      document.getElementById("send-btn").addEventListener("click", () => sendMessage());
-      document.getElementById("user-input").addEventListener("keypress", (e) => { if (e.key === 'Enter') sendMessage(); });
+      const sendBtn = document.getElementById("send-btn");
+      const userInput = document.getElementById("user-input");
+      if (sendBtn && userInput) {
+        sendBtn.addEventListener("click", () => sendMessage());
+        userInput.addEventListener("keypress", (e) => { if (e.key === 'Enter') sendMessage(); });
+      }
 
       function sendMessage(customText) {
         const inputField = document.getElementById("user-input");
-        const text = customText || inputField.value.trim();
+        const text = customText || (inputField ? inputField.value.trim() : "");
         if (!text) return;
 
         addChatMessage(text, 'user-msg');
-        if(!customText) inputField.value = "";
+        if(!customText && inputField) inputField.value = "";
         setTimeout(() => getSmartAnswer(text), 300);
       }
 
       function addChatMessage(msg, className) {
         const box = document.getElementById("chat-box");
+        if (!box) return;
         const div = document.createElement("div");
         div.className = "chat-msg " + className;
         div.innerText = msg;
@@ -211,17 +219,20 @@
         addChatMessage(reply, 'bot-msg');
       }
 
-      document.getElementById("voice-btn").addEventListener("click", function() {
-        if (!('webkitSpeechRecognition' in window)) {
-          alert("ব্রাউজারে ভয়েস সাপোর্ট করছে না।");
-          return;
-        }
-        const recognition = new webkitSpeechRecognition();
-        recognition.lang = 'bn-BD';
-        recognition.onstart = () => addChatMessage("🎙️ শুনছি... বলুন...", 'bot-msg');
-        recognition.onresult = (e) => sendMessage(e.results[0][0].transcript);
-        recognition.start();
-      });
+      const voiceBtn = document.getElementById("voice-btn");
+      if (voiceBtn) {
+        voiceBtn.addEventListener("click", function() {
+          if (!('webkitSpeechRecognition' in window)) {
+            alert("ব্রাউজারে ভয়েস সাপোর্ট করছে না।");
+            return;
+          }
+          const recognition = new webkitSpeechRecognition();
+          recognition.lang = 'bn-BD';
+          recognition.onstart = () => addChatMessage("🎙️ শুনছি... বলুন...", 'bot-msg');
+          recognition.onresult = (e) => sendMessage(e.results[0][0].transcript);
+          recognition.start();
+        });
+      }
 
       const quizData = [
         { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit", "Core Process Unit"], ans: 1 },
@@ -257,4 +268,81 @@
 
       const startBtn = document.getElementById("start-btn");
       if (startBtn) {
-        startBtn.addEventListener("click", function
+        startBtn.addEventListener("click", function() {
+          let html = "";
+
+          quizData.forEach((qObj, index) => {
+            html += `<div class="q-box"><p><b>${index + 1}. ${qObj.q}</b></p>`;
+            qObj.options.forEach((opt, optIndex) => {
+              html += `<label style="display:block; margin: 5px 0;"><input type="radio" name="q_${index}" value="${optIndex}"> ${opt}</label>`;
+            });
+            html += `</div>`;
+          });
+
+          const quizBox = document.getElementById("quiz-box");
+          const quizResult = document.getElementById("quiz-result");
+          const certCard = document.getElementById("certificate-card");
+          const submitBtn = document.getElementById("submit-btn");
+          const timerDisplay = document.getElementById("timer-display");
+
+          if (quizBox) quizBox.innerHTML = html;
+          if (quizResult) quizResult.innerHTML = "";
+          if (certCard) certCard.style.display = "none";
+          if (submitBtn) submitBtn.style.display = "inline-block";
+          if (timerDisplay) timerDisplay.style.display = "inline-block";
+
+          clearInterval(timerInterval);
+          timeLeft = 1200;
+          const timeLeftSpan = document.getElementById("time-left");
+          if (timeLeftSpan) timeLeftSpan.innerText = formatTime(timeLeft);
+          
+          timerInterval = setInterval(() => {
+            timeLeft--;
+            if (timeLeftSpan) timeLeftSpan.innerText = formatTime(timeLeft);
+            if (timeLeft <= 0) {
+              clearInterval(timerInterval);
+              alert("সময় শেষ!");
+              if (submitBtn) submitBtn.click();
+            }
+          }, 1000);
+        });
+      }
+
+      const submitBtn = document.getElementById("submit-btn");
+      if (submitBtn) {
+        submitBtn.addEventListener("click", function() {
+          let score = 0;
+          const total = quizData.length;
+
+          quizData.forEach((qObj, index) => {
+            const options = document.getElementsByName(`q_${index}`);
+            for (let i = 0; i < options.length; i++) {
+              if (options[i].checked && parseInt(options[i].value) === qObj.ans) {
+                score++;
+              }
+            }
+          });
+
+          clearInterval(timerInterval);
+          const quizResult = document.getElementById("quiz-result");
+          if (quizResult) quizResult.innerText = `🎉 আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।`;
+          
+          const userName = prompt("আপনার সার্টিফিকেট এর জন্য নাম দিন:") || "অংশগ্রহণকারী";
+          const certName = document.getElementById("cert-name");
+          const certScore = document.getElementById("cert-score");
+          const certCard = document.getElementById("certificate-card");
+
+          if (certName) certName.innerText = userName;
+          if (certScore) certScore.innerText = `${score} / ${total}`;
+          if (certCard) certCard.style.display = "block";
+        });
+      }
+
+      const printBtn = document.getElementById("print-btn");
+      if (printBtn) {
+        printBtn.addEventListener("click", () => window.print());
+      }
+    });
+  </script>
+</body>
+</html>
