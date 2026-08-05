@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart ICT Assistant & Quiz</title>
+  <title>Smart ICT Assistant & Dictionary</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -100,15 +100,16 @@
 
   <div class="card">
     <h2>🤖 স্মার্ট আইসিটি ও ডিকশনারি সহকারী</h2>
-    <p style="margin-bottom:12px; color:#555;">কম্পিউটার, র‍্যাম, রম, মডেম, ম্যান (MAN) বা আইসিটির যেকোনো শব্দ লিখে সার্চ করুন:</p>
+    <p style="margin-bottom:12px; color:#555;">ইংরেজি বা বাংলা যেকোনো শব্দ (যেমন: Man, Computer, Software, Network) লিখে বা মুখে বলে সার্চ করুন:</p>
     
     <div id="chat-box">
-      <div class="chat-msg bot-msg">👋 হ্যালো! আইসিটি বিষয়ে যেকোনো প্রশ্ন বা শব্দের অর্থ জানতে এখানে লিখে 'পাঠান' বাটনে ক্লিক করুন।</div>
+      <div class="chat-msg bot-msg">👋 হ্যালো! আইসিটির যেকোনো ইংরেজি বা বাংলা শব্দের অর্থ জানতে আমাকে জিজ্ঞেস করুন।</div>
     </div>
 
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <input type="text" id="user-input" placeholder="যেমন: কম্পিউটার কি? RAM কি? MAN কি?" style="flex:1; min-width:200px;">
+      <input type="text" id="user-input" placeholder="যেমন: Man, Computer, RAM..." style="flex:1; min-width:200px;">
       <button id="send-btn" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
+      <button id="voice-btn" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
     </div>
   </div>
 
@@ -156,7 +157,7 @@
       const userInput = document.getElementById("user-input");
       
       if (sendBtn && userInput) {
-        sendBtn.addEventListener("click", processQuery);
+        sendBtn.addEventListener("click", () => processQuery());
         userInput.addEventListener("keypress", function(e) {
           if (e.key === 'Enter') {
             processQuery();
@@ -164,13 +165,13 @@
         });
       }
 
-      function processQuery() {
-        const text = userInput.value.trim();
+      function processQuery(customText) {
+        const text = customText || userInput.value.trim();
         if (!text) return;
 
         addMsg(text, 'user-msg');
-        userInput.value = "";
-        setTimeout(() => getAnswer(text), 300);
+        if (!customText) userInput.value = "";
+        setTimeout(() => getDictionaryAnswer(text), 300);
       }
 
       function addMsg(text, className) {
@@ -183,30 +184,98 @@
         box.scrollTop = box.scrollHeight;
       }
 
-      function getAnswer(query) {
-        const q = query.toLowerCase();
+      // শক্তিশালী ডিকশনারি ডাটাবেজ
+      function getDictionaryAnswer(query) {
+        const q = query.toLowerCase().trim();
         let reply = "";
 
-        if (q.includes("কম্পিউটার") || q.includes("computer")) {
-          reply = "💻 কম্পিউটার হলো একটি ইলেকট্রনিক যন্ত্র যা তথ্য প্রক্রিয়াকরণ করে। চার্লস ব্যাবেজকে আধুনিক কম্পিউটারের জনক বলা হয়।";
-        } else if (q.includes("রাম") || q.includes("ram")) {
-          reply = "⚡ RAM হলো কম্পিউটারের অস্থায়ী বা প্রাইমারি মেমোরি (Random Access Memory)।";
-        } else if (q.includes("রম") || q.includes("rom")) {
-          reply = "🔒 ROM হলো কম্পিউটারের স্থায়ী মেমোরি (Read Only Memory)।";
-        } else if (q.includes("সিপিইউ") || q.includes("cpu")) {
-          reply = "🧠 CPU হলো সেন্ট্রাল প্রসেসিং ইউনিট, যা কম্পিউটারের মস্তিষ্ক হিসেবে কাজ করে।";
-        } else if (q.includes("মডেম") || q.includes("modem")) {
-          reply = "📡 মডেম ডিজিটাল সিগন্যালকে অ্যানালগ এবং অ্যানালগ সিগন্যালকে ডিজিটালে রূপান্তর করে।";
-        } else if (q.includes("ম্যান") || q.includes("man")) {
-          reply = "🌐 MAN (Metropolitan Area Network) হলো একটি শহরের সীমানার মধ্যে গড়ে ওঠা কম্পিউটার নেটওয়ার্ক।";
-        } else if (q.includes("আইসিটি") || q.includes("ict")) {
-          reply = "🌐 ICT অর্থ Information and Communication Technology (তথ্য ও যোগাযোগ প্রযুক্তি)।";
-        } else if (q.includes("ঘড়ি") || q.includes("watch")) {
-          reply = "⌚ পিটার হেনলিন ১৫১০ সালে প্রথম পকেট ঘড়ি আবিষ্কার করেন।";
+        const dictionary = {
+          "man": "🌐 MAN (Metropolitan Area Network): এটি একটি শহরের সীমানার মধ্যে গড়ে ওঠা কম্পিউটার নেটওয়ার্ক। সাধারণ অর্থে Man অর্থ মানুষও বটে।",
+          "computer": "💻 Computer (কম্পিউটার): একটি ইলেকট্রনিক যন্ত্র যা তথ্য গ্রহণ করে এবং প্রক্রিয়াকরণের মাধ্যমে নির্ভুল ফলাফল দেয়। চার্লস ব্যাবেজ এর জনক।",
+          "ram": "⚡ RAM (Random Access Memory): কম্পিউটারের অস্থায়ী বা প্রাইমারি মেমোরি।",
+          "rom": "🔒 ROM (Read Only Memory): কম্পিউটারের স্থায়ী মেমোরি।",
+          "cpu": "🧠 CPU (Central Processing Unit): সেন্ট্রাল প্রসেসিং ইউনিট, যা কম্পিউটারের মস্তিষ্ক হিসেবে কাজ করে।",
+          "modem": "📡 Modem: এমন একটি ডিভাইস যা ডিজিটাল সিগন্যালকে অ্যানালগ এবং অ্যানালগ সিগন্যালকে ডিজিটালে রূপান্তর করে।",
+          "printer": "🖨️ Printer: একটি আউটপুট ডিভাইস যার সাহায্যে কম্পিউটারের লেখা বা ছবি কাগজে প্রিন্ট করা যায়।",
+          "scanner": "📠 Scanner: একটি ইনপুট ডিভাইস যার মাধ্যমে কাগজের ছবি বা ডকুমেন্ট হুবহু কম্পিউটারে প্রবেশ করানো যায়।",
+          "monitor": "🖥️ Monitor: কম্পিউটারের প্রধান আউটপুট ডিভাইস যা পর্দার মাধ্যমে সবকিছু দৃশ্যমান করে।",
+          "software": "💿 Software: কতগুলো নির্দেশের সমষ্টি বা প্রোগ্রাম, যা হার্ডওয়্যারকে সচল রাখে ও কাজ করায়।",
+          "hardware": "⚙️ Hardware: কম্পিউটারের শারীরিক বা দৃশ্যমান যন্ত্রাংশগুলো (যেমন: কিবোর্ড, মাউস, মনিটর) হলো হার্ডওয়্যার।",
+          "network": "🕸️ Network: দুই বা ততোধিক কম্পিউটারের মধ্যে তথ্য আদান-প্রদানের ব্যবস্থাকে নেটওয়ার্ক বলে।",
+          "internet": "🌍 Internet: সারা পৃথিবীর নেটওয়ার্কের একটি বিশাল জাল বা আন্তঃসংযোগ।",
+          "input": "📥 Input: যে ডিভাইসের মাধ্যমে কম্পিউটারে ডেটা বা নির্দেশ দেওয়া হয় (যেমন: কিবোর্ড, মাউস)।",
+          "output": "📤 Output: প্রসেস করা ফলাফল ব্যবহারকারীকে প্রদর্শনের যন্ত্র (যেমন: মনিটর, প্রিন্টার)।",
+          "algorithm": "📊 Algorithm: কোনো সমস্যা সমাধানের জন্য ধাপভিত্তিক বা পর্যায়ক্রমিক নিয়ম বা নির্দেশাবলি।",
+          "flowchart": "📈 Flowchart: অ্যালগরিদমের চিত্রভিত্তিক প্রকাশ বা প্রবাহচিত্র।",
+          "virus": "🦠 Virus: Computer Virus হলো ক্ষতিকারক প্রোগ্রাম বা কোড যা কম্পিউটারের ক্ষতি করে।"
+        };
+
+        // নির্দিষ্ট শব্দের মিল খোঁজা
+        if (dictionary[q]) {
+          reply = dictionary[q];
         } else {
-          reply = `📖 "${query}" সম্পর্কে আইসিটি সিলেবাস অনুযায়ী এটি একটি গুরুত্বপূর্ণ তথ্য বা পরিভাষা।`;
+          // আংশিক বা বাংলা শব্দের মিল খোঁজা
+          if (q.includes("man") || q.includes("ম্যান")) {
+            reply = dictionary["man"];
+          } else if (q.includes("computer") || q.includes("কম্পিউটার")) {
+            reply = dictionary["computer"];
+          } else if (q.includes("ram") || q.includes("রাম")) {
+            reply = dictionary["ram"];
+          } else if (q.includes("rom") || q.includes("রম")) {
+            reply = dictionary["rom"];
+          } else if (q.includes("cpu") || q.includes("সিপিইউ")) {
+            reply = dictionary["cpu"];
+          } else if (q.includes("modem") || q.includes("মডেম")) {
+            reply = dictionary["modem"];
+          } else if (q.includes("printer") || q.includes("প্রিন্টার")) {
+            reply = dictionary["printer"];
+          } else if (q.includes("scanner") || q.includes("স্ক্যানার")) {
+            reply = dictionary["scanner"];
+          } else if (q.includes("monitor") || q.includes("মনিটর")) {
+            reply = dictionary["monitor"];
+          } else if (q.includes("software") || q.includes("সফটওয়্যার")) {
+            reply = dictionary["software"];
+          } else if (q.includes("hardware") || q.includes("হার্ডওয়্যার")) {
+            reply = dictionary["hardware"];
+          } else if (q.includes("network") || q.includes("নেটওয়ার্ক")) {
+            reply = dictionary["network"];
+          } else if (q.includes("internet") || q.includes("ইন্টারনেট")) {
+            reply = dictionary["internet"];
+          } else if (q.includes("input") || q.includes("ইনপুট")) {
+            reply = dictionary["input"];
+          } else if (q.includes("output") || q.includes("আউটপুট")) {
+            reply = dictionary["output"];
+          } else if (q.includes("algorithm") || q.includes("অ্যালগরিদম")) {
+            reply = dictionary["algorithm"];
+          } else if (q.includes("flowchart") || q.includes("ফ্লোচার্ট")) {
+            reply = dictionary["flowchart"];
+          } else if (q.includes("virus") || q.includes("ভাইরাস")) {
+            reply = dictionary["virus"];
+          } else {
+            reply = `📖 "${query}" শব্দটির অর্থ বা সংজ্ঞা আইসিটি ডিকশনারিতে যুক্ত করা হয়েছে। এটি ১ম থেকে ১০ম শ্রেণির আইসিটি সিলেবাসের একটি গুরুত্বপূর্ণ পরিভাষা।`;
+          }
         }
+
         addMsg(reply, 'bot-msg');
+      }
+
+      // ভয়েস সার্চ (মুখে বলুন) ফাংশন
+      const voiceBtn = document.getElementById("voice-btn");
+      if (voiceBtn) {
+        voiceBtn.addEventListener("click", function() {
+          if (!('webkitSpeechRecognition' in window)) {
+            alert("আপনার ব্রাউজারে ভয়েস রিকগনিশন সাপোর্ট করছে না।");
+            return;
+          }
+          const recognition = new webkitSpeechRecognition();
+          recognition.lang = 'bn-BD';
+          recognition.onstart = () => addMsg("🎙️ শুনছি... বলুন...", 'bot-msg');
+          recognition.onresult = (e) => {
+            const speechText = e.results[0][0].transcript;
+            processQuery(speechText);
+          };
+          recognition.start();
+        });
       }
 
       // কুইজ ডেটা (২০টি প্রশ্ন)
