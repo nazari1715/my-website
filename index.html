@@ -115,16 +115,14 @@
   </div>
 
   <div class="card" id="quiz-section">
-    <h2>🧠 জাতীয় আইসিটি কুইজ প্রতিযোগিতা</h2>
+    <h2>🧠 জাতীয় আইসিটি কুইজ প্রতিযোগিতা (২০টি প্রশ্ন)</h2>
     <p>বিষয় নির্বাচন করে কুইজ শুরু করুন:</p>
     
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
       <div>
         <label for="quiz-subject"><b>বিষয় নির্বাচন করুন:</b></label><br>
         <select id="quiz-subject" style="width:100%; max-width:300px; margin-top:5px;">
-          <option value="hardware">১. কম্পিউটার হার্ডওয়্যার ও বেসিকস</option>
-          <option value="internet">২. ইন্টারনেট ও নেটওয়ার্কিং</option>
-          <option value="cyber">৩. সাইবার নিরাপত্তা</option>
+          <option value="ict_general">১ম থেকে ১০ম শ্রেণি - আইসিটি সার্বিক সিলেবাস</option>
         </select>
       </div>
       <button id="start-btn" style="background:#28a745; color:white; padding:12px 24px; font-size:16px; font-weight:bold;">▶️ কুইজ শুরু করুন</button>
@@ -186,8 +184,12 @@
 
         if (q.includes("কম্পিউটার") || q.includes("computer")) {
           reply = "💻 কম্পিউটার হলো একটি ইলেকট্রনিক যন্ত্র, যা তথ্য গ্রহণ করে এবং প্রক্রিয়াকরণের মাধ্যমে নির্ভুল ফলাফল দেয়। চার্লস ব্যাবেজকে আধুনিক কম্পিউটারের জনক বলা হয়।";
+        } else if (q.includes("ঘড়ি") || q.includes("watch") || q.includes("clock") || q.includes("কে পথম ঘড়ি আবিষ্কার করে")) {
+          reply = "⌚ পিটার হেনলিন (Peter Henlein) ১৫>>() সালে প্রথম পকেট ঘড়ি বা ঘড়ি আবিষ্কার করেন।";
+        } else if (q.includes("man") || q.includes("ম্যান")) {
+          reply = "🌐 MAN (Metropolitan Area Network) হলো একটি শহরের সীমানার মধ্যে গড়ে ওঠা কম্পিউটার নেটওয়ার্ক।";
         } else if (q.includes("আইসিটি") || q.includes("ict")) {
-          reply = "🌐 ICT অর্থ Information and Communication Technology (তথ্য ও যোগাযোগ প্রযুক্তি)। তথ্য সংগ্রহ, সংরক্ষণ ও আদান-প্রদানের প্রযুক্তি হলো আইসিটি।";
+          reply = "🌐 ICT অর্থ Information and Communication Technology (তথ্য ও যোগাযোগ প্রযুক্তি)।";
         } else if (q.includes("সিপিইউ") || q.includes("cpu")) {
           reply = "🧠 CPU হলো Central Processing Unit, যেটিকে কম্পিউটারের মস্তিষ্ক বলা হয়।";
         } else if (q.includes("রাম") || q.includes("ram")) {
@@ -200,27 +202,10 @@
           reply = "📥 যে ডিভাইসের মাধ্যমে কম্পিউটারে ডেটা দেওয়া হয় তাকে ইনপুট ডিভাইস বলে (যেমন: কিবোর্ড, মাউস)।";
         } else if (q.includes("আউটপুট") || q.includes("output")) {
           reply = "📤 প্রসেস করা ফলাফল দেখার যন্ত্রকে আউটপুট ডিভাইস বলে (যেমন: মনিটর, প্রিন্টার)।";
-        } else if (q.includes("সফটওয়্যার") || q.includes("software")) {
-          reply = "💿 সফটওয়্যার হলো কতগুলো প্রোগ্রামের সমষ্টি যা হার্ডওয়্যারকে সচল রাখে।";
-        } else if (q.includes("হার্ডওয়্যার") || q.includes("hardware")) {
-          reply = "⚙️ কম্পিউটারের স্পর্শনীয় যন্ত্রাংশগুলোকে হার্ডওয়্যার বলে।";
         } else if (q.includes("ইন্টারনেট") || q.includes("internet")) {
           reply = "🌍 ইন্টারনেট হলো সারা পৃথিবীর নেটওয়ার্কের একটি বিশাল জাল।";
-        } else if (q.includes("ভাইরাস") || q.includes("virus")) {
-          reply = "🦠 কম্পিউটার ভাইরাস হলো ক্ষতিকারক প্রোগ্রাম যা ফাইল ও ডেটা নষ্ট করে।";
-        } else if (q.includes("ইমেইল") || q.includes("email")) {
-          reply = "✉️ ইমেইল হলো ইলেকট্রনিক মেইল যার মাধ্যমে ইন্টারনেটে চিঠি বা বার্তা পাঠানো হয়।";
-        } else if (q.includes("অ্যালগরিদম") || q.includes("algorithm")) {
-          reply = "📝 কোনো সমস্যা সমাধানের ধাপভিত্তিক নিয়ম হলো অ্যালগরিদম।";
-        } else if (q.includes("ফ্লোচার্ট") || q.includes("flowchart")) {
-          reply = "📊 যে চিত্রের মাধ্যমে অ্যালগরিদমের ধারা প্রকাশ করা হয় তাকে ফ্লোচার্ট বলে।";
-        } else if (q.includes("man") || q.includes("ম্যান")) {
-          reply = "🌐 MAN (Metropolitan Area Network) হলো একটি শহরের সীমানার মধ্যে গড়ে ওঠা কম্পিউটার নেটওয়ার্ক।";
-        } else if (q.includes("ঘড়ি") || q.includes("watch") || q.includes("clock")) {
-          reply = "⌚ পিটার হেনলিন (Peter Henlein) ১৫১০ সালে প্রথম পকেট ঘড়ি বা ঘড়ি আবিষ্কার করেন।";
         } else {
-          // ডাইনামিক স্মার্ট জেনারেটর: কোনো কিওয়ার্ড না মিললেও যাতে ফাঁকা না থাকে
-          reply = `📖 "${query}" সম্পর্কিত তথ্য ১ম থেকে ১০ম শ্রেণির আইসিটি পাঠ্যবইয়ের সংশ্লিষ্ট অধ্যায়ে আলোচনা করা হয়েছে। আপনি নিচের কুইজ অংশ থেকে এ বিষয়ে আরও প্রস্তুতি নিতে পারেন!`;
+          reply = `📖 "${query}" সম্পর্কিত তথ্য ১ম থেকে ১০ম শ্রেণির আইসিটি পাঠ্যবইয়ের সিলেবাসের অন্তর্ভুক্ত রয়েছে।`;
         }
 
         addChatMessage(reply, 'bot-msg');
@@ -238,24 +223,32 @@
         recognition.start();
       });
 
-      const quizData = {
-        hardware: [
-          { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit"], ans: 1 },
-          { q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি?", options: ["RAM", "ROM", "Cache"], ans: 1 },
-          { q: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?", options: ["Monitor", "Hard Disk", "Microprocessor/CPU"], ans: 2 }
-        ],
-        internet: [
-          { q: "www-এর পূর্ণরূপ কী?", options: ["World Wide Web", "World Whole Web", "Web World Wide"], ans: 0 },
-          { q: "ইন্টারনেটে নেটওয়ার্ক ঠিকানার পরিচয়কে কী বলা হয়?", options: ["IP Address", "USB Drive", "E-mail"], ans: 0 }
-        ],
-        cyber: [
-          { q: "পাসওয়ার্ড সুরক্ষিত রাখার সবচেয়ে ভালো উপায় কোনটি?", options: ["একই পাসওয়ার্ড রাখা", "সহজ নাম্বার দেওয়া", "শক্তিশালী ও অনন্য রাখা"], ans: 2 },
-          { q: "ফিশিং (Phishing) কীসের সাথে সম্পর্কিত?", options: ["মাছ ধরা", "অনলাইন তথ্য চুরি", "কম্পিউটার স্পিড"], ans: 1 }
-        ]
-      };
+      // ২০টি সিলেবাস ভিত্তিক মানসম্মত প্রশ্ন
+      const quizData = [
+        { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit", "Core Process Unit"], ans: 1 },
+        { q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি?", options: ["RAM", "ROM", "Cache", "Register"], ans: 1 },
+        { q: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?", options: ["Monitor", "Hard Disk", "Microprocessor / CPU", "Motherboard"], ans: 2 },
+        { q: "www-এর পূর্ণরূপ কী?", options: ["World Wide Web", "World Whole Web", "Web World Wide", "Wide World Web"], ans: 0 },
+        { q: "ইন্টারনেটে নেটওয়ার্ক ঠিকানার পরিচয়কে কী বলা হয়?", options: ["IP Address", "USB Drive", "E-mail", "Bluetooth"], ans: 0 },
+        { q: "পাসওয়ার্ড সুরক্ষিত রাখার সবচেয়ে ভালো উপায় কোনটি?", options: ["একই পাসওয়ার্ড রাখা", "সহজ নাম্বার দেওয়া", "শক্তিশালী ও অনন্য রাখা", "বন্ধুকে জানিয়ে রাখা"], ans: 2 },
+        { q: "ফিশিং (Phishing) কীসের সাথে সম্পর্কিত?", options: ["মাছ ধরা", "অনলাইন তথ্য চুরি বা প্রতারণা", "কম্পিউটার স্পিড বৃদ্ধি", "প্রিন্ট করা"], ans: 1 },
+        { q: "যে ডিভাইসের মাধ্যমে কম্পিউটারে ডেটা দেওয়া হয় তাকে কী বলে?", options: ["ইনপুট ডিভাইস", "আউটপুট ডিভাইস", "স্টোরেজ", "প্রসেসর"], ans: 0 },
+        { q: "মনিটর কী ধরনের ডিভাইস?", options: ["ইনপুট", "আউটপুট", "স্টোরেজ", "কমিউনিকেশন"], ans: 1 },
+        { q: "কম্পিউটারের জনক কে?", options: ["বিল গেটস", "স্টিভ জবস", "চার্লস ব্যাবেজ", "অ্যালান টুরিং"], ans: 2 },
+        { q: "র‌্যাম (RAM) কোন ধরনের মেমোরি?", options: ["স্থায়ী", "অস্থায়ী", "সেকেন্ডারি", "রিড অনলি"], ans: 1 },
+        { q: "নিচের কোনটি ইনপুট ডিভাইস?", options: ["প্রিন্টার", "স্পিকার", "কিবোর্ড", "প্লটার"], ans: 2 },
+        { q: "কম্পিউটারের হার্ডডিস্ক কী কাজে ব্যবহৃত হয়?", options: ["হিসাব করতে", "তথ্য স্থায়ীভাবে সংরক্ষণ করতে", "বিদ্যুৎ সরবরাহ করতে", "ছবি দেখাতে"], ans: 1 },
+        { q: "ইন্টারনেট ব্যবহারের জন্য কোনটি আবশ্যক?", options: ["মডেম বা রাউটার", "স্ক্যানার", "জয়েস্টিক", "হেডফোন"], ans: 0 },
+        { q: "কম্পিউটার ভাইরাস হলো এক ধরণের—", options: ["ভালো সফটওয়্যার", "ক্ষতিকারক প্রোগ্রাম বা সফটওয়্যার", "হার্ডওয়্যার যন্ত্র", "অপারেটিং সিস্টেম"], ans: 1 },
+        { q: "ইমেল (Email) শব্দের পূর্ণরূপ কী?", options: ["Electronic Mail", "Electrical Mail", "Easy Mail", "Effective Mail"], ans: 0 },
+        { q: "অ্যালগরিদম কী?", options: ["কম্পিউটার গেম", "সমস্যা সমাধানের ধাপভিত্তিক নিয়ম", "নেটওয়ার্ক ক্যাবল", "ভাইরাস"], ans: 1 },
+        { q: "ফ্লোচার্ট বা প্রবাহচিত্রের চিত্র প্রতীক মূলত কী প্রকাশ করে?", options: ["কাজের ধারা বা ধাপ", "কম্পিউটারের গতি", "বিদ্যুতের ভোল্টেজ", "মনিটরের রেজুলেশন"], ans: 0 },
+        { q: "লোকাল এরিয়া নেটওয়ার্ককে সংক্ষেপে কী বলা হয়?", options: ["WAN", "MAN", "LAN", "PAN"], ans: 2 },
+        { q: "তথ্য ও যোগাযোগ প্রযুক্তির মূল ভিত্তি কী?", options: ["তথ্য", "উপাত্ত", "জ্ঞান ও প্রযুক্তি", "উপরের সবগুলো"], ans: 3 }
+      ];
 
       let timerInterval;
-      let timeLeft = 1200;
+      let timeLeft = 1200; // ২০ মিনিট = ১২০০ সেকেন্ড
 
       function formatTime(seconds) {
         const m = Math.floor(seconds / 60);
@@ -264,11 +257,9 @@
       }
 
       document.getElementById("start-btn").addEventListener("click", function() {
-        const subject = document.getElementById("quiz-subject").value;
-        const questions = quizData[subject];
         let html = "";
 
-        questions.forEach((qObj, index) => {
+        quizData.forEach((qObj, index) => {
           html += `<div class="q-box"><p><b>${index + 1}. ${qObj.q}</b></p>`;
           qObj.options.forEach((opt, optIndex) => {
             html += `<label style="display:block; margin: 5px 0;"><input type="radio" name="q_${index}" value="${optIndex}"> ${opt}</label>`;
@@ -284,19 +275,24 @@
 
         clearInterval(timerInterval);
         timeLeft = 1200;
+        document.getElementById("time-left").innerText = formatTime(timeLeft);
+        
         timerInterval = setInterval(() => {
           timeLeft--;
           document.getElementById("time-left").innerText = formatTime(timeLeft);
-          if (timeLeft <= 0) clearInterval(timerInterval);
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            alert("সময় শেষ!");
+            document.getElementById("submit-btn").click();
+          }
         }, 1000);
       });
 
       document.getElementById("submit-btn").addEventListener("click", function() {
-        const subject = document.getElementById("quiz-subject").value;
-        const questions = quizData[subject];
         let score = 0;
+        const total = quizData.length;
 
-        questions.forEach((qObj, index) => {
+        quizData.forEach((qObj, index) => {
           const options = document.getElementsByName(`q_${index}`);
           for (let i = 0; i < options.length; i++) {
             if (options[i].checked && parseInt(options[i].value) === qObj.ans) {
@@ -305,19 +301,7 @@
           }
         });
 
-        const total = questions.length;
-        if (score >= Math.ceil(total * 0.7)) {
-          const userName = prompt("আপনার সার্টিফিকেট এর জন্য নাম দিন:") || "অংশগ্রহণকারী";
-          document.getElementById("cert-name").innerText = userName;
-          document.getElementById("cert-score").innerText = `${score} / ${total}`;
-          document.getElementById("certificate-card").style.display = "block";
-        }
-
+        clearInterval(timerInterval);
         document.getElementById("quiz-result").innerText = `🎉 আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।`;
-      });
-
-      document.getElementById("print-btn").addEventListener("click", () => window.print());
-    });
-  </script>
-</body>
-</html>
+        
+        const userName = prompt("আপনার
