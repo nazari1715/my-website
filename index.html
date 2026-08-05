@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>স্মার্ট আইসিটি অলিম্পিয়াড ও সহকারী (১ম - ১০ম শ্রেণি)</title>
+  <title>স্মার্ট আইসিটি ও ডিকশনারি সহকারী (১ম - ১০ম শ্রেণি)</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -298,10 +298,15 @@
           }
         });
 
-        document.getElementById("quiz-result").innerText = `🎉 আপনি ${questions.length}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।`;
-        document.getElementById("cert-name").innerText = prompt("আপনার নাম দিন:") || "শিক্ষার্থী";
-        document.getElementById("cert-score").innerText = `${score} / ${questions.length}`;
-        document.getElementById("certificate-card").style.display = "block";
+        const total = questions.length;
+        if (score >= Math.ceil(total * 0.7)) {
+          const userName = prompt("আপনার সার্টিফিকেট এর জন্য নাম দিন:") || "অংশগ্রহণকারী";
+          document.getElementById("cert-name").innerText = userName;
+          document.getElementById("cert-score").innerText = `${score} / ${total}`;
+          document.getElementById("certificate-card").style.display = "block";
+        }
+
+        document.getElementById("quiz-result").innerText = `🎉 আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।`;
       });
 
       document.getElementById("print-btn").addEventListener("click", () => window.print());
