@@ -91,6 +91,8 @@
     }
     .note-box { background: rgba(0,123,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #28a745; }
     .dark-mode .note-box { background: rgba(255,255,255,0.03); }
+    .dashboard-stats { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
+    .stat-box { flex: 1; min-width: 130px; background: rgba(0,123,255,0.08); padding: 12px; border-radius: 8px; text-align: center; }
   </style>
 </head>
 <body>
@@ -100,8 +102,28 @@
     <p id="live-clock" style="font-weight:bold; color:#007bff; margin:10px 0 0 0;"></p>
   </div>
 
+  <div class="card" style="background: linear-gradient(135deg, #007bff11, #28a74511); display:flex; align-items:center; gap:15px;">
+    <div style="font-size: 35px;">🤖✨</div>
+    <div>
+      <h3 style="margin:0 0 5px 0; color:#007bff;">স্মার্ট আইসিটি এআই টিউটর</h3>
+      <p id="ai-status-text" style="margin:0; font-size:14px; color:#555;">সক্রিয় আছে! যেকোনো শব্দ সার্চ করুন বা মুখে বলুন।</p>
+    </div>
+  </div>
+
   <div class="card">
     <h2>🤖 স্মার্ট আইসিটি ও ডিকশনারি সহকারী</h2>
+    
+    <div class="dashboard-stats">
+      <div class="stat-box">
+        <span style="display:block; font-size:12px; color:#555;">সৈনিক সার্চ সংখ্যা</span>
+        <strong id="stat-search-count" style="font-size:18px; color:#007bff;">0</strong> টি
+      </div>
+      <div class="stat-box">
+        <span style="display:block; font-size:12px; color:#555;">শেখা ডিকশনারি শব্দ</span>
+        <strong id="stat-word-count" style="font-size:18px; color:#28a745;">0</strong> টি
+      </div>
+    </div>
+
     <p style="margin-bottom:12px; color:#555;">ইংরেজি বা বাংলা যেকোনো শব্দ (যেমন: Man, Computer, Software, Network) লিখে বা মুখে বলে সার্চ করুন:</p>
     
     <div id="chat-box">
@@ -113,6 +135,8 @@
       <button id="send-btn" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
       <button id="voice-btn" style="background:#17a2b8; color:white; padding:10px 18px;">🎙️ মুখে বলুন</button>
     </div>
+    
+    <p style="font-size: 13px; color: #888; margin-top: 8px;">💡 টিপস: মুখে বলে "কুইজ শুরু করো" অথবা "ডার্ক মোড" বললেও কাজ করবে!</p>
   </div>
 
   <div class="card">
@@ -154,6 +178,8 @@
 
     <button id="submit-btn" style="background:#007bff; color:white; padding:12px 25px; font-size:16px; font-weight:bold; margin-top:10px; display:none;">উত্তর জমা দিন 🚀</button>
     <p id="quiz-result" style="font-weight:bold; font-size:16px; margin-top:15px;"></p>
+    
+    <p id="performance-grade" style="font-weight:bold; font-size:17px; color:#28a745; margin-top:5px;"></p>
 
     <div id="certificate-card">
       <h1 style="color:#007bff; margin-bottom:5px;">📜 আইসিটি সার্টিফিকেট</h1>
@@ -171,6 +197,9 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
+      let searchCount = 0;
+      let learnedWordsCount = 0;
+
       // ডার্ক মোড টগল
       const darkModeBtn = document.getElementById("dark-mode-btn");
       if (darkModeBtn) {
@@ -186,7 +215,7 @@
       setInterval(updateClock, 1000);
       updateClock();
 
-      // ৩ নম্বর মিনি গেমের জন্য ভয়েস অন/অফ অপশন কন্ট্রোল
+      // মিনি গেমের জন্য ভয়েস অন/অফ অপশন কন্ট্রোল
       let isVoiceActive = false;
       const voiceToggleBtn = document.getElementById("voice-toggle-btn");
       if (voiceToggleBtn) {
@@ -216,7 +245,6 @@
         }
         fb.innerText = msg;
 
-        // যদি ভয়েস অপশন অন করা থাকে তবেই ব্রাউজার মুখে পড়ে শোনাবে
         if (isVoiceActive && 'speechSynthesis' in window) {
           const speech = new SpeechSynthesisUtterance(msg);
           speech.lang = 'bn-BD';
@@ -241,8 +269,30 @@
         const text = customText || userInput.value.trim();
         if (!text) return;
 
+        // ১ নম্বর নতুন ফিচার: ভয়েস কমান্ড হ্যান্ডলিং (যেমন: "কুইজ শুরু করো" বা "ডার্ক মোড")
+        const lowerText = text.toLowerCase();
+        if (lowerText.includes("কুইজ শুরু") || lowerText.includes("quiz")) {
+          addMsg(text, 'user-msg');
+          addMsg("🚀 ভয়েস কমান্ড অনুযায়ী কুইজ শুরু করা হলো!", 'bot-msg');
+          document.getElementById("start-btn").click();
+          if (!customText) userInput.value = "";
+          return;
+        }
+        if (lowerText.includes("ডার্ক মোড") || lowerText.includes("dark mode")) {
+          addMsg(text, 'user-msg');
+          addMsg("🌙 ভয়েস কমান্ড অনুযায়ী ডার্ক মোড টগল করা হলো!", 'bot-msg');
+          document.body.classList.toggle("dark-mode");
+          if (!customText) userInput.value = "";
+          return;
+        }
+
         addMsg(text, 'user-msg');
         if (!customText) userInput.value = "";
+        
+        // ড্যাশবোর্ড কাউন্টার আপডেট
+        searchCount++;
+        document.getElementById("stat-search-count").innerText = searchCount;
+
         setTimeout(() => getDictionaryAnswer(text), 300);
       }
 
@@ -284,6 +334,8 @@
 
         if (dictionary[q]) {
           reply = dictionary[q];
+          learnedWordsCount++;
+          document.getElementById("stat-word-count").innerText = learnedWordsCount;
         } else {
           if (q.includes("man") || q.includes("ম্যান")) {
             reply = dictionary["man"];
@@ -324,9 +376,12 @@
           } else {
             reply = `📖 "${query}" শব্দটির অর্থ বা সংজ্ঞা আইসিটি ডিকশনারিতে যুক্ত করা হয়েছে। এটি ১ম থেকে ১০ম শ্রেণির আইসিটি সিলেবাসের একটি গুরুত্বপূর্ণ পরিভাষা।`;
           }
+          learnedWordsCount++;
+          document.getElementById("stat-word-count").innerText = learnedWordsCount;
         }
 
         addMsg(reply, 'bot-msg');
+        document.getElementById("ai-status-text").innerText = `সর্বশেষ সার্চ করা শব্দ: "${query}" সফলভাবে প্রসেস করা হয়েছে!`;
       }
 
       // ভয়েস সার্চ ফাংশন
@@ -396,6 +451,7 @@
 
           document.getElementById("quiz-box").innerHTML = html;
           document.getElementById("quiz-result").innerHTML = "";
+          document.getElementById("performance-grade").innerHTML = "";
           document.getElementById("certificate-card").style.display = "none";
           document.getElementById("submit-btn").style.display = "inline-block";
           document.getElementById("timer-display").style.display = "inline-block";
@@ -433,6 +489,26 @@
           clearInterval(timerInterval);
           document.getElementById("quiz-result").innerText = `🎉 আপনি ২০-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।`;
           
+          let gradeText = "";
+          let gradeColor = "";
+          if (score >= 18) {
+            gradeText = "🏆 পারফরম্যান্স গ্রেড: A+ (অসাধারণ!)";
+            gradeColor = "#28a745";
+          } else if (score >= 15) {
+            gradeText = "⭐ পারফরম্যান্স গ্রেড: A (খুব ভালো)";
+            gradeColor = "#007bff";
+          } else if (score >= 10) {
+            gradeText = "👍 পারফরম্যান্স গ্রেড: B (ভালো)";
+            gradeColor = "#ffc107";
+          } else {
+            gradeText = "📖 পারফরম্যান্স গ্রেড: C (আরও চেষ্টা করতে হবে)";
+            gradeColor = "#d9534f";
+          }
+
+          const gradeElem = document.getElementById("performance-grade");
+          gradeElem.innerText = gradeText;
+          gradeElem.style.color = gradeColor;
+
           const name = prompt("সার্টিফিকেটের জন্য আপনার নাম লিখুন:") || "শিক্ষার্থী";
           document.getElementById("cert-name").innerText = name;
           document.getElementById("cert-score").innerText = `${score} / 20`;
