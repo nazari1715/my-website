@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart ICT Assistant & Dictionary</title>
+  <title>Smart ICT Pro Assistant & Quiz Portal</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -47,7 +47,7 @@
     }
     .dark-mode .q-box { background: rgba(255,255,255,0.05); }
     #chat-box {
-      height: 300px;
+      height: 280px;
       overflow-y: auto;
       border: 1px solid #ddd;
       padding: 10px;
@@ -89,6 +89,8 @@
       margin-top: 20px;
       color: #222;
     }
+    .note-box { background: rgba(0,123,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #28a745; }
+    .dark-mode .note-box { background: rgba(255,255,255,0.03); }
   </style>
 </head>
 <body>
@@ -114,6 +116,28 @@
   </div>
 
   <div class="card">
+    <h2>📚 আইসিটি সংক্ষিপ্ত নোট ও লেকচার</h2>
+    <div class="note-box">
+      <h4>অধ্যায় ১: তথ্য ও যোগাযোগ প্রযুক্তি এবং আমাদের বাংলাদেশ</h4>
+      <p>কম্পিউটার প্রযুক্তির বিকাশ, ইন্টারনেট এবং ই-লার্নিং আমাদের শিক্ষাব্যবস্থাকে সম্পূর্ণ বদলে দিয়েছে। তথ্য প্রযুক্তির সঠিক ব্যবহারে জীবনযাত্রার মান উন্নত হয়।</p>
+    </div>
+    <div class="note-box">
+      <h4>অধ্যায় ২: কম্পিউটার সংশ্লিষ্ট যন্ত্রপাতি</h4>
+      <p>কম্পিউটার সচল রাখতে ইনপুট (কিবোর্ড, মাউস), প্রসেসিং (CPU) এবং আউটপুট (মনিটর, প্রিন্টার) ডিভাইসের গুরুত্ব অপরিসীম।</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🎮 মিনি আইসিটি শব্দ মেলানো গেম</h2>
+    <p id="game-question">নিচের কোনটি ইনপুট ডিভাইস?</p>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+      <button onclick="checkGameAns(true)" style="background:#28a745; color:white; padding:8px 15px;">কিবোর্ড (সঠিক)</button>
+      <button onclick="checkGameAns(false)" style="background:#d9534f; color:white; padding:8px 15px;">মনিটর (ভুল)</button>
+    </div>
+    <p id="game-feedback" style="font-weight:bold; margin-top:10px;"></p>
+  </div>
+
+  <div class="card">
     <h2>🧠 জাতীয় আইসিটি কুইজ প্রতিযোগিতা (২০টি প্রশ্ন)</h2>
     <p>কুইজ শুরু করতে নিচের বাটনে ক্লিক করুন:</p>
     
@@ -127,12 +151,23 @@
     <button id="submit-btn" style="background:#007bff; color:white; padding:12px 25px; font-size:16px; font-weight:bold; margin-top:10px; display:none;">উত্তর জমা দিন 🚀</button>
     <p id="quiz-result" style="font-weight:bold; font-size:16px; margin-top:15px;"></p>
 
+    <div id="leaderboard-card" style="display:none; margin-top:15px; background:rgba(0,123,255,0.05); padding:12px; border-radius:8px;">
+      <h3>🏆 সাম্প্রতিক কুইজ স্কোর তালিকা</h3>
+      <ul id="score-list" style="padding-left:20px; text-align:left;"></ul>
+    </div>
+
     <div id="certificate-card">
       <h1 style="color:#007bff; margin-bottom:5px;">📜 আইসিটি সার্টিফিকেট</h1>
       <h2 id="cert-name" style="color:#28a745; margin:10px 0;">[নাম]</h2>
       <p><b>স্কোর: <span id="cert-score">0</span></b></p>
       <button id="print-btn" style="background:#28a745; color:white; padding:8px 20px; font-size:14px; margin-top:15px;">🖨️ প্রিন্ট করুন</button>
     </div>
+  </div>
+
+  <div class="card" style="text-align:center; background:#eef2f5;">
+    <h3 style="color:#007bff; margin-bottom:5px;">👨‍💻 প্রজেক্ট ডেভেলপার পরিচিতি</h3>
+    <p style="margin:5px 0;"><b>তৈরি করেছে:</b> তথ্যপ্রযুক্তি শিক্ষার্থী</p>
+    <p style="margin:5px 0; color:#555;">স্মার্ট আইসিটি ও ডিকশনারি সহকারী প্রজেক্ট (১ম - ১০ম শ্রেণি)</p>
   </div>
 
   <script>
@@ -151,6 +186,18 @@
       }
       setInterval(updateClock, 1000);
       updateClock();
+
+      // মিনি গেম চেক ফাংশন
+      window.checkGameAns = function(isCorrect) {
+        const fb = document.getElementById("game-feedback");
+        if (isCorrect) {
+          fb.style.color = "green";
+          fb.innerText = "🎉 অভিনন্দন! আপনার উত্তর সঠিক হয়েছে।";
+        } else {
+          fb.style.color = "red";
+          fb.innerText = "❌ ভুল উত্তর! সঠিক উত্তরটি হবে কিবোর্ড।";
+        }
+      }
 
       // ডিকশনারি বা চ্যাটবট ফাংশন
       const sendBtn = document.getElementById("send-btn");
@@ -210,11 +257,9 @@
           "virus": "🦠 Virus: Computer Virus হলো ক্ষতিকারক প্রোগ্রাম বা কোড যা কম্পিউটারের ক্ষতি করে।"
         };
 
-        // নির্দিষ্ট শব্দের মিল খোঁজা
         if (dictionary[q]) {
           reply = dictionary[q];
         } else {
-          // আংশিক বা বাংলা শব্দের মিল খোঁজা
           if (q.includes("man") || q.includes("ম্যান")) {
             reply = dictionary["man"];
           } else if (q.includes("computer") || q.includes("কম্পিউটার")) {
@@ -259,7 +304,7 @@
         addMsg(reply, 'bot-msg');
       }
 
-      // ভয়েস সার্চ (মুখে বলুন) ফাংশন
+      // ভয়েস সার্চ ফাংশন
       const voiceBtn = document.getElementById("voice-btn");
       if (voiceBtn) {
         voiceBtn.addEventListener("click", function() {
@@ -329,6 +374,7 @@
           document.getElementById("certificate-card").style.display = "none";
           document.getElementById("submit-btn").style.display = "inline-block";
           document.getElementById("timer-display").style.display = "inline-block";
+          document.getElementById("leaderboard-card").style.display = "none";
 
           clearInterval(timerInterval);
           timeLeft = 1200;
@@ -363,10 +409,17 @@
           clearInterval(timerInterval);
           document.getElementById("quiz-result").innerText = `🎉 আপনি ২০-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।`;
           
-          const name = prompt("সার্টিফিকেটের জন্য আপনার নাম লিখুন:") || "শিক্ষার্থী";
+          const name = prompt("সার্টিফিকেট ও লিডারবোর্ডের জন্য আপনার নাম লিখুন:") || "শিক্ষার্থী";
           document.getElementById("cert-name").innerText = name;
           document.getElementById("cert-score").innerText = `${score} / 20`;
           document.getElementById("certificate-card").style.display = "block";
+
+          // লিডারবোর্ডে স্কোর যোগ করা
+          const scoreList = document.getElementById("score-list");
+          const li = document.createElement("li");
+          li.innerText = `${name}: ${score} / 20`;
+          scoreList.appendChild(li);
+          document.getElementById("leaderboard-card").style.display = "block";
         });
       }
 
