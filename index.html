@@ -184,8 +184,8 @@
 
         if (q.includes("কম্পিউটার") || q.includes("computer")) {
           reply = "💻 কম্পিউটার হলো একটি ইলেকট্রনিক যন্ত্র, যা তথ্য গ্রহণ করে এবং প্রক্রিয়াকরণের মাধ্যমে নির্ভুল ফলাফল দেয়। চার্লস ব্যাবেজকে আধুনিক কম্পিউটারের জনক বলা হয়।";
-        } else if (q.includes("ঘড়ি") || q.includes("watch") || q.includes("clock") || q.includes("কে পথম ঘড়ি আবিষ্কার করে")) {
-          reply = "⌚ পিটার হেনলিন (Peter Henlein) ১৫>>() সালে প্রথম পকেট ঘড়ি বা ঘড়ি আবিষ্কার করেন।";
+        } else if (q.includes("ঘড়ি") || q.includes("watch") || q.includes("clock") || q.includes("কে প্রথম ঘড়ি আবিষ্কার করে")) {
+          reply = "⌚ পিটার হেনলিন (Peter Henlein) ১৫১০ সালে প্রথম পকেট ঘড়ি বা ঘড়ি আবিষ্কার করেন।";
         } else if (q.includes("man") || q.includes("ম্যান")) {
           reply = "🌐 MAN (Metropolitan Area Network) হলো একটি শহরের সীমানার মধ্যে গড়ে ওঠা কম্পিউটার নেটওয়ার্ক।";
         } else if (q.includes("আইসিটি") || q.includes("ict")) {
@@ -223,7 +223,6 @@
         recognition.start();
       });
 
-      // ২০টি সিলেবাস ভিত্তিক মানসম্মত প্রশ্ন
       const quizData = [
         { q: "সিপিইউ (CPU)-এর পূর্ণরূপ কী?", options: ["Central Process Unit", "Central Processing Unit", "Computer Processing Unit", "Core Process Unit"], ans: 1 },
         { q: "নিচের কোনটি কম্পিউটারের স্থায়ী মেমোরি?", options: ["RAM", "ROM", "Cache", "Register"], ans: 1 },
@@ -248,7 +247,7 @@
       ];
 
       let timerInterval;
-      let timeLeft = 1200; // ২০ মিনিট = ১২০০ সেকেন্ড
+      let timeLeft = 1200;
 
       function formatTime(seconds) {
         const m = Math.floor(seconds / 60);
@@ -256,52 +255,6 @@
         return `${m}:${s < 10 ? '0' : ''}${s}`;
       }
 
-      document.getElementById("start-btn").addEventListener("click", function() {
-        let html = "";
-
-        quizData.forEach((qObj, index) => {
-          html += `<div class="q-box"><p><b>${index + 1}. ${qObj.q}</b></p>`;
-          qObj.options.forEach((opt, optIndex) => {
-            html += `<label style="display:block; margin: 5px 0;"><input type="radio" name="q_${index}" value="${optIndex}"> ${opt}</label>`;
-          });
-          html += `</div>`;
-        });
-
-        document.getElementById("quiz-box").innerHTML = html;
-        document.getElementById("quiz-result").innerHTML = "";
-        document.getElementById("certificate-card").style.display = "none";
-        document.getElementById("submit-btn").style.display = "inline-block";
-        document.getElementById("timer-display").style.display = "inline-block";
-
-        clearInterval(timerInterval);
-        timeLeft = 1200;
-        document.getElementById("time-left").innerText = formatTime(timeLeft);
-        
-        timerInterval = setInterval(() => {
-          timeLeft--;
-          document.getElementById("time-left").innerText = formatTime(timeLeft);
-          if (timeLeft <= 0) {
-            clearInterval(timerInterval);
-            alert("সময় শেষ!");
-            document.getElementById("submit-btn").click();
-          }
-        }, 1000);
-      });
-
-      document.getElementById("submit-btn").addEventListener("click", function() {
-        let score = 0;
-        const total = quizData.length;
-
-        quizData.forEach((qObj, index) => {
-          const options = document.getElementsByName(`q_${index}`);
-          for (let i = 0; i < options.length; i++) {
-            if (options[i].checked && parseInt(options[i].value) === qObj.ans) {
-              score++;
-            }
-          }
-        });
-
-        clearInterval(timerInterval);
-        document.getElementById("quiz-result").innerText = `🎉 আপনি ${total}-টির মধ্যে ${score}-টি সঠিক উত্তর দিয়েছেন।`;
-        
-        const userName = prompt("আপনার
+      const startBtn = document.getElementById("start-btn");
+      if (startBtn) {
+        startBtn.addEventListener("click", function
