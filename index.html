@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>স্মার্ট আইসিটি ও ডিকশনারি সহকারী</title>
+  <title>Smart ICT Assistant & Quiz</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -100,14 +100,14 @@
 
   <div class="card">
     <h2>🤖 স্মার্ট আইসিটি ও ডিকশনারি সহকারী</h2>
-    <p style="margin-bottom:12px; color:#555;">কম্পিউটার, র‍্যাম, রম, মডেম বা যেকোনো শব্দের অর্থ জানতে নিচে লিখুন:</p>
+    <p style="margin-bottom:12px; color:#555;">কম্পিউটার, র‍্যাম, রম, মডেম, ম্যান (MAN) বা আইসিটির যেকোনো শব্দ লিখে সার্চ করুন:</p>
     
     <div id="chat-box">
-      <div class="chat-msg bot-msg">👋 হ্যালো! আইসিটি বিষয়ে যেকোনো প্রশ্ন বা শব্দের অর্থ জানতে আমাকে জিজ্ঞেস করুন।</div>
+      <div class="chat-msg bot-msg">👋 হ্যালো! আইসিটি বিষয়ে যেকোনো প্রশ্ন বা শব্দের অর্থ জানতে এখানে লিখে 'পাঠান' বাটনে ক্লিক করুন।</div>
     </div>
 
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <input type="text" id="user-input" placeholder="যেমন: কম্পিউটার কি? RAM কি?" style="flex:1; min-width:200px;">
+      <input type="text" id="user-input" placeholder="যেমন: কম্পিউটার কি? RAM কি? MAN কি?" style="flex:1; min-width:200px;">
       <button id="send-btn" style="background:#007bff; color:white; padding:10px 18px;">পাঠান 🚀</button>
     </div>
   </div>
@@ -154,9 +154,14 @@
       // ডিকশনারি বা চ্যাটবট ফাংশন
       const sendBtn = document.getElementById("send-btn");
       const userInput = document.getElementById("user-input");
+      
       if (sendBtn && userInput) {
-        sendBtn.addEventListener("click", () => processQuery());
-        userInput.addEventListener("keypress", (e) => { if (e.key === 'Enter') processQuery(); });
+        sendBtn.addEventListener("click", processQuery);
+        userInput.addEventListener("keypress", function(e) {
+          if (e.key === 'Enter') {
+            processQuery();
+          }
+        });
       }
 
       function processQuery() {
@@ -182,18 +187,24 @@
         const q = query.toLowerCase();
         let reply = "";
 
-        if (q.includes("কম্পিউটার")) {
-          reply = "💻 কম্পিউটার হলো একটি ইলেকট্রনিক যন্ত্র যা তথ্য প্রক্রিয়াকরণ করে।";
+        if (q.includes("কম্পিউটার") || q.includes("computer")) {
+          reply = "💻 কম্পিউটার হলো একটি ইলেকট্রনিক যন্ত্র যা তথ্য প্রক্রিয়াকরণ করে। চার্লস ব্যাবেজকে আধুনিক কম্পিউটারের জনক বলা হয়।";
         } else if (q.includes("রাম") || q.includes("ram")) {
-          reply = "⚡ RAM হলো কম্পিউটারের অস্থায়ী বা প্রাইমারি মেমোরি।";
+          reply = "⚡ RAM হলো কম্পিউটারের অস্থায়ী বা প্রাইমারি মেমোরি (Random Access Memory)।";
         } else if (q.includes("রম") || q.includes("rom")) {
           reply = "🔒 ROM হলো কম্পিউটারের স্থায়ী মেমোরি (Read Only Memory)।";
         } else if (q.includes("সিপিইউ") || q.includes("cpu")) {
-          reply = "🧠 CPU হলো সেন্ট্রাল প্রসেসিং ইউনিট, যা কম্পিউটারের মস্তিষ্ক।";
-        } else if (q.includes("মডেম")) {
+          reply = "🧠 CPU হলো সেন্ট্রাল প্রসেসিং ইউনিট, যা কম্পিউটারের মস্তিষ্ক হিসেবে কাজ করে।";
+        } else if (q.includes("মডেম") || q.includes("modem")) {
           reply = "📡 মডেম ডিজিটাল সিগন্যালকে অ্যানালগ এবং অ্যানালগ সিগন্যালকে ডিজিটালে রূপান্তর করে।";
+        } else if (q.includes("ম্যান") || q.includes("man")) {
+          reply = "🌐 MAN (Metropolitan Area Network) হলো একটি শহরের সীমানার মধ্যে গড়ে ওঠা কম্পিউটার নেটওয়ার্ক।";
+        } else if (q.includes("আইসিটি") || q.includes("ict")) {
+          reply = "🌐 ICT অর্থ Information and Communication Technology (তথ্য ও যোগাযোগ প্রযুক্তি)।";
+        } else if (q.includes("ঘড়ি") || q.includes("watch")) {
+          reply = "⌚ পিটার হেনলিন ১৫১০ সালে প্রথম পকেট ঘড়ি আবিষ্কার করেন।";
         } else {
-          reply = `📖 "${query}" সম্পর্কিত তথ্য আইসিটি সিলেবাসের অন্তর্ভুক্ত।`;
+          reply = `📖 "${query}" সম্পর্কে আইসিটি সিলেবাস অনুযায়ী এটি একটি গুরুত্বপূর্ণ তথ্য বা পরিভাষা।`;
         }
         addMsg(reply, 'bot-msg');
       }
